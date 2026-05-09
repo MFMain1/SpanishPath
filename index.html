@@ -4,1844 +4,3359 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
 <meta name="description" content="SpanishPath — A serious Spanish learning companion built for fluency.">
-<meta name="theme-color" content="#FAF7F2">
-
-<!-- iOS PWA -->
+<meta name="theme-color" content="#1a1614">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="SpanishPath">
-<meta name="mobile-web-app-capable" content="yes">
-
 <title>SpanishPath</title>
 
-<!-- Inline manifest via data URI -->
-<link rel="manifest" href='data:application/manifest+json,{"name":"SpanishPath","short_name":"SpanishPath","start_url":"./","display":"standalone","orientation":"portrait","background_color":"%23FAF7F2","theme_color":"%23FAF7F2","description":"A serious Spanish learning companion","icons":[{"src":"data:image/svg%2Bxml,%3Csvg xmlns%3D%22http%3A//www.w3.org/2000/svg%22 viewBox%3D%220 0 512 512%22%3E%3Crect width%3D%22512%22 height%3D%22512%22 rx%3D%22112%22 fill%3D%22%23B8472A%22/%3E%3Ctext x%3D%22256%22 y%3D%22340%22 font-family%3D%22Georgia,serif%22 font-size%3D%22280%22 font-weight%3D%22600%22 fill%3D%22%23FAF7F2%22 text-anchor%3D%22middle%22%3ESp%3C/text%3E%3C/svg%3E","sizes":"512x512","type":"image/svg+xml","purpose":"any"}]}'>
+<link rel="manifest" href='data:application/manifest+json,{"name":"SpanishPath","short_name":"SpanishPath","start_url":".","display":"standalone","background_color":"%23FAF7F2","theme_color":"%231a1614","orientation":"portrait","icons":[{"src":"data:image/svg%2Bxml;utf8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 192 192%22%3E%3Crect width=%22192%22 height=%22192%22 rx=%2240%22 fill=%22%231a1614%22/%3E%3Ctext x=%2296%22 y=%22128%22 font-family=%22Georgia,serif%22 font-size=%22120%22 font-style=%22italic%22 fill=%22%23B8472A%22 text-anchor=%22middle%22%3ESp%3C/text%3E%3C/svg%3E","sizes":"192x192","type":"image/svg+xml"}]}'>
+<link rel="apple-touch-icon" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192"><rect width="192" height="192" rx="40" fill="%231a1614"/><text x="96" y="128" font-family="Georgia,serif" font-size="120" font-style="italic" fill="%23B8472A" text-anchor="middle">Sp</text></svg>'>
 
-<!-- Apple touch icon -->
-<link rel="apple-touch-icon" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" fill="%23B8472A"/><text x="256" y="340" font-family="Georgia,serif" font-size="280" font-weight="600" fill="%23FAF7F2" text-anchor="middle">Sp</text></svg>'>
-
-<!-- Favicon -->
-<link rel="icon" type="image/svg+xml" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="%23B8472A"/><text x="50" y="68" font-family="Georgia,serif" font-size="56" font-weight="600" fill="%23FAF7F2" text-anchor="middle">Sp</text></svg>'>
-
-<!-- Fonts: Fraunces (display serif) + Plus Jakarta Sans (body) + JetBrains Mono (Spanish text emphasis) -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,300..900,0..100,0..1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..900,0..100,0..1;1,9..144,300..900,0..100,0..1&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
-/* ===== TOKENS ===== */
 :root {
-  --paper: #FAF7F2;
-  --paper-dim: #F2EDE3;
-  --surface: #FFFFFF;
-  --surface-warm: #FBF6EC;
-  --ink: #1A1612;
-  --ink-soft: #3D342A;
-  --ink-mute: #6B5D4F;
-  --ink-faint: #A89B8A;
-  --line: #E8E0D4;
-  --line-soft: #EFE8DB;
+  --cream: #FAF7F2;
+  --cream-2: #F2EDE3;
+  --paper: #FFFEFB;
+  --ink: #1a1614;
+  --ink-2: #2D2825;
+  --ink-soft: #4A423C;
+  --muted: #7A6F65;
+  --line: #E8E0D2;
+  --line-2: #D9CFBE;
   --terracotta: #B8472A;
-  --terracotta-deep: #8E3520;
-  --terracotta-soft: #F5E0D5;
-  --emerald: #1F4A3D;
-  --emerald-soft: #DCE8E2;
-  --gold: #C9962E;
-  --gold-soft: #F5E9C8;
-  --error: #A33024;
-
-  --radius-sm: 8px;
-  --radius-md: 14px;
-  --radius-lg: 20px;
-  --radius-xl: 28px;
-
-  --shadow-sm: 0 1px 2px rgba(26, 22, 18, 0.04), 0 1px 1px rgba(26, 22, 18, 0.03);
-  --shadow-md: 0 4px 12px rgba(26, 22, 18, 0.06), 0 2px 4px rgba(26, 22, 18, 0.04);
-  --shadow-lg: 0 12px 32px rgba(26, 22, 18, 0.08), 0 4px 8px rgba(26, 22, 18, 0.04);
-
-  --font-display: 'Fraunces', Georgia, serif;
-  --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
-
-  --safe-top: env(safe-area-inset-top, 0);
-  --safe-bottom: env(safe-area-inset-bottom, 0);
+  --terracotta-deep: #8E351F;
+  --terracotta-soft: rgba(184, 71, 42, 0.08);
+  --gold: #C99B3D;
+  --gold-soft: rgba(201, 155, 61, 0.12);
+  --moss: #5C7548;
+  --moss-soft: rgba(92, 117, 72, 0.12);
+  --rose: #C8836F;
+  --error: #B33A2A;
+  --success: #4A7140;
+  --shadow-sm: 0 1px 2px rgba(26,22,20,0.04);
+  --shadow-md: 0 6px 24px -8px rgba(26,22,20,0.12), 0 2px 6px -2px rgba(26,22,20,0.06);
+  --shadow-lg: 0 24px 60px -16px rgba(26,22,20,0.18), 0 8px 20px -8px rgba(26,22,20,0.08);
+  --serif: 'Fraunces', Georgia, serif;
+  --sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --mono: 'JetBrains Mono', ui-monospace, monospace;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
 }
 
-/* ===== RESET ===== */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { height: 100%; overscroll-behavior-y: none; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html, body { height: 100%; overflow: hidden; }
 body {
-  font-family: var(--font-body);
+  font-family: var(--sans);
+  background: var(--cream);
+  color: var(--ink);
   font-size: 16px;
   line-height: 1.5;
-  color: var(--ink);
-  background: var(--paper);
-  background-image:
-    radial-gradient(circle at 12% 18%, rgba(184, 71, 42, 0.04) 0%, transparent 38%),
-    radial-gradient(circle at 88% 84%, rgba(31, 74, 61, 0.04) 0%, transparent 42%);
-  min-height: 100dvh;
-  overflow-x: hidden;
-  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overscroll-behavior: none;
 }
-button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
-input { font: inherit; color: inherit; }
-[hidden] { display: none !important; }
+input, button, textarea { font-family: inherit; font-size: inherit; color: inherit; }
+input:focus, button:focus, textarea:focus { outline: none; }
+button { cursor: pointer; border: none; background: none; }
+input { font-size: 16px; } /* prevents iOS zoom */
 
-/* ===== LOADING SCREEN ===== */
-#loading-screen {
+/* ─────────────────────── App shell ─────────────────────── */
+#app {
   position: fixed; inset: 0;
-  display: flex; align-items: center; justify-content: center;
-  background: var(--paper);
-  z-index: 100;
-}
-.loader-mark {
-  font-family: var(--font-display);
-  font-size: 56px;
-  font-weight: 500;
-  color: var(--terracotta);
-  font-variation-settings: 'opsz' 144, 'SOFT' 50;
-  letter-spacing: -0.04em;
-  animation: breathe 2.4s ease-in-out infinite;
-}
-@keyframes breathe {
-  0%, 100% { opacity: 0.4; transform: scale(0.98); }
-  50% { opacity: 1; transform: scale(1); }
-}
-
-/* ===== AUTH SCREEN ===== */
-#auth-screen {
-  min-height: 100dvh;
   display: flex; flex-direction: column;
-  padding: calc(var(--safe-top) + 40px) 24px calc(var(--safe-bottom) + 40px);
-  position: relative;
+  height: 100dvh;
+  background: var(--cream);
 }
-.auth-decoration {
-  position: absolute;
-  top: 0; right: 0;
-  width: 60%;
-  height: 50dvh;
-  background: radial-gradient(ellipse at top right, rgba(184, 71, 42, 0.08) 0%, transparent 60%);
-  pointer-events: none;
-  z-index: 0;
+.screen {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-top: var(--safe-top);
+  display: none;
+  scroll-behavior: smooth;
 }
-.auth-decoration::before {
-  content: '';
-  position: absolute;
-  top: 12%; right: -10%;
-  width: 280px; height: 280px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(201, 150, 46, 0.12), transparent 70%);
-  filter: blur(20px);
+.screen.active { display: block; }
+.screen.no-nav { padding-bottom: var(--safe-bottom); }
+.screen.has-nav { padding-bottom: calc(76px + var(--safe-bottom)); }
+
+.container { max-width: 540px; margin: 0 auto; padding: 0 20px; }
+
+/* ─────────────────────── Auth ─────────────────────── */
+#screen-auth {
+  background:
+    radial-gradient(ellipse 140% 60% at 50% 0%, rgba(184,71,42,0.08), transparent 50%),
+    radial-gradient(ellipse 100% 60% at 50% 100%, rgba(201,155,61,0.06), transparent 60%),
+    var(--cream);
 }
-.auth-content {
-  position: relative;
-  z-index: 1;
-  margin-top: auto;
-  margin-bottom: auto;
-  max-width: 440px;
-  width: 100%;
-  align-self: center;
-}
-.brand {
-  margin-bottom: 56px;
-  text-align: left;
+.auth-wrap {
+  min-height: 100dvh;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 60px 28px calc(40px + var(--safe-bottom));
+  max-width: 460px; margin: 0 auto;
 }
 .brand-mark {
-  display: inline-block;
-  font-family: var(--font-display);
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 44px;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-bottom: 6px;
+  font-variation-settings: 'opsz' 144, 'SOFT' 30, 'WONK' 0;
+}
+.brand-mark em {
+  font-style: italic;
+  color: var(--terracotta);
+  font-variation-settings: 'opsz' 144, 'SOFT' 80, 'WONK' 1;
+}
+.brand-tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 56px;
+}
+.auth-title {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  margin-bottom: 8px;
+}
+.auth-sub { color: var(--ink-soft); margin-bottom: 36px; font-size: 15px; }
+
+.field { margin-bottom: 18px; }
+.field label {
+  display: block;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.input {
+  width: 100%;
+  padding: 16px 18px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  font-size: 16px;
+  color: var(--ink);
+  transition: border-color .15s, background .15s;
+}
+.input:focus { border-color: var(--ink); background: var(--cream); }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 16px 22px;
+  border-radius: 14px;
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: 0.01em;
+  transition: transform .12s, background .15s, box-shadow .15s;
+  width: 100%;
+}
+.btn-primary { background: var(--ink); color: var(--cream); }
+.btn-primary:hover { background: var(--ink-2); }
+.btn-primary:active { transform: scale(0.98); }
+.btn-primary:disabled { opacity: 0.5; pointer-events: none; }
+.btn-terracotta { background: var(--terracotta); color: var(--cream); }
+.btn-terracotta:hover { background: var(--terracotta-deep); }
+.btn-terracotta:active { transform: scale(0.98); }
+.btn-terracotta:disabled { opacity: 0.5; pointer-events: none; }
+.btn-ghost {
+  background: transparent;
+  color: var(--ink-soft);
+  border: 1px solid var(--line);
+}
+.btn-ghost:hover { background: var(--cream-2); border-color: var(--line-2); }
+
+.auth-toggle {
+  text-align: center;
+  margin-top: 24px;
+  color: var(--muted);
   font-size: 14px;
+}
+.auth-toggle button {
+  color: var(--terracotta);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.auth-error, .auth-info {
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 13.5px;
+  margin-bottom: 16px;
+  display: none;
+}
+.auth-error { background: rgba(179,58,42,0.08); color: var(--error); border: 1px solid rgba(179,58,42,0.18); }
+.auth-info { background: var(--moss-soft); color: var(--moss); border: 1px solid rgba(92,117,72,0.2); }
+.auth-error.show, .auth-info.show { display: block; }
+
+/* ─────────────────────── Top bar ─────────────────────── */
+.topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 20px 12px;
+}
+.topbar h1 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 28px;
+  letter-spacing: -0.015em;
+  font-variation-settings: 'opsz' 72, 'SOFT' 50;
+}
+.topbar h1 em {
+  font-style: italic;
+  color: var(--terracotta);
+  font-variation-settings: 'opsz' 72, 'SOFT' 80, 'WONK' 1;
+}
+.streak-pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 7px 12px 7px 10px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-2);
+}
+.streak-pill .flame { font-size: 14px; }
+
+/* ─────────────────────── Hero ─────────────────────── */
+.hero {
+  margin: 12px 20px 24px;
+  border-radius: 24px;
+  background: linear-gradient(155deg, #1a1614 0%, #2a201c 60%, #1a1614 100%);
+  color: var(--cream);
+  padding: 28px 24px 26px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+.hero::before {
+  content: ""; position: absolute; inset: 0;
+  background:
+    radial-gradient(circle at 85% 10%, rgba(184,71,42,0.32), transparent 45%),
+    radial-gradient(circle at 0% 100%, rgba(201,155,61,0.22), transparent 50%);
+  pointer-events: none;
+}
+.hero-eyebrow {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 10px;
+  position: relative;
+}
+.hero-title {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: 4px;
+  position: relative;
+  font-variation-settings: 'opsz' 72, 'SOFT' 60;
+}
+.hero-sub {
+  color: rgba(250,247,242,0.65);
+  font-size: 14px;
+  margin-bottom: 22px;
+  position: relative;
+}
+.hero-progress {
+  position: relative;
+  margin-bottom: 18px;
+}
+.hero-progress-row {
+  display: flex; justify-content: space-between; align-items: baseline;
+  margin-bottom: 8px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: rgba(250,247,242,0.55);
+}
+.hero-progress-row b { color: var(--cream); font-weight: 600; }
+.hero-bar {
+  height: 4px;
+  background: rgba(250,247,242,0.1);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.hero-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--terracotta), var(--gold));
+  border-radius: 999px;
+  transition: width .8s cubic-bezier(.2,.8,.2,1);
+}
+.hero-cta {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  padding: 14px 22px;
+  background: var(--cream);
+  color: var(--ink);
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 14.5px;
+  position: relative;
+  transition: transform .12s, background .15s;
+}
+.hero-cta:hover { background: #fff; }
+.hero-cta:active { transform: scale(0.98); }
+.hero-cta .arrow { transition: transform .2s; }
+.hero-cta:hover .arrow { transform: translateX(3px); }
+
+/* ─────────────────────── Stat cards ─────────────────────── */
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  padding: 0 20px;
+  margin-bottom: 28px;
+}
+.stat {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 14px 12px 12px;
+  text-align: left;
+}
+.stat-label {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+.stat-value {
+  font-family: var(--serif);
+  font-size: 26px;
+  font-weight: 400;
+  color: var(--ink);
+  line-height: 1;
+  letter-spacing: -0.01em;
+}
+.stat-unit { font-size: 13px; color: var(--muted); margin-left: 3px; font-family: var(--sans); }
+
+/* ─────────────────────── Section header ─────────────────────── */
+.section-head {
+  display: flex; justify-content: space-between; align-items: baseline;
+  padding: 0 20px;
+  margin-bottom: 14px;
+  margin-top: 8px;
+}
+.section-title {
+  font-family: var(--serif);
+  font-size: 20px;
   font-weight: 500;
+  letter-spacing: -0.01em;
+}
+.section-meta {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ─────────────────────── Curriculum map ─────────────────────── */
+.unit {
+  margin-bottom: 36px;
+  padding: 0 20px;
+}
+.unit-head {
+  display: flex; align-items: center; gap: 14px;
+  margin-bottom: 14px;
+}
+.unit-num {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  color: var(--terracotta);
+  font-weight: 600;
+}
+.unit-title {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  font-variation-settings: 'opsz' 48, 'SOFT' 50;
+}
+.unit-line {
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+
+.lesson-list { display: flex; flex-direction: column; gap: 10px; }
+
+.lesson {
+  display: flex; align-items: center; gap: 14px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 14px 16px;
+  transition: transform .12s, border-color .15s, background .15s, box-shadow .15s;
+  text-align: left;
+  width: 100%;
+  position: relative;
+}
+.lesson:hover { border-color: var(--line-2); }
+.lesson:active { transform: scale(0.99); }
+.lesson.locked { opacity: 0.55; }
+.lesson.complete { background: linear-gradient(180deg, #FFFEFB, #F8F2E5); }
+.lesson.current {
+  border-color: var(--ink);
+  border-width: 1.5px;
+  box-shadow: 0 0 0 4px rgba(26,22,20,0.05);
+}
+
+.lesson-circle {
+  flex-shrink: 0;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  border: 1.5px solid var(--line-2);
+  display: grid; place-items: center;
+  background: var(--cream);
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all .15s;
+}
+.lesson-circle:hover { border-color: var(--terracotta); color: var(--terracotta); }
+.lesson.complete .lesson-circle {
+  background: var(--terracotta);
+  border-color: var(--terracotta);
+  color: var(--cream);
+}
+.lesson.complete .lesson-circle::after {
+  content: "✓"; font-size: 14px; font-weight: 700;
+}
+.lesson.complete .lesson-circle .num-text { display: none; }
+.lesson.current .lesson-circle { border-color: var(--ink); color: var(--ink); }
+.lesson-info { flex: 1; min-width: 0; }
+.lesson-title-row {
+  display: flex; align-items: baseline; gap: 8px;
+  margin-bottom: 2px;
+}
+.lesson-title {
+  font-family: var(--serif);
+  font-size: 17px;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  color: var(--ink);
+}
+.lesson-tag {
+  display: none;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold);
+  background: var(--gold-soft);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+.lesson.has-content .lesson-tag { display: inline-block; }
+.lesson-sub {
+  font-size: 13px;
+  color: var(--muted);
+}
+.lesson-arrow {
+  color: var(--muted);
+  font-size: 18px;
+  flex-shrink: 0;
+  font-family: var(--serif);
+}
+
+/* ─────────────────────── Bottom nav ─────────────────────── */
+.bottom-nav {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  display: none;
+  justify-content: space-around; align-items: stretch;
+  padding: 8px 8px calc(8px + var(--safe-bottom));
+  background: rgba(250,247,242,0.85);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border-top: 1px solid var(--line);
+  z-index: 50;
+}
+.bottom-nav.show { display: flex; }
+.nav-btn {
+  flex: 1;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 4px;
+  padding: 8px 4px;
+  border-radius: 10px;
+  color: var(--muted);
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  transition: color .15s;
+}
+.nav-btn .icon { width: 22px; height: 22px; }
+.nav-btn.active { color: var(--ink); }
+.nav-btn.active .icon { stroke: var(--terracotta); }
+
+/* ─────────────────────── Modal (lesson preview) ─────────────────────── */
+.modal-backdrop {
+  position: fixed; inset: 0;
+  background: rgba(26,22,20,0.5);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 100;
+  display: none;
+  align-items: flex-end;
+  animation: fadeIn .25s;
+}
+.modal-backdrop.show { display: flex; }
+.modal {
+  background: var(--cream);
+  width: 100%;
+  max-width: 540px;
+  margin: 0 auto;
+  border-radius: 24px 24px 0 0;
+  padding: 28px 24px calc(28px + var(--safe-bottom));
+  max-height: 88dvh;
+  overflow-y: auto;
+  animation: slideUp .3s cubic-bezier(.2,.8,.2,1);
+}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { from { transform: translateY(40px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+.modal-grip {
+  width: 36px; height: 4px;
+  background: var(--line-2);
+  border-radius: 4px;
+  margin: -8px auto 18px;
+}
+.modal-eyebrow {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--terracotta);
+  margin-bottom: 8px;
+}
+.modal-title {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  margin-bottom: 6px;
+  font-variation-settings: 'opsz' 72, 'SOFT' 50;
+}
+.modal-sub { color: var(--ink-soft); margin-bottom: 20px; font-size: 15px; }
+
+.dialect-note {
+  background: linear-gradient(135deg, rgba(184,71,42,0.06), rgba(201,155,61,0.06));
+  border: 1px solid rgba(184,71,42,0.18);
+  border-radius: 14px;
+  padding: 16px 18px;
+  margin-bottom: 22px;
+  position: relative;
+}
+.dialect-note::before {
+  content: "🇻🇪 VENEZUELAN NOTE";
+  position: absolute;
+  top: -10px; left: 14px;
+  background: var(--cream);
+  padding: 0 8px;
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.16em;
+  color: var(--terracotta);
+  font-weight: 600;
+}
+.dialect-note p { font-size: 14px; color: var(--ink-2); line-height: 1.55; }
+
+.modal-actions {
+  display: flex; flex-direction: column; gap: 10px;
+  margin-top: 14px;
+}
+
+.modal-vocab {
+  margin-bottom: 22px;
+}
+.modal-vocab-title {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+.modal-vocab-list { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+.modal-vocab-list li {
+  display: flex; justify-content: space-between; gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px dashed var(--line);
+  font-size: 14.5px;
+}
+.modal-vocab-list li:last-child { border: none; }
+.modal-vocab-list b { font-family: var(--serif); font-weight: 500; }
+.modal-vocab-list span { color: var(--muted); font-style: italic; }
+
+/* ─────────────────────── Library / Profile ─────────────────────── */
+.placeholder {
+  padding: 60px 28px;
+  text-align: center;
+}
+.placeholder-icon {
+  font-family: var(--serif);
+  font-size: 64px;
+  color: var(--terracotta);
+  margin-bottom: 18px;
+  font-style: italic;
+}
+.placeholder h2 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 26px;
+  margin-bottom: 8px;
+  letter-spacing: -0.01em;
+}
+.placeholder p { color: var(--ink-soft); font-size: 15px; max-width: 320px; margin: 0 auto 24px; }
+
+.profile-card {
+  margin: 0 20px 16px;
+  padding: 22px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+}
+.profile-email {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+.profile-meta {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  margin-bottom: 16px;
+}
+.profile-stats { display: flex; gap: 16px; padding-top: 14px; border-top: 1px solid var(--line); }
+.profile-stat {
+  flex: 1;
+}
+.profile-stat-num {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--ink);
+}
+.profile-stat-label {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.profile-actions { padding: 0 20px; display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
+
+/* ─────────────────────── LESSON ENGINE ─────────────────────── */
+#screen-lesson {
+  background: var(--cream);
+  display: none;
+}
+#screen-lesson.active { display: flex; flex-direction: column; }
+
+.lesson-header {
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px 20px 12px;
+  padding-top: calc(14px + var(--safe-top));
+}
+.lesson-close {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  display: grid; place-items: center;
+  font-size: 18px;
+  color: var(--ink-soft);
+  flex-shrink: 0;
+}
+.lesson-close:active { transform: scale(0.92); }
+.lesson-progress-bar {
+  flex: 1;
+  height: 8px;
+  background: var(--line);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.lesson-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--terracotta), var(--rose));
+  border-radius: 999px;
+  transition: width .4s cubic-bezier(.2,.8,.2,1);
+}
+.lesson-xp-pill {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 6px 11px;
+  background: var(--ink);
+  color: var(--gold);
+  border-radius: 999px;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.exercise-area {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 20px 22px 140px;
+}
+.exercise-prompt-eyebrow {
+  font-family: var(--mono);
+  font-size: 10.5px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--terracotta);
   margin-bottom: 12px;
-  font-variation-settings: 'opsz' 14;
 }
-.brand-mark::before {
-  content: '';
-  display: inline-block;
-  width: 32px; height: 1px;
-  background: var(--terracotta);
-  vertical-align: middle;
-  margin-right: 12px;
-  margin-bottom: 3px;
-}
-.brand-name {
-  font-family: var(--font-display);
-  font-size: clamp(48px, 11vw, 64px);
+.exercise-prompt {
+  font-family: var(--serif);
   font-weight: 400;
-  letter-spacing: -0.035em;
-  line-height: 0.95;
-  color: var(--ink);
-  font-variation-settings: 'opsz' 144, 'SOFT' 30;
+  font-size: 26px;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  margin-bottom: 22px;
+  font-variation-settings: 'opsz' 72, 'SOFT' 50;
 }
-.brand-name em {
+.exercise-prompt em {
   font-style: italic;
-  font-weight: 300;
   color: var(--terracotta);
-  font-variation-settings: 'opsz' 144, 'SOFT' 60, 'WONK' 1;
-}
-.brand-tagline {
-  margin-top: 18px;
-  font-size: 17px;
-  color: var(--ink-mute);
-  max-width: 320px;
-  line-height: 1.45;
+  font-variation-settings: 'opsz' 72, 'SOFT' 80, 'WONK' 1;
 }
 
-.auth-tabs {
-  display: flex;
-  background: var(--paper-dim);
-  padding: 4px;
-  border-radius: 12px;
-  margin-bottom: 28px;
-  position: relative;
-}
-.auth-tab {
-  flex: 1;
-  padding: 11px 16px;
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--ink-mute);
-  border-radius: 9px;
-  transition: color 0.2s ease;
-  position: relative;
-  z-index: 1;
-}
-.auth-tab.active { color: var(--ink); }
-.auth-tab-indicator {
-  position: absolute;
-  top: 4px; bottom: 4px;
-  width: calc(50% - 4px);
-  background: var(--surface);
-  border-radius: 9px;
-  box-shadow: var(--shadow-sm);
-  transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.auth-tab-indicator.right { transform: translateX(100%); }
-
-.field {
-  margin-bottom: 16px;
-}
-.field-label {
-  display: block;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--ink-mute);
-  margin-bottom: 8px;
-}
-.field-input {
-  width: 100%;
-  padding: 14px 16px;
-  background: var(--surface);
+/* INTRO screen */
+.intro-card {
+  background: var(--paper);
   border: 1px solid var(--line);
-  border-radius: var(--radius-md);
+  border-radius: 18px;
+  padding: 22px;
+  margin-bottom: 18px;
+}
+.intro-body { color: var(--ink-2); font-size: 15px; line-height: 1.6; margin-bottom: 18px; }
+.intro-body:last-child { margin-bottom: 0; }
+.intro-vocab { display: flex; flex-direction: column; gap: 0; }
+.intro-vocab-row {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 0;
+  border-bottom: 1px dashed var(--line);
+}
+.intro-vocab-row:last-child { border-bottom: none; }
+.intro-es {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--ink);
+}
+.intro-divider { color: var(--line-2); }
+.intro-en { color: var(--muted); font-style: italic; font-size: 14.5px; text-align: right; }
+.intro-speak {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: var(--terracotta-soft);
+  color: var(--terracotta);
+  display: grid; place-items: center;
+  margin-right: 10px;
+  flex-shrink: 0;
+}
+.intro-speak:active { transform: scale(0.9); }
+.intro-row-flex { display: flex; align-items: center; gap: 6px; }
+
+/* TAP-SELECT */
+.options-grid { display: flex; flex-direction: column; gap: 10px; }
+.option-tile {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 18px 20px;
+  background: var(--paper);
+  border: 1.5px solid var(--line);
+  border-radius: 14px;
   font-size: 16px;
   color: var(--ink);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-  outline: none;
-  -webkit-appearance: none;
-  appearance: none;
-}
-.field-input:focus {
-  border-color: var(--terracotta);
-  box-shadow: 0 0 0 3px rgba(184, 71, 42, 0.1);
-}
-.field-input::placeholder { color: var(--ink-faint); }
-
-.btn-primary {
-  width: 100%;
-  padding: 16px 20px;
-  background: var(--ink);
-  color: var(--paper);
-  border-radius: var(--radius-md);
-  font-size: 15px;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  margin-top: 12px;
-  transition: transform 0.15s ease, background 0.2s ease;
-  position: relative;
-}
-.btn-primary:hover { background: var(--ink-soft); }
-.btn-primary:active { transform: scale(0.98); }
-.btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
-
-.btn-text {
-  font-size: 14px;
-  color: var(--ink-mute);
-  padding: 12px;
-  width: 100%;
-  margin-top: 8px;
-}
-.btn-text strong { color: var(--terracotta); font-weight: 600; }
-
-.auth-error {
-  background: rgba(163, 48, 36, 0.08);
-  border: 1px solid rgba(163, 48, 36, 0.2);
-  color: var(--error);
-  padding: 12px 14px;
-  border-radius: var(--radius-md);
-  font-size: 14px;
-  margin-bottom: 16px;
-}
-.auth-success {
-  background: var(--emerald-soft);
-  border: 1px solid rgba(31, 74, 61, 0.2);
-  color: var(--emerald);
-  padding: 12px 14px;
-  border-radius: var(--radius-md);
-  font-size: 14px;
-  margin-bottom: 16px;
-}
-
-.auth-footer {
-  margin-top: 32px;
-  text-align: center;
-  font-size: 13px;
-  color: var(--ink-faint);
-}
-
-/* ===== APP SHELL ===== */
-#app {
-  display: flex; flex-direction: column;
-  min-height: 100dvh;
-  padding-top: var(--safe-top);
-}
-.app-header {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 16px 20px 12px;
-  border-bottom: 1px solid var(--line-soft);
-  background: var(--paper);
-  position: sticky; top: 0;
-  z-index: 10;
-}
-.header-mark {
-  font-family: var(--font-display);
-  font-size: 22px;
-  font-weight: 500;
-  color: var(--ink);
-  letter-spacing: -0.02em;
-  font-variation-settings: 'opsz' 36, 'SOFT' 30;
-}
-.header-mark em {
-  color: var(--terracotta);
-  font-style: italic;
-  font-weight: 400;
-  font-variation-settings: 'opsz' 36, 'SOFT' 60, 'WONK' 1;
-}
-.header-actions {
-  display: flex; align-items: center; gap: 10px;
-}
-.streak-badge {
-  display: flex; align-items: center; gap: 6px;
-  padding: 6px 11px;
-  background: var(--gold-soft);
-  border-radius: 999px;
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--ink-soft);
-}
-.streak-icon { font-size: 13px; }
-.level-badge {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.06em;
-  padding: 6px 10px;
-  background: var(--ink);
-  color: var(--paper);
-  border-radius: 6px;
-}
-
-/* ===== MAIN CONTENT ===== */
-main {
-  flex: 1;
-  padding-bottom: calc(80px + var(--safe-bottom));
-}
-.tab-section { padding: 24px 20px 32px; }
-
-/* ===== HOME TAB ===== */
-.greeting {
-  margin-bottom: 28px;
-}
-.greeting-label {
-  font-size: 13px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--ink-mute);
-  font-weight: 600;
-  margin-bottom: 8px;
-}
-.greeting-title {
-  font-family: var(--font-display);
-  font-size: 36px;
-  line-height: 1.05;
-  font-weight: 400;
-  letter-spacing: -0.025em;
-  color: var(--ink);
-  font-variation-settings: 'opsz' 72, 'SOFT' 40;
-}
-.greeting-title em {
-  font-style: italic;
-  color: var(--terracotta);
-  font-variation-settings: 'opsz' 72, 'SOFT' 60, 'WONK' 1;
-}
-
-.hero-card {
-  background: var(--ink);
-  color: var(--paper);
-  border-radius: var(--radius-xl);
-  padding: 28px 24px 24px;
-  position: relative;
-  overflow: hidden;
-  margin-bottom: 32px;
-  box-shadow: var(--shadow-lg);
-}
-.hero-card::before {
-  content: '';
-  position: absolute;
-  top: -40px; right: -40px;
-  width: 200px; height: 200px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(184, 71, 42, 0.4), transparent 70%);
-  pointer-events: none;
-}
-.hero-card::after {
-  content: '';
-  position: absolute;
-  bottom: -60px; left: -30px;
-  width: 180px; height: 180px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(201, 150, 46, 0.18), transparent 65%);
-  pointer-events: none;
-}
-.hero-content { position: relative; z-index: 1; }
-.hero-eyebrow {
-  font-size: 11px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: rgba(250, 247, 242, 0.6);
-  font-weight: 600;
-  margin-bottom: 10px;
-  font-family: var(--font-mono);
-}
-.hero-lesson-num {
-  font-family: var(--font-display);
-  font-size: 13px;
-  color: var(--gold);
-  margin-bottom: 4px;
-  font-style: italic;
-  font-variation-settings: 'opsz' 14, 'SOFT' 60;
-}
-.hero-title {
-  font-family: var(--font-display);
-  font-size: 28px;
-  font-weight: 400;
-  line-height: 1.1;
-  margin-bottom: 6px;
-  font-variation-settings: 'opsz' 72, 'SOFT' 30;
-}
-.hero-subtitle {
-  font-size: 15px;
-  color: rgba(250, 247, 242, 0.65);
-  margin-bottom: 24px;
-}
-.hero-btn {
-  display: inline-flex; align-items: center; gap: 10px;
-  background: var(--paper);
-  color: var(--ink);
-  padding: 13px 20px;
-  border-radius: 999px;
-  font-size: 14px;
-  font-weight: 600;
-  transition: transform 0.15s ease;
-}
-.hero-btn:active { transform: scale(0.96); }
-.hero-btn svg { width: 14px; height: 14px; }
-
-/* Progress strip */
-.progress-strip {
-  display: flex; align-items: center; gap: 14px;
-  margin-bottom: 28px;
-}
-.progress-meta {
-  display: flex; justify-content: space-between; align-items: baseline;
-  margin-bottom: 10px;
-}
-.progress-label {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--ink-soft);
-}
-.progress-pct {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  color: var(--ink-mute);
-  font-weight: 500;
-}
-.progress-bar {
-  height: 6px;
-  background: var(--paper-dim);
-  border-radius: 999px;
-  overflow: hidden;
-}
-.progress-fill {
-  height: 100%;
-  background: linear-gradient(90deg, var(--terracotta), var(--gold));
-  border-radius: 999px;
-  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Stats grid */
-.stats-grid {
-  display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  margin-bottom: 32px;
-}
-.stat-card {
-  background: var(--surface-warm);
-  border: 1px solid var(--line-soft);
-  border-radius: var(--radius-lg);
-  padding: 18px 14px;
-  text-align: center;
-}
-.stat-value {
-  font-family: var(--font-display);
-  font-size: 28px;
-  font-weight: 500;
-  color: var(--ink);
-  line-height: 1;
-  font-variation-settings: 'opsz' 72, 'SOFT' 30;
-}
-.stat-label {
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--ink-mute);
-  margin-top: 8px;
-  font-weight: 600;
-}
-
-/* Section heading */
-.section-heading {
-  display: flex; align-items: baseline; justify-content: space-between;
-  margin-bottom: 16px;
-}
-.section-title {
-  font-family: var(--font-display);
-  font-size: 22px;
-  font-weight: 500;
-  color: var(--ink);
-  letter-spacing: -0.02em;
-  font-variation-settings: 'opsz' 36, 'SOFT' 30;
-}
-.section-link {
-  font-size: 13px;
-  color: var(--terracotta);
-  font-weight: 600;
-}
-
-/* Quick review card */
-.review-card {
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
-  padding: 20px;
-  display: flex; align-items: center; gap: 14px;
-}
-.review-icon {
-  width: 44px; height: 44px;
-  border-radius: 12px;
-  background: var(--emerald-soft);
-  color: var(--emerald);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 20px;
-  flex-shrink: 0;
-}
-.review-text { flex: 1; }
-.review-title {
-  font-weight: 600;
-  font-size: 15px;
-  color: var(--ink);
-}
-.review-subtitle {
-  font-size: 13px;
-  color: var(--ink-mute);
-  margin-top: 2px;
-}
-.review-arrow { color: var(--ink-faint); }
-
-/* ===== LEARN TAB (Curriculum Map) ===== */
-.curriculum-header {
-  margin-bottom: 28px;
-}
-.curriculum-eyebrow {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--terracotta);
-  font-weight: 500;
-  margin-bottom: 10px;
-}
-.curriculum-title {
-  font-family: var(--font-display);
-  font-size: 38px;
-  font-weight: 400;
-  line-height: 1.0;
-  letter-spacing: -0.03em;
-  color: var(--ink);
-  margin-bottom: 12px;
-  font-variation-settings: 'opsz' 96, 'SOFT' 40;
-}
-.curriculum-title em {
-  font-style: italic;
-  color: var(--terracotta);
-  font-variation-settings: 'opsz' 96, 'SOFT' 60, 'WONK' 1;
-}
-.curriculum-meta {
-  display: flex; gap: 18px;
-  font-size: 13px;
-  color: var(--ink-mute);
-  align-items: center;
-}
-.curriculum-meta-item {
-  display: flex; align-items: center; gap: 6px;
-}
-.curriculum-meta-item strong { color: var(--ink); font-weight: 600; }
-.curriculum-meta-divider {
-  width: 3px; height: 3px;
-  border-radius: 50%;
-  background: var(--ink-faint);
-}
-
-.unit-block {
-  margin-bottom: 32px;
-}
-.unit-header {
-  display: flex; align-items: baseline; gap: 14px;
-  padding: 12px 0;
-  margin-bottom: 8px;
-  border-bottom: 1px solid var(--line);
-}
-.unit-num {
-  font-family: var(--font-display);
-  font-size: 13px;
-  font-style: italic;
-  color: var(--terracotta);
-  font-variation-settings: 'opsz' 14, 'SOFT' 60;
-  letter-spacing: 0.04em;
-}
-.unit-title {
-  font-family: var(--font-display);
-  font-size: 17px;
-  font-weight: 500;
-  color: var(--ink);
-  flex: 1;
-  font-variation-settings: 'opsz' 36, 'SOFT' 30;
-}
-.unit-progress {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--ink-mute);
-  font-weight: 500;
-}
-
-.lesson-list {
-  display: flex; flex-direction: column;
-  gap: 6px;
-}
-.lesson-card {
-  display: flex; align-items: center; gap: 14px;
-  padding: 14px 16px;
-  background: var(--surface);
-  border: 1px solid var(--line-soft);
-  border-radius: var(--radius-md);
-  transition: transform 0.15s ease, border-color 0.2s ease, background 0.2s ease;
   text-align: left;
+  transition: all .15s;
   width: 100%;
   position: relative;
 }
-.lesson-card:active { transform: scale(0.99); }
-.lesson-card.completed {
-  background: var(--surface-warm);
-  border-color: var(--line-soft);
+.option-tile:hover { border-color: var(--line-2); }
+.option-tile:active { transform: scale(0.99); }
+.option-tile.selected { border-color: var(--ink); background: var(--cream-2); }
+.option-tile.correct {
+  border-color: var(--success);
+  background: rgba(74,113,64,0.08);
+  color: var(--success);
 }
-.lesson-card.current {
-  border-color: var(--terracotta);
-  background: var(--surface);
-  box-shadow: 0 0 0 1px var(--terracotta), 0 4px 12px rgba(184, 71, 42, 0.08);
+.option-tile.wrong {
+  border-color: var(--error);
+  background: rgba(179,58,42,0.06);
+  color: var(--error);
 }
-.lesson-card.locked {
-  opacity: 0.55;
-}
-.lesson-checkbox {
-  width: 26px; height: 26px;
+.option-letter {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted);
+  width: 22px; height: 22px;
   border-radius: 50%;
-  border: 1.5px solid var(--line);
-  display: flex; align-items: center; justify-content: center;
+  background: var(--cream);
+  display: grid; place-items: center;
   flex-shrink: 0;
-  transition: all 0.2s ease;
+}
+.option-tile.selected .option-letter { background: var(--ink); color: var(--cream); }
+.option-tile.correct .option-letter { background: var(--success); color: var(--cream); }
+.option-tile.wrong .option-letter { background: var(--error); color: var(--cream); }
+.option-text { flex: 1; }
+
+/* FILL-BLANK / TRANSLATE */
+.sentence-display {
+  font-family: var(--serif);
+  font-size: 24px;
+  line-height: 1.4;
+  padding: 20px 22px;
   background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  margin-bottom: 18px;
+  color: var(--ink);
+  font-variation-settings: 'opsz' 48, 'SOFT' 60;
+}
+.blank-slot {
+  display: inline-block;
+  min-width: 80px;
+  border-bottom: 2px solid var(--terracotta);
+  margin: 0 4px;
+  text-align: center;
+  color: var(--terracotta);
+  font-style: italic;
+}
+.text-input {
+  width: 100%;
+  padding: 18px 20px;
+  background: var(--paper);
+  border: 1.5px solid var(--line);
+  border-radius: 14px;
+  font-family: var(--serif);
+  font-size: 20px;
+  color: var(--ink);
+  transition: border-color .15s;
+}
+.text-input:focus { border-color: var(--ink); }
+.text-input.correct { border-color: var(--success); background: rgba(74,113,64,0.04); }
+.text-input.wrong { border-color: var(--error); background: rgba(179,58,42,0.04); }
+
+/* LISTEN */
+.listen-card {
+  background: linear-gradient(155deg, #1a1614 0%, #2a201c 100%);
+  color: var(--cream);
+  border-radius: 18px;
+  padding: 36px 24px 32px;
+  text-align: center;
+  margin-bottom: 22px;
+  position: relative;
+  overflow: hidden;
+}
+.listen-card::before {
+  content: ""; position: absolute; inset: 0;
+  background: radial-gradient(circle at 50% 0%, rgba(184,71,42,0.25), transparent 60%);
+  pointer-events: none;
+}
+.listen-button {
+  width: 92px; height: 92px;
+  border-radius: 50%;
+  background: var(--terracotta);
+  color: var(--cream);
+  display: grid; place-items: center;
+  margin: 0 auto 14px;
+  position: relative;
+  transition: transform .15s, background .15s;
   cursor: pointer;
 }
-.lesson-checkbox:hover { border-color: var(--ink-mute); }
-.lesson-card.completed .lesson-checkbox {
-  background: var(--emerald);
-  border-color: var(--emerald);
+.listen-button:hover { background: var(--terracotta-deep); }
+.listen-button:active { transform: scale(0.95); }
+.listen-button svg { width: 36px; height: 36px; }
+.listen-button.playing::after {
+  content: ""; position: absolute; inset: -8px;
+  border-radius: 50%;
+  border: 2px solid var(--gold);
+  animation: pulse-ring 1.2s ease-out infinite;
 }
-.lesson-card.completed .lesson-checkbox::after {
-  content: '';
-  width: 10px; height: 6px;
-  border-left: 1.5px solid var(--paper);
-  border-bottom: 1.5px solid var(--paper);
-  transform: rotate(-45deg) translate(1px, -1px);
+@keyframes pulse-ring {
+  0% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(1.4); opacity: 0; }
 }
-.lesson-card.current .lesson-checkbox {
-  border-color: var(--terracotta);
+.listen-replay {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: rgba(250,247,242,0.6);
+  text-transform: uppercase;
   position: relative;
 }
-.lesson-card.current .lesson-checkbox::after {
-  content: '';
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  background: var(--terracotta);
-  animation: pulse 2s ease-in-out infinite;
-}
-@keyframes pulse {
-  0%, 100% { transform: scale(0.7); opacity: 0.6; }
-  50% { transform: scale(1); opacity: 1; }
-}
 
-.lesson-content { flex: 1; min-width: 0; }
-.lesson-num {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  color: var(--ink-faint);
-  letter-spacing: 0.08em;
-  font-weight: 500;
-  margin-bottom: 2px;
-}
-.lesson-title {
-  font-family: var(--font-display);
-  font-size: 16px;
-  font-weight: 500;
-  color: var(--ink);
-  letter-spacing: -0.01em;
-  line-height: 1.25;
-  font-variation-settings: 'opsz' 24, 'SOFT' 30;
-}
-.lesson-card.completed .lesson-title { color: var(--ink-mute); }
-.lesson-subtitle {
-  font-size: 12px;
-  color: var(--ink-mute);
-  margin-top: 2px;
-}
-.lesson-arrow {
-  color: var(--ink-faint);
-  flex-shrink: 0;
-  font-size: 16px;
-}
-
-/* Empty/placeholder tabs */
-.placeholder {
-  text-align: center;
-  padding: 80px 32px;
-}
-.placeholder-icon {
-  font-size: 36px;
-  margin-bottom: 16px;
-  opacity: 0.5;
-}
-.placeholder-title {
-  font-family: var(--font-display);
-  font-size: 22px;
-  margin-bottom: 8px;
-  color: var(--ink);
-  font-variation-settings: 'opsz' 36, 'SOFT' 30;
-}
-.placeholder-text {
-  font-size: 14px;
-  color: var(--ink-mute);
-  max-width: 280px;
-  margin: 0 auto;
-  line-height: 1.5;
-}
-
-/* ===== PROFILE TAB ===== */
-.profile-card {
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
-  padding: 24px;
-  margin-bottom: 16px;
-}
-.profile-avatar {
-  width: 64px; height: 64px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--terracotta), var(--terracotta-deep));
-  color: var(--paper);
-  display: flex; align-items: center; justify-content: center;
-  font-family: var(--font-display);
-  font-size: 26px;
-  font-weight: 500;
+/* ARRANGE */
+.arrange-zone {
+  min-height: 76px;
+  background: var(--paper);
+  border: 1.5px dashed var(--line-2);
+  border-radius: 14px;
+  padding: 12px;
   margin-bottom: 14px;
-  font-variation-settings: 'opsz' 36, 'SOFT' 30;
+  display: flex; flex-wrap: wrap; gap: 8px;
+  align-content: flex-start;
 }
-.profile-email {
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--ink);
-  margin-bottom: 4px;
-  word-break: break-all;
+.arrange-pool {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  padding: 12px 0 4px;
 }
-.profile-meta {
-  font-size: 13px;
-  color: var(--ink-mute);
-}
-.profile-actions {
-  display: flex; flex-direction: column; gap: 8px;
-}
-.profile-btn {
-  text-align: left;
-  padding: 16px 18px;
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-md);
-  font-size: 15px;
-  color: var(--ink);
+.token {
+  padding: 10px 16px;
+  background: var(--paper);
+  border: 1.5px solid var(--line-2);
+  border-radius: 10px;
+  font-family: var(--serif);
+  font-size: 17px;
   font-weight: 500;
-  display: flex; align-items: center; justify-content: space-between;
-  transition: background 0.15s ease;
+  color: var(--ink);
+  transition: all .15s;
+  cursor: pointer;
+  user-select: none;
 }
-.profile-btn:hover { background: var(--surface-warm); }
-.profile-btn.danger { color: var(--error); }
+.token:active { transform: scale(0.96); }
+.token.placed { background: var(--cream-2); }
+.token.invisible { opacity: 0.25; pointer-events: none; }
 
-/* ===== BOTTOM NAV ===== */
-nav#bottom-nav {
+/* SPEAK */
+.speak-card {
+  background: var(--paper);
+  border: 1.5px solid var(--line);
+  border-radius: 18px;
+  padding: 26px 22px;
+  margin-bottom: 18px;
+  text-align: center;
+}
+.speak-target {
+  font-family: var(--serif);
+  font-size: 30px;
+  font-weight: 500;
+  color: var(--ink);
+  margin-bottom: 6px;
+  font-variation-settings: 'opsz' 72, 'SOFT' 60;
+}
+.speak-translation {
+  color: var(--muted);
+  font-size: 14px;
+  font-style: italic;
+  margin-bottom: 22px;
+}
+.mic-button {
+  width: 84px; height: 84px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--cream);
+  display: grid; place-items: center;
+  margin: 0 auto 12px;
+  transition: all .15s;
+  position: relative;
+  cursor: pointer;
+}
+.mic-button:hover { background: var(--ink-2); }
+.mic-button:active { transform: scale(0.94); }
+.mic-button.listening { background: var(--terracotta); }
+.mic-button.listening::after {
+  content: ""; position: absolute; inset: -10px;
+  border-radius: 50%;
+  border: 2px solid var(--terracotta);
+  animation: pulse-ring 1.2s ease-out infinite;
+}
+.mic-button svg { width: 32px; height: 32px; }
+.mic-status {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.speak-heard {
+  margin-top: 14px;
+  padding: 12px 14px;
+  background: var(--cream-2);
+  border-radius: 10px;
+  font-style: italic;
+  font-size: 14px;
+  color: var(--ink-soft);
+  display: none;
+}
+.speak-heard.show { display: block; }
+
+/* ─────────────────────── Footer (check / continue) ─────────────────────── */
+.exercise-footer {
   position: fixed; bottom: 0; left: 0; right: 0;
-  background: rgba(250, 247, 242, 0.92);
+  padding: 16px 22px calc(16px + var(--safe-bottom));
+  background: rgba(250,247,242,0.92);
   backdrop-filter: saturate(180%) blur(20px);
   -webkit-backdrop-filter: saturate(180%) blur(20px);
   border-top: 1px solid var(--line);
-  padding: 8px 8px calc(8px + var(--safe-bottom));
-  display: flex; justify-content: space-around;
-  z-index: 20;
+  z-index: 40;
+  max-width: 540px;
+  margin: 0 auto;
 }
-.nav-btn {
-  flex: 1;
-  display: flex; flex-direction: column; align-items: center; gap: 3px;
-  padding: 8px 4px;
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  color: var(--ink-faint);
-  transition: color 0.2s ease;
-  border-radius: 8px;
+.feedback {
+  display: none;
+  padding: 14px 16px;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  font-size: 14px;
+  line-height: 1.45;
 }
-.nav-btn.active { color: var(--terracotta); }
-.nav-btn svg {
-  width: 22px; height: 22px;
-  stroke: currentColor;
-  fill: none;
-  stroke-width: 1.6;
+.feedback.show { display: block; }
+.feedback.correct {
+  background: rgba(74,113,64,0.1);
+  border: 1px solid rgba(74,113,64,0.25);
+  color: var(--success);
 }
-.nav-btn.active svg { stroke-width: 2; }
+.feedback.wrong {
+  background: rgba(179,58,42,0.08);
+  border: 1px solid rgba(179,58,42,0.22);
+  color: var(--error);
+}
+.feedback b { font-weight: 700; display: block; margin-bottom: 2px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; }
+.feedback .answer-reveal {
+  margin-top: 6px;
+  padding-top: 6px;
+  border-top: 1px dashed currentColor;
+  opacity: 0.85;
+  font-family: var(--serif);
+  font-size: 16px;
+}
 
-/* ===== LESSON MODAL ===== */
-.modal-overlay {
-  position: fixed; inset: 0;
-  background: rgba(26, 22, 18, 0.5);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  z-index: 50;
-  display: flex; align-items: flex-end; justify-content: center;
-  animation: overlay-in 0.2s ease;
+/* ─────────────────────── Lesson complete ─────────────────────── */
+.complete-screen {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 28px;
+  text-align: center;
+  background:
+    radial-gradient(ellipse 100% 50% at 50% 0%, rgba(184,71,42,0.1), transparent 60%),
+    radial-gradient(ellipse 80% 40% at 50% 100%, rgba(201,155,61,0.1), transparent 70%),
+    var(--cream);
 }
-@keyframes overlay-in {
-  from { background: rgba(26, 22, 18, 0); }
-  to { background: rgba(26, 22, 18, 0.5); }
+.complete-mark {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 88px;
+  color: var(--terracotta);
+  line-height: 1;
+  margin-bottom: 18px;
+  font-variation-settings: 'opsz' 144, 'SOFT' 100, 'WONK' 1;
+  animation: popIn .5s cubic-bezier(.2,.8,.2,1);
 }
-.modal {
-  background: var(--paper);
-  width: 100%;
-  max-width: 520px;
-  border-radius: 28px 28px 0 0;
-  padding: 24px 24px calc(24px + var(--safe-bottom));
-  max-height: 85dvh;
-  overflow-y: auto;
-  position: relative;
-  animation: modal-in 0.32s cubic-bezier(0.34, 1.3, 0.64, 1);
+@keyframes popIn {
+  0% { transform: scale(0.4); opacity: 0; }
+  60% { transform: scale(1.1); }
+  100% { transform: scale(1); opacity: 1; }
 }
-@keyframes modal-in {
-  from { transform: translateY(100%); }
-  to { transform: translateY(0); }
-}
-.modal-handle {
-  width: 40px; height: 4px;
-  background: var(--line);
-  border-radius: 999px;
-  margin: 0 auto 20px;
-}
-.modal-eyebrow {
-  font-family: var(--font-mono);
+.complete-eyebrow {
+  font-family: var(--mono);
   font-size: 11px;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--terracotta);
-  font-weight: 500;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
-.modal-title {
-  font-family: var(--font-display);
-  font-size: 28px;
+.complete-title {
+  font-family: var(--serif);
   font-weight: 400;
-  letter-spacing: -0.02em;
+  font-size: 38px;
   line-height: 1.1;
-  color: var(--ink);
+  letter-spacing: -0.02em;
   margin-bottom: 8px;
-  font-variation-settings: 'opsz' 72, 'SOFT' 30;
+  font-variation-settings: 'opsz' 144, 'SOFT' 50;
 }
-.modal-subtitle {
+.complete-sub {
+  color: var(--ink-soft);
   font-size: 15px;
-  color: var(--ink-mute);
-  margin-bottom: 20px;
-  line-height: 1.5;
+  margin-bottom: 32px;
+  max-width: 320px;
 }
-.modal-section {
-  background: var(--surface-warm);
-  border-radius: var(--radius-md);
-  padding: 16px;
-  margin-bottom: 12px;
+.complete-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  width: 100%;
+  max-width: 380px;
+  margin-bottom: 30px;
 }
-.modal-section-label {
+.complete-stat {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 14px 8px;
+}
+.complete-stat-num {
+  font-family: var(--serif);
+  font-size: 28px;
+  font-weight: 500;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+.complete-stat-label {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 4px;
+}
+.complete-actions {
+  display: flex; flex-direction: column; gap: 10px;
+  width: 100%;
+  max-width: 380px;
+}
+
+/* ─────────────────────── Library ─────────────────────── */
+.lib-summary {
+  margin: 4px 20px 20px;
+  padding: 22px;
+  background: linear-gradient(155deg, #1a1614 0%, #2a201c 100%);
+  border-radius: 18px;
+  color: var(--cream);
+  position: relative;
+  overflow: hidden;
+}
+.lib-summary::before {
+  content: ""; position: absolute; inset: 0;
+  background: radial-gradient(circle at 100% 0%, rgba(184,71,42,0.28), transparent 50%),
+              radial-gradient(circle at 0% 100%, rgba(201,155,61,0.18), transparent 60%);
+  pointer-events: none;
+}
+.lib-summary-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 18px;
+  position: relative;
+}
+.lib-summary-stats > div { text-align: left; }
+.lib-summary-stats b {
+  display: block;
+  font-family: var(--serif);
+  font-size: 30px;
+  font-weight: 400;
+  color: var(--cream);
+  line-height: 1;
+  margin-bottom: 4px;
+  letter-spacing: -0.01em;
+}
+.lib-summary-stats span {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.16em;
+  color: rgba(250,247,242,0.55);
+  text-transform: uppercase;
+}
+#lib-review-btn { position: relative; }
+#lib-review-btn:disabled {
+  background: rgba(250,247,242,0.15);
+  color: rgba(250,247,242,0.5);
+  pointer-events: none;
+}
+
+.lib-controls {
+  padding: 0 20px;
+  margin-bottom: 14px;
+  display: flex; flex-direction: column; gap: 12px;
+}
+.lib-search {
+  font-size: 15px;
+  padding: 12px 16px;
+}
+.lib-filters {
+  display: flex; gap: 6px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 0 -20px;
+  padding: 0 20px;
+}
+.lib-filters::-webkit-scrollbar { display: none; }
+.lib-filter {
+  padding: 7px 14px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-family: var(--mono);
   font-size: 11px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--ink-mute);
-  font-weight: 600;
-  margin-bottom: 8px;
-}
-.modal-section-text {
-  font-size: 14px;
   color: var(--ink-soft);
-  line-height: 1.6;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: all .15s;
 }
-.modal-vz-tag {
-  display: inline-flex; align-items: center; gap: 6px;
-  background: var(--terracotta);
-  color: var(--paper);
-  padding: 3px 9px;
-  border-radius: 999px;
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  margin-bottom: 8px;
-  text-transform: uppercase;
-}
-.modal-actions {
-  display: flex; flex-direction: column; gap: 10px;
-  margin-top: 24px;
-}
-.btn-disabled {
-  width: 100%;
-  padding: 16px 20px;
-  background: var(--paper-dim);
-  color: var(--ink-mute);
-  border-radius: var(--radius-md);
-  font-size: 15px;
-  font-weight: 600;
-  cursor: not-allowed;
-  text-align: center;
-  position: relative;
-}
-.btn-disabled::after {
-  content: 'soon';
-  position: absolute; right: 18px; top: 50%;
-  transform: translateY(-50%);
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--gold);
-}
-.btn-secondary {
-  width: 100%;
-  padding: 14px 20px;
-  background: transparent;
-  color: var(--ink-soft);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-md);
-  font-size: 14px;
-  font-weight: 600;
-  transition: background 0.15s ease;
-}
-.btn-secondary:hover { background: var(--surface-warm); }
-.btn-secondary.completed {
-  background: var(--emerald-soft);
-  border-color: rgba(31, 74, 61, 0.2);
-  color: var(--emerald);
+.lib-filter.active {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--cream);
 }
 
-/* ===== TOAST ===== */
-#toast-container {
-  position: fixed;
-  top: calc(var(--safe-top) + 16px);
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 100;
-  pointer-events: none;
+.lib-list {
+  padding: 0 20px;
   display: flex; flex-direction: column; gap: 8px;
 }
-.toast {
-  background: var(--ink);
-  color: var(--paper);
-  padding: 12px 18px;
-  border-radius: 999px;
+.lib-card {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 16px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  position: relative;
+}
+.lib-card.due {
+  border-color: rgba(184,71,42,0.4);
+  background: linear-gradient(180deg, var(--paper), rgba(184,71,42,0.04));
+}
+.lib-card-speak {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: var(--terracotta-soft);
+  color: var(--terracotta);
+  display: grid; place-items: center;
+  flex-shrink: 0;
   font-size: 14px;
+}
+.lib-card-speak:active { transform: scale(0.92); }
+.lib-card-text { flex: 1; min-width: 0; }
+.lib-card-es {
+  font-family: var(--serif);
+  font-size: 17px;
   font-weight: 500;
-  box-shadow: var(--shadow-lg);
-  animation: toast-in 0.3s cubic-bezier(0.34, 1.3, 0.64, 1);
-  pointer-events: auto;
-  max-width: calc(100vw - 32px);
+  color: var(--ink);
+  margin-bottom: 2px;
 }
-.toast.success { background: var(--emerald); }
-.toast.error { background: var(--error); }
-@keyframes toast-in {
-  from { opacity: 0; transform: translateY(-20px) scale(0.95); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
+.lib-card-en {
+  font-size: 13px;
+  color: var(--muted);
+  font-style: italic;
 }
-.toast.out {
-  animation: toast-out 0.25s ease forwards;
+.lib-card-meta {
+  text-align: right;
+  flex-shrink: 0;
 }
-@keyframes toast-out {
-  to { opacity: 0; transform: translateY(-12px) scale(0.96); }
+.lib-card-tag {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: var(--cream-2);
+  padding: 3px 7px;
+  border-radius: 5px;
+  display: inline-block;
+  margin-bottom: 4px;
+}
+.lib-card.due .lib-card-tag {
+  background: var(--terracotta);
+  color: var(--cream);
+}
+.lib-card-interval {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+.lib-empty-msg {
+  padding: 40px 20px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 14px;
 }
 
-/* ===== UTILITY ===== */
-.fade-in { animation: fade-in 0.4s ease; }
-@keyframes fade-in {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
+/* ─────────────────────── Review session ─────────────────────── */
+.review-card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 36px 26px 30px;
+  text-align: center;
+  margin-bottom: 22px;
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
-.stagger > * { animation: fade-in 0.4s ease backwards; }
-.stagger > *:nth-child(1) { animation-delay: 0.05s; }
-.stagger > *:nth-child(2) { animation-delay: 0.10s; }
-.stagger > *:nth-child(3) { animation-delay: 0.15s; }
-.stagger > *:nth-child(4) { animation-delay: 0.20s; }
-.stagger > *:nth-child(5) { animation-delay: 0.25s; }
-.stagger > *:nth-child(6) { animation-delay: 0.30s; }
-.stagger > *:nth-child(7) { animation-delay: 0.35s; }
-.stagger > *:nth-child(8) { animation-delay: 0.40s; }
+.review-eyebrow {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--terracotta);
+  margin-bottom: 16px;
+}
+.review-front {
+  font-family: var(--serif);
+  font-size: 38px;
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  margin-bottom: 14px;
+  line-height: 1.15;
+  font-variation-settings: 'opsz' 144, 'SOFT' 50;
+  color: var(--ink);
+}
+.review-back {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 22px;
+  color: var(--terracotta);
+  margin-bottom: 14px;
+  display: none;
+  font-variation-settings: 'opsz' 72, 'SOFT' 80, 'WONK' 1;
+}
+.review-back.show { display: block; animation: fadeIn .3s; }
+.review-tag {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: var(--cream-2);
+  padding: 4px 10px;
+  border-radius: 5px;
+  margin-top: 6px;
+}
+.review-speak-row {
+  margin-top: 18px;
+}
+.review-speak-row button {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 18px;
+  background: var(--cream-2);
+  border-radius: 10px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  border: 1px solid var(--line);
+}
+.review-speak-row button:active { transform: scale(0.96); }
 
-/* Responsive padding for larger screens */
-@media (min-width: 640px) {
-  main, .app-header { max-width: 600px; margin-left: auto; margin-right: auto; }
-  nav#bottom-nav { max-width: 600px; left: 50%; transform: translateX(-50%); border-radius: 16px 16px 0 0; }
+.review-actions {
+  display: flex; flex-direction: column; gap: 10px;
+}
+.review-quality-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  display: none;
+}
+.review-quality-grid.show { display: grid; animation: fadeIn .25s; }
+.q-btn {
+  padding: 14px 6px 12px;
+  border-radius: 12px;
+  background: var(--paper);
+  border: 1.5px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  transition: all .15s;
+}
+.q-btn:active { transform: scale(0.97); }
+.q-btn-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.q-btn-interval {
+  font-size: 11px;
+  color: var(--muted);
+}
+.q-again { color: var(--error); border-color: rgba(179,58,42,0.3); }
+.q-again:hover { background: rgba(179,58,42,0.06); }
+.q-hard { color: #c4793b; border-color: rgba(196,121,59,0.3); }
+.q-hard:hover { background: rgba(196,121,59,0.06); }
+.q-good { color: var(--success); border-color: rgba(74,113,64,0.3); }
+.q-good:hover { background: rgba(74,113,64,0.06); }
+.q-easy { color: var(--moss); border-color: rgba(92,117,72,0.3); }
+.q-easy:hover { background: rgba(92,117,72,0.06); }
+
+#btn-reveal {
+  width: 100%;
 }
 
+/* Dashboard review banner */
+.review-banner {
+  margin: 0 20px 20px;
+  padding: 16px 18px;
+  background: linear-gradient(135deg, var(--terracotta), var(--terracotta-deep));
+  color: var(--cream);
+  border-radius: 14px;
+  display: none;
+  align-items: center;
+  gap: 14px;
+  cursor: pointer;
+  transition: transform .12s;
+}
+.review-banner.show { display: flex; }
+.review-banner:active { transform: scale(0.99); }
+.review-banner-icon {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 28px;
+  font-variation-settings: 'opsz' 72, 'SOFT' 80, 'WONK' 1;
+  flex-shrink: 0;
+}
+.review-banner-text { flex: 1; }
+.review-banner-title {
+  font-family: var(--serif);
+  font-size: 17px;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+}
+.review-banner-sub {
+  font-size: 12px;
+  opacity: 0.85;
+  font-family: var(--mono);
+  letter-spacing: 0.08em;
+}
+.review-banner-arrow { font-size: 20px; opacity: 0.7; }
+
+
+#loading {
+  position: fixed; inset: 0;
+  background: var(--cream);
+  display: grid; place-items: center;
+  z-index: 9999;
+}
+.spin {
+  width: 28px; height: 28px;
+  border: 2.5px solid var(--line);
+  border-top-color: var(--terracotta);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* misc */
+.spacer-sm { height: 14px; }
+.spacer { height: 28px; }
+.spacer-lg { height: 44px; }
+.fade-in { animation: fadeIn .25s ease; }
+.shake { animation: shake 0.4s; }
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-6px); }
+  40%, 80% { transform: translateX(6px); }
+}
 </style>
 </head>
+
 <body>
 
-<!-- ===== LOADING SCREEN ===== -->
-<div id="loading-screen">
-  <div class="loader-mark">SpanishPath</div>
+<div id="loading"><div class="spin"></div></div>
+
+<div id="app">
+
+  <!-- ============== AUTH SCREEN ============== -->
+  <div class="screen no-nav" id="screen-auth">
+    <div class="auth-wrap">
+      <div class="brand-mark">Spanish<em>Path</em></div>
+      <div class="brand-tag">A1 → C1 · Latin American</div>
+
+      <div class="auth-title" id="auth-title">Welcome back.</div>
+      <div class="auth-sub" id="auth-sub">Sign in to continue your journey.</div>
+
+      <div class="auth-error" id="auth-error"></div>
+      <div class="auth-info" id="auth-info"></div>
+
+      <div class="field">
+        <label>Email</label>
+        <input class="input" type="email" id="auth-email" autocomplete="email" placeholder="you@example.com">
+      </div>
+      <div class="field">
+        <label>Password</label>
+        <input class="input" type="password" id="auth-password" autocomplete="current-password" placeholder="••••••••">
+      </div>
+
+      <button class="btn btn-primary" id="auth-submit">Sign in</button>
+
+      <div class="auth-toggle">
+        <span id="auth-toggle-text">New to SpanishPath?</span>
+        <button id="auth-toggle">Create account</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============== HOME ============== -->
+  <div class="screen has-nav" id="screen-home">
+    <div class="topbar">
+      <h1>Spanish<em>Path</em></h1>
+      <div class="streak-pill"><span class="flame">🔥</span><span id="streak-count">0</span></div>
+    </div>
+
+    <div class="hero">
+      <div class="hero-eyebrow" id="hero-eyebrow">UNIT 1 · LESSON 1</div>
+      <div class="hero-title" id="hero-title">Hola y Adiós</div>
+      <div class="hero-sub" id="hero-sub">Greetings, goodbyes, and your first Venezuelan touch.</div>
+      <div class="hero-progress">
+        <div class="hero-progress-row"><span>A1 PROGRESS</span><span><b id="progress-done">0</b> / 30 LESSONS</span></div>
+        <div class="hero-bar"><div class="hero-bar-fill" id="progress-fill" style="width:0%"></div></div>
+      </div>
+      <button class="hero-cta" id="hero-cta">
+        <span id="hero-cta-text">Start lesson</span>
+        <span class="arrow">→</span>
+      </button>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat">
+        <div class="stat-label">Level</div>
+        <div class="stat-value">A1</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">XP</div>
+        <div class="stat-value" id="xp-count">0</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Streak</div>
+        <div class="stat-value" id="streak-stat">0<span class="stat-unit">d</span></div>
+      </div>
+    </div>
+
+    <button class="review-banner" id="review-banner">
+      <span class="review-banner-icon">α</span>
+      <div class="review-banner-text">
+        <div class="review-banner-title"><span id="review-banner-count">0</span> words to review</div>
+        <div class="review-banner-sub">SPACED REPETITION · TAP TO START</div>
+      </div>
+      <span class="review-banner-arrow">→</span>
+    </button>
+
+    <div class="section-head">
+      <div class="section-title">Today's path</div>
+      <div class="section-meta" id="today-meta">UNIT 1</div>
+    </div>
+
+    <div id="today-lessons" style="padding: 0 20px;">
+      <div class="lesson-list"></div>
+    </div>
+
+    <div class="spacer-lg"></div>
+  </div>
+
+  <!-- ============== LEARN (curriculum map) ============== -->
+  <div class="screen has-nav" id="screen-learn">
+    <div class="topbar">
+      <h1>Curriculum</h1>
+      <div class="streak-pill" style="font-family:var(--mono);"><span id="learn-meta">A1</span></div>
+    </div>
+    <div id="curriculum-content"></div>
+    <div class="spacer-lg"></div>
+  </div>
+
+  <!-- ============== LIBRARY ============== -->
+  <div class="screen has-nav" id="screen-library">
+    <div class="topbar">
+      <h1>Library</h1>
+      <div class="streak-pill" id="lib-due-pill" style="display:none;">
+        <span style="color:var(--terracotta); font-size:14px;">●</span>
+        <span id="lib-due-count">0</span> due
+      </div>
+    </div>
+
+    <div id="library-empty" class="placeholder" style="display:none;">
+      <div class="placeholder-icon">α</div>
+      <h2>Your reference library</h2>
+      <p>Complete a lesson to start building your library. Every word and phrase you learn will collect here, scheduled by spaced repetition.</p>
+    </div>
+
+    <div id="library-content" style="display:none;">
+      <div class="lib-summary">
+        <div class="lib-summary-stats">
+          <div><b id="lib-total">0</b><span>WORDS</span></div>
+          <div><b id="lib-learned">0</b><span>LEARNED</span></div>
+          <div><b id="lib-due">0</b><span>DUE NOW</span></div>
+        </div>
+        <button class="btn btn-terracotta" id="lib-review-btn">
+          <span>Review now</span>
+          <span class="arrow">→</span>
+        </button>
+      </div>
+
+      <div class="lib-controls">
+        <input type="text" class="input lib-search" id="lib-search" placeholder="Search words…" autocomplete="off" autocapitalize="none">
+        <div class="lib-filters" id="lib-filters">
+          <button class="lib-filter active" data-filter="all">All</button>
+          <button class="lib-filter" data-filter="due">Due</button>
+          <button class="lib-filter" data-filter="learned">Learned</button>
+          <button class="lib-filter" data-filter="new">New</button>
+        </div>
+      </div>
+
+      <div class="lib-list" id="lib-list"></div>
+    </div>
+
+    <div class="spacer-lg"></div>
+  </div>
+
+  <!-- ============== REVIEW ============== -->
+  <div class="screen no-nav" id="screen-review">
+    <div class="lesson-header">
+      <button class="lesson-close" id="review-close" aria-label="Close review">✕</button>
+      <div class="lesson-progress-bar"><div class="lesson-progress-fill" id="review-progress-fill" style="width:0%"></div></div>
+      <div class="lesson-xp-pill"><span id="review-counter">0/0</span></div>
+    </div>
+    <div class="exercise-area" id="review-area"></div>
+  </div>
+
+  <!-- ============== PROFILE ============== -->
+  <div class="screen has-nav" id="screen-profile">
+    <div class="topbar"><h1>Profile</h1></div>
+
+    <div class="profile-card">
+      <div class="profile-email" id="profile-email">—</div>
+      <div class="profile-meta" id="profile-since">MEMBER SINCE —</div>
+      <div class="profile-stats">
+        <div class="profile-stat">
+          <div class="profile-stat-num" id="profile-lessons">0</div>
+          <div class="profile-stat-label">Lessons</div>
+        </div>
+        <div class="profile-stat">
+          <div class="profile-stat-num" id="profile-xp">0</div>
+          <div class="profile-stat-label">XP</div>
+        </div>
+        <div class="profile-stat">
+          <div class="profile-stat-num" id="profile-streak">0</div>
+          <div class="profile-stat-label">Day streak</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="profile-actions">
+      <button class="btn btn-ghost" id="btn-export">Export progress (.json)</button>
+      <button class="btn btn-ghost" id="btn-reset" style="color: var(--error);">Reset all progress</button>
+      <button class="btn btn-ghost" id="btn-signout">Sign out</button>
+    </div>
+    <div class="spacer-lg"></div>
+  </div>
+
+  <!-- ============== LESSON ENGINE ============== -->
+  <div class="screen no-nav" id="screen-lesson">
+    <div class="lesson-header">
+      <button class="lesson-close" id="lesson-close" aria-label="Close lesson">✕</button>
+      <div class="lesson-progress-bar"><div class="lesson-progress-fill" id="lesson-progress-fill" style="width:0%"></div></div>
+      <div class="lesson-xp-pill"><span id="lesson-xp-running">0</span> XP</div>
+    </div>
+    <div class="exercise-area" id="exercise-area"></div>
+    <div class="exercise-footer" id="exercise-footer">
+      <div class="feedback" id="feedback"></div>
+      <button class="btn btn-primary" id="btn-check">Check</button>
+    </div>
+  </div>
+
+  <!-- ============== BOTTOM NAV ============== -->
+  <nav class="bottom-nav" id="bottom-nav">
+    <button class="nav-btn active" data-screen="home">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 11.5L12 4l9 7.5V20a1 1 0 01-1 1h-5v-7h-6v7H4a1 1 0 01-1-1z"/></svg>
+      Home
+    </button>
+    <button class="nav-btn" data-screen="learn">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 5h16M4 12h16M4 19h10"/></svg>
+      Learn
+    </button>
+    <button class="nav-btn" data-screen="library">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4h6a3 3 0 013 3v13M20 4h-6a3 3 0 00-3 3v13M4 4v16M20 4v16"/></svg>
+      Library
+    </button>
+    <button class="nav-btn" data-screen="profile">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
+      Profile
+    </button>
+  </nav>
+
 </div>
 
-<!-- ===== AUTH SCREEN ===== -->
-<div id="auth-screen" hidden>
-  <div class="auth-decoration"></div>
-  <div class="auth-content">
-    <div class="brand">
-      <div class="brand-mark">A1 → C2 · Latin American</div>
-      <h1 class="brand-name">Spanish<em>Path</em></h1>
-      <p class="brand-tagline">A serious companion for fluency. Built for drilling, retention, and real conversation.</p>
+<!-- ============== LESSON MODAL ============== -->
+<div class="modal-backdrop" id="modal-backdrop">
+  <div class="modal" id="modal">
+    <div class="modal-grip"></div>
+    <div class="modal-eyebrow" id="modal-eyebrow">UNIT 1 · LESSON 1</div>
+    <div class="modal-title" id="modal-title">Hola y Adiós</div>
+    <div class="modal-sub" id="modal-sub">Greetings & goodbyes</div>
+    <div class="modal-vocab" id="modal-vocab" style="display:none;">
+      <div class="modal-vocab-title">YOU'LL LEARN</div>
+      <ul class="modal-vocab-list" id="modal-vocab-list"></ul>
     </div>
-
-    <div class="auth-tabs" role="tablist">
-      <button class="auth-tab active" data-tab="signin" role="tab">Sign In</button>
-      <button class="auth-tab" data-tab="signup" role="tab">Create Account</button>
-      <div class="auth-tab-indicator"></div>
+    <div class="dialect-note" id="modal-dialect" style="display:none;"><p id="modal-dialect-text"></p></div>
+    <div class="modal-actions">
+      <button class="btn btn-terracotta" id="modal-start">Start lesson</button>
+      <button class="btn btn-ghost" id="modal-mark-complete">Mark complete (skip)</button>
     </div>
-
-    <form id="auth-form" autocomplete="on">
-      <div id="auth-message-slot"></div>
-
-      <div class="field">
-        <label class="field-label" for="auth-email">Email</label>
-        <input type="email" id="auth-email" class="field-input" placeholder="you@example.com" required autocomplete="email" autocapitalize="off" inputmode="email">
-      </div>
-
-      <div class="field">
-        <label class="field-label" for="auth-password">Password</label>
-        <input type="password" id="auth-password" class="field-input" placeholder="Minimum 6 characters" required autocomplete="current-password" minlength="6">
-      </div>
-
-      <button type="submit" class="btn-primary" id="auth-submit">Sign In</button>
-    </form>
-
-    <p class="auth-footer">Your progress syncs securely. No tracking. No ads.</p>
   </div>
 </div>
 
-<!-- ===== MAIN APP ===== -->
-<div id="app" hidden>
-  <header class="app-header">
-    <div class="header-mark">Spanish<em>Path</em></div>
-    <div class="header-actions">
-      <div class="streak-badge" id="streak-badge">
-        <span class="streak-icon">🔥</span>
-        <span id="streak-num">0</span>
-      </div>
-      <div class="level-badge" id="level-badge">A1</div>
-    </div>
-  </header>
-
-  <main>
-    <!-- HOME TAB -->
-    <section id="home-tab" class="tab-section">
-      <div class="greeting stagger">
-        <div class="greeting-label">Today's session</div>
-        <h1 class="greeting-title">Pick up <em>where you left off</em></h1>
-      </div>
-
-      <div class="hero-card fade-in">
-        <div class="hero-content">
-          <div class="hero-eyebrow">Current lesson</div>
-          <div class="hero-lesson-num" id="hero-num">Lesson 1 of 30</div>
-          <h2 class="hero-title" id="hero-title">Hola y Adiós</h2>
-          <p class="hero-subtitle" id="hero-subtitle">Greetings, goodbyes, and basic courtesy</p>
-          <button class="hero-btn" data-action="open-current-lesson">
-            Continue learning
-            <svg viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-        </div>
-      </div>
-
-      <div class="fade-in" style="margin-bottom: 32px;">
-        <div class="progress-meta">
-          <div class="progress-label">A1 progress</div>
-          <div class="progress-pct"><span id="progress-pct-num">0</span>%</div>
-        </div>
-        <div class="progress-bar">
-          <div class="progress-fill" id="progress-fill" style="width: 0%;"></div>
-        </div>
-      </div>
-
-      <div class="stats-grid stagger">
-        <div class="stat-card">
-          <div class="stat-value" id="stat-completed">0</div>
-          <div class="stat-label">Lessons</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-value" id="stat-xp">0</div>
-          <div class="stat-label">XP</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-value" id="stat-streak">0</div>
-          <div class="stat-label">Day streak</div>
-        </div>
-      </div>
-
-      <div class="section-heading">
-        <h2 class="section-title">Daily Review</h2>
-      </div>
-      <div class="review-card fade-in">
-        <div class="review-icon">↻</div>
-        <div class="review-text">
-          <div class="review-title">Spaced repetition queue</div>
-          <div class="review-subtitle">Unlocks after your first lesson</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- LEARN TAB -->
-    <section id="learn-tab" class="tab-section" hidden>
-      <div class="curriculum-header">
-        <div class="curriculum-eyebrow">CEFR Level — A1 Foundations</div>
-        <h1 class="curriculum-title"><em>Beginner</em> path</h1>
-        <div class="curriculum-meta">
-          <div class="curriculum-meta-item"><strong id="curr-completed">0</strong> / 30 complete</div>
-          <div class="curriculum-meta-divider"></div>
-          <div class="curriculum-meta-item">~80 hours</div>
-          <div class="curriculum-meta-divider"></div>
-          <div class="curriculum-meta-item">8 units</div>
-        </div>
-      </div>
-
-      <div id="curriculum-list"></div>
-    </section>
-
-    <!-- LIBRARY TAB -->
-    <section id="library-tab" class="tab-section" hidden>
-      <div class="curriculum-header">
-        <div class="curriculum-eyebrow">Reference</div>
-        <h1 class="curriculum-title"><em>Library</em></h1>
-        <p style="color: var(--ink-mute); margin-top: 12px; font-size: 14px;">Vocabulary, conjugations, and grammar notes you've learned.</p>
-      </div>
-      <div class="placeholder">
-        <div class="placeholder-icon">◫</div>
-        <div class="placeholder-title">Library is empty</div>
-        <div class="placeholder-text">As you complete lessons, words and concepts you learn will be saved here for reference.</div>
-      </div>
-    </section>
-
-    <!-- PROFILE TAB -->
-    <section id="profile-tab" class="tab-section" hidden>
-      <div class="curriculum-header">
-        <div class="curriculum-eyebrow">Account</div>
-        <h1 class="curriculum-title"><em>Profile</em></h1>
-      </div>
-
-      <div class="profile-card">
-        <div class="profile-avatar" id="profile-avatar">M</div>
-        <div class="profile-email" id="profile-email">—</div>
-        <div class="profile-meta" id="profile-meta">Member since today</div>
-      </div>
-
-      <div class="profile-actions">
-        <button class="profile-btn" data-action="export-progress">
-          <span>Export progress</span>
-          <span style="color: var(--ink-faint);">→</span>
-        </button>
-        <button class="profile-btn" data-action="reset-progress">
-          <span>Reset all progress</span>
-          <span style="color: var(--ink-faint);">→</span>
-        </button>
-        <button class="profile-btn danger" data-action="sign-out">
-          <span>Sign out</span>
-          <span style="color: currentColor;">→</span>
-        </button>
-      </div>
-
-      <p style="text-align: center; color: var(--ink-faint); font-size: 12px; margin-top: 32px; font-family: var(--font-mono);">SpanishPath · v0.1</p>
-    </section>
-  </main>
-
-  <nav id="bottom-nav">
-    <button class="nav-btn active" data-tab="home">
-      <svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8M5 9v12h14V9" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      <span>Home</span>
-    </button>
-    <button class="nav-btn" data-tab="learn">
-      <svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 012-2h11a2 2 0 012 2v14H6a2 2 0 01-2-2V5z" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 7h6M9 11h6M9 15h4" stroke-linecap="round"/></svg>
-      <span>Learn</span>
-    </button>
-    <button class="nav-btn" data-tab="library">
-      <svg viewBox="0 0 24 24"><path d="M4 19h16M5 5h4v14M11 5h3v14M16 8h4v11" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      <span>Library</span>
-    </button>
-    <button class="nav-btn" data-tab="profile">
-      <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      <span>Profile</span>
-    </button>
-  </nav>
-</div>
-
-<!-- TOAST CONTAINER -->
-<div id="toast-container"></div>
-
-<!-- LESSON MODAL TEMPLATE (rendered dynamically) -->
-
-<script type="module">
-import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.7/+esm';
-
-// ============================================================
-// CONFIG
-// ============================================================
+<!-- ============== Supabase + App Logic ============== -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+// ─────────── CONFIG ───────────
 const SUPABASE_URL = 'https://mipooqmstsbsoyypbvgd.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1pcG9vcW1zdHNic295eXBidmdkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgyODM0OTUsImV4cCI6MjA5Mzg1OTQ5NX0.fAzCkeiaaKFggElQOxfU8H4H1i1IB1yEajkMmki1lXk';
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1pcG9vcW1zdHNic295eXBidmdkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgyODM0OTUsImV4cCI6MjA5Mzg1OTQ5NX0.fAzCkeiaaKFggElQOxfU8H4H1i1IB1yEajkMmki1lXk';
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
-const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
-  auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: false }
-});
+// ─────────── CURRICULUM ───────────
+// 30 A1 lessons across 8 units
+// Lesson 1 has full content; remaining lessons show "coming soon" preview
+const UNITS = [
+  { num: 1, title: 'First Words', lessons: ['L1','L2','L3','L4'] },
+  { num: 2, title: 'People & Pronouns', lessons: ['L5','L6','L7','L8'] },
+  { num: 3, title: 'Numbers & Time', lessons: ['L9','L10','L11'] },
+  { num: 4, title: 'Daily Life', lessons: ['L12','L13','L14','L15'] },
+  { num: 5, title: 'Food & Drink', lessons: ['L16','L17','L18','L19'] },
+  { num: 6, title: 'Places & Directions', lessons: ['L20','L21','L22'] },
+  { num: 7, title: 'Family & Home', lessons: ['L23','L24','L25','L26'] },
+  { num: 8, title: 'A1 Capstone', lessons: ['L27','L28','L29','L30'] },
+];
 
-// ============================================================
-// CURRICULUM — A1 (30 lessons across 8 units)
-// ============================================================
-const CURRICULUM = {
-  level: 'A1',
-  title: 'Beginner Foundations',
-  units: [
-    {
-      num: 1, title: 'First Steps',
-      lessons: [
-        { id: 1, title: 'Hola y Adiós', subtitle: 'Greetings, goodbyes, and courtesy', focus: 'Greetings & politeness phrases', vz: 'In Venezuela, "épale" and "chamo/chama" are common informal greetings between friends.' },
-        { id: 2, title: '¿Cómo te llamas?', subtitle: 'Introductions and basic exchange', focus: 'Asking and giving names, where you\'re from', vz: '"¿Cómo te va?" is the casual Venezuelan equivalent of "how\'s it going."' },
-        { id: 3, title: 'El Alfabeto', subtitle: 'The Spanish alphabet & sounds', focus: 'Letter names, ñ, double letters, vowel sounds', vz: 'In the Caribbean (incl. Venezuela), final "s" is often aspirated or dropped — "los amigos" sounds like "loh amigoh."' },
-        { id: 4, title: 'Números 0–30', subtitle: 'Counting and basic numbers', focus: 'Cardinal numbers 0 through 30', vz: null },
-        { id: 5, title: 'Pronombres', subtitle: 'Subject pronouns', focus: 'yo, tú, él/ella, nosotros, ustedes, ellos', vz: 'Latin America uses "ustedes" exclusively — never "vosotros." This applies fully in Venezuela.' }
-      ]
-    },
-    {
-      num: 2, title: 'To Be or To Be',
-      lessons: [
-        { id: 6, title: 'Ser — Identity', subtitle: 'The first "to be" verb', focus: 'soy, eres, es, somos, son — for permanent traits', vz: null },
-        { id: 7, title: 'Estar — State & Place', subtitle: 'The second "to be" verb', focus: 'estoy, estás, está, estamos, están — for location & state', vz: null },
-        { id: 8, title: 'Ser vs. Estar', subtitle: 'When to use which', focus: 'Permanent vs. temporary; identity vs. condition', vz: null },
-        { id: 9, title: 'Hay', subtitle: 'There is, there are', focus: 'Using "hay" for existence', vz: null }
-      ]
-    },
-    {
-      num: 3, title: 'People & Things',
-      lessons: [
-        { id: 10, title: 'Artículos', subtitle: 'el, la, un, una', focus: 'Definite and indefinite articles', vz: null },
-        { id: 11, title: 'Género', subtitle: 'Noun gender rules', focus: 'Masculine and feminine nouns; common patterns and exceptions', vz: null },
-        { id: 12, title: 'Plurales', subtitle: 'Making things plural', focus: 'Plural rules: -s, -es, irregular forms', vz: null },
-        { id: 13, title: 'Adjetivos', subtitle: 'Describing things', focus: 'Adjective agreement in gender and number', vz: '"Chévere" (cool, great) is one of the most-used Venezuelan adjectives.' }
-      ]
-    },
-    {
-      num: 4, title: 'My World',
-      lessons: [
-        { id: 14, title: 'Tener', subtitle: 'To have', focus: 'tengo, tienes, tiene, tenemos, tienen + tener idioms', vz: null },
-        { id: 15, title: 'La Familia', subtitle: 'Family vocabulary', focus: 'padre, madre, hermano, primo, abuelos, etc.', vz: null },
-        { id: 16, title: 'Posesivos', subtitle: 'My, your, our', focus: 'mi, tu, su, nuestro/a + agreement', vz: null },
-        { id: 17, title: 'Demostrativos', subtitle: 'This, that, those', focus: 'este, ese, aquel and their forms', vz: null }
-      ]
-    },
-    {
-      num: 5, title: 'Time & Numbers',
-      lessons: [
-        { id: 18, title: 'Números 30–100', subtitle: 'Bigger numbers', focus: 'Tens, units, and patterns', vz: null },
-        { id: 19, title: 'Los Días', subtitle: 'Days of the week', focus: 'lunes through domingo + "el" usage', vz: null },
-        { id: 20, title: 'Los Meses', subtitle: 'Months and dates', focus: 'enero through diciembre + how to say dates', vz: null },
-        { id: 21, title: 'La Hora', subtitle: 'Telling time', focus: 'es / son las... + a.m./p.m. + "y media", "menos cuarto"', vz: null }
-      ]
-    },
-    {
-      num: 6, title: 'Action Time',
-      lessons: [
-        { id: 22, title: 'Verbos -AR', subtitle: 'Regular AR verbs', focus: 'Conjugation: hablar, trabajar, estudiar, caminar', vz: null },
-        { id: 23, title: 'Verbos -ER', subtitle: 'Regular ER verbs', focus: 'Conjugation: comer, beber, leer, aprender', vz: null },
-        { id: 24, title: 'Verbos -IR', subtitle: 'Regular IR verbs', focus: 'Conjugation: vivir, escribir, recibir, abrir', vz: null },
-        { id: 25, title: 'Verbos Irregulares', subtitle: 'Common irregulars', focus: 'ir, hacer, ver, dar, saber', vz: null }
-      ]
-    },
-    {
-      num: 7, title: 'Daily Life',
-      lessons: [
-        { id: 26, title: 'Comida y Bebida', subtitle: 'Food and drink', focus: 'Common foods, meals, ordering', vz: 'In Venezuela: "arepa" (cornmeal patty) is a staple. "Cachapa", "pabellón", "cambur" (banana, not "plátano") are key.' },
-        { id: 27, title: 'Querer y Gustar', subtitle: 'Wanting and liking', focus: 'quiero/quieres + me gusta / te gusta + indirect objects', vz: null },
-        { id: 28, title: 'Ropa y Colores', subtitle: 'Clothes and colors', focus: 'Clothing items + color agreement', vz: null },
-        { id: 29, title: 'El Tiempo', subtitle: 'Weather and seasons', focus: 'hace + weather expressions; estaciones', vz: null }
-      ]
-    },
-    {
-      num: 8, title: 'Capstone',
-      lessons: [
-        { id: 30, title: 'Repaso A1', subtitle: 'Review and mastery check', focus: 'Mixed review of all A1 concepts; readiness check for A2', vz: null }
-      ]
-    }
-  ]
+const LESSON_META = {
+  L1: { unit:1, n:1, title:'Hola y Adiós', sub:'Greetings & goodbyes', xp:30, dialect:"In Venezuela you'll often hear «épale» as a casual hello and «chévere» for cool/great — both are everyday. They mark you as relaxed and local." },
+  L2: { unit:1, n:2, title:'Por favor, gracias', sub:'Manners & polite phrases', xp:25 },
+  L3: { unit:1, n:3, title:'El alfabeto', sub:'Letters & sounds', xp:25, dialect:"Caribbean Spanish (Venezuela, PR, DR, coastal Colombia) softens or drops the 's' sound at the ends of syllables. «Buenos días» can sound like «buenoh díah». Train your ear for it." },
+  L4: { unit:1, n:4, title:'Soy / Me llamo', sub:'Introducing yourself', xp:30 },
+  L5: { unit:2, n:5, title:'Yo, tú, él, ella', sub:'Subject pronouns', xp:25, dialect:"In Venezuela, «tú» is standard. Some regions use «vos», but Venezuela stays with «tú». Plural is always «ustedes», never «vosotros»." },
+  L6: { unit:2, n:6, title:'Ser vs Estar', sub:'The two "to be" verbs', xp:35 },
+  L7: { unit:2, n:7, title:'Tengo / Tienes', sub:'Talking about possession', xp:30 },
+  L8: { unit:2, n:8, title:'¿Quién eres?', sub:'Asking who, what, where', xp:30 },
+  L9: { unit:3, n:9, title:'Números 1-30', sub:'Counting', xp:25 },
+  L10: { unit:3, n:10, title:'¿Qué hora es?', sub:'Telling time', xp:30 },
+  L11: { unit:3, n:11, title:'Días y meses', sub:'Days, months, dates', xp:25 },
+  L12: { unit:4, n:12, title:'Mi rutina', sub:'Daily routine verbs', xp:35 },
+  L13: { unit:4, n:13, title:'Verbos -AR', sub:'Regular -AR conjugation', xp:35 },
+  L14: { unit:4, n:14, title:'Verbos -ER / -IR', sub:'Regular -ER and -IR conjugation', xp:35 },
+  L15: { unit:4, n:15, title:'Adjetivos', sub:'Describing things', xp:30, dialect:"Venezuelans love expressive adjectives. «Burda de bueno» means «really good» — «burda» is intensifier slang you'll hear constantly." },
+  L16: { unit:5, n:16, title:'En el restaurante', sub:'Ordering food', xp:30 },
+  L17: { unit:5, n:17, title:'Comida venezolana', sub:'Arepas, hallacas, more', xp:35, dialect:"You can't learn Venezuelan Spanish without arepas. «¿Te provoca una arepa?» — «Do you feel like an arepa?» — uses «provocar» for «to feel like», a Caribbean staple." },
+  L18: { unit:5, n:18, title:'Bebidas y mercado', sub:'Drinks & shopping at the market', xp:30 },
+  L19: { unit:5, n:19, title:'Me gusta', sub:'Expressing likes', xp:30 },
+  L20: { unit:6, n:20, title:'En la ciudad', sub:'Places in town', xp:30 },
+  L21: { unit:6, n:21, title:'Direcciones', sub:'Giving and asking directions', xp:35 },
+  L22: { unit:6, n:22, title:'Transporte', sub:'Getting around', xp:25 },
+  L23: { unit:7, n:23, title:'Mi familia', sub:'Family members', xp:25 },
+  L24: { unit:7, n:24, title:'Mi casa', sub:'Rooms & furniture', xp:25 },
+  L25: { unit:7, n:25, title:'Posesivos', sub:'My, your, our', xp:30 },
+  L26: { unit:7, n:26, title:'Describir personas', sub:'Describing people', xp:30 },
+  L27: { unit:8, n:27, title:'Repaso 1', sub:'Review: Units 1-4', xp:40 },
+  L28: { unit:8, n:28, title:'Repaso 2', sub:'Review: Units 5-7', xp:40 },
+  L29: { unit:8, n:29, title:'Conversación A1', sub:'Hold a real conversation', xp:50 },
+  L30: { unit:8, n:30, title:'Evaluación A1', sub:'Final A1 assessment', xp:60 },
 };
 
-// Total lessons count
-const TOTAL_A1_LESSONS = CURRICULUM.units.reduce((sum, u) => sum + u.lessons.length, 0);
-
-// Flatten lessons for lookup
-const LESSON_INDEX = {};
-CURRICULUM.units.forEach(u => u.lessons.forEach(l => { LESSON_INDEX[l.id] = { ...l, unit: u.num, unitTitle: u.title }; }));
-
-// ============================================================
-// STATE
-// ============================================================
-const state = {
-  user: null,
-  progress: {
-    current_level: 'A1',
-    current_lesson: 1,
-    completed_lessons: [],
-    streak: 0,
-    last_active: null,
-    total_xp: 0
-  },
-  ready: false,
-  authMode: 'signin'
+// ─────────── LESSON 1 CONTENT (the playable lesson) ───────────
+const LESSON_1 = {
+  id: 'L1',
+  title: 'Hola y Adiós',
+  vocabPreview: [
+    ['Hola', 'hello'],
+    ['Buenos días', 'good morning'],
+    ['Buenas tardes', 'good afternoon'],
+    ['Buenas noches', 'good night'],
+    ['Adiós', 'goodbye'],
+    ['Hasta luego', 'see you later'],
+    ['Mucho gusto', 'nice to meet you'],
+    ['Chévere', 'cool (Venezuelan)'],
+  ],
+  vocabulary: [
+    ['Hola','hello'], ['Buenos días','good morning'], ['Buenas tardes','good afternoon'],
+    ['Buenas noches','good night / good evening'], ['Adiós','goodbye'], ['Hasta luego','see you later'],
+    ['Nos vemos','see you'], ['Chao','bye (casual)'], ['Mucho gusto','nice to meet you'],
+    ['Épale','hey (Venezuelan)'], ['Chévere','cool / great (Venezuelan)'],
+    ['¿Qué tal?','what\'s up?'], ['Pana','friend (Venezuelan)'],
+  ],
+  exercises: [
+    {
+      type: 'intro',
+      title: 'Greetings & Goodbyes',
+      body: "Spanish greetings shift with the time of day. There's no single «good day» — you pick from morning, afternoon, or evening. Tap any phrase to hear it.",
+      vocab: [
+        ['Hola', 'hello'],
+        ['Buenos días', 'good morning'],
+        ['Buenas tardes', 'good afternoon (after midday)'],
+        ['Buenas noches', 'good evening / good night'],
+        ['Adiós', 'goodbye'],
+        ['Hasta luego', 'see you later'],
+        ['Nos vemos', 'see you'],
+        ['Chao', 'bye (casual)'],
+      ],
+    },
+    {
+      type: 'tap_select',
+      prompt: 'What does «Hola» mean?',
+      options: ['Goodbye', 'Hello', 'Please', 'Thank you'],
+      correct: 1,
+      explain: '«Hola» = hello. Universal across all Spanish-speaking countries.',
+    },
+    {
+      type: 'listen',
+      audio: 'Buenos días',
+      prompt: 'Tap to listen, then choose what was said.',
+      options: ['Buenas tardes', 'Buenos días', 'Buenas noches', 'Hasta luego'],
+      correct: 1,
+      explain: '«Buenos días» — used from waking until midday.',
+    },
+    {
+      type: 'tap_select',
+      prompt: 'Which is «Goodbye»?',
+      options: ['Hola', 'Gracias', 'Adiós', 'Bien'],
+      correct: 2,
+      explain: '«Adiós» = goodbye. More final than «hasta luego».',
+    },
+    {
+      type: 'fill_blank',
+      prompt: 'Fill the blank — greeting before bed.',
+      sentence: 'Buenas ___.',
+      correct: ['noches'],
+      hint: 'Used in the evening and at night.',
+      explain: '«Buenas noches» works for both «good evening» and «good night».',
+    },
+    {
+      type: 'listen',
+      audio: 'Mucho gusto',
+      prompt: 'Tap to listen, then choose the meaning.',
+      options: ['See you later', 'Goodbye', 'Nice to meet you', 'How are you?'],
+      correct: 2,
+      explain: '«Mucho gusto» — said when you meet someone for the first time. Literally «much pleasure».',
+    },
+    {
+      type: 'arrange',
+      prompt: 'Arrange — «See you later, Sofía.»',
+      tokens: ['Sofía', 'luego,', 'Hasta'],
+      correct: ['Hasta', 'luego,', 'Sofía'],
+      explain: 'Spanish word order here matches English: greeting + name.',
+    },
+    {
+      type: 'translate',
+      prompt: 'Translate to Spanish.',
+      source: 'Goodbye, see you later.',
+      correct: ['adiós, hasta luego', 'adios, hasta luego', 'adiós hasta luego', 'adios hasta luego'],
+      explain: '«Adiós, hasta luego» — common pairing when you\'re leaving but expect to see them again.',
+    },
+    {
+      type: 'intro',
+      title: 'Venezuelan Spotlight',
+      body: "Two Venezuelan staples: «épale» (casual «hey») and «chévere» (cool/great). Drop these into conversation and you'll sound local immediately.",
+      vocab: [
+        ['Épale', 'hey (casual greeting)'],
+        ['Chévere', 'cool / great'],
+        ['¿Qué tal?', 'what\'s up?'],
+        ['Pana', 'friend / dude'],
+      ],
+    },
+    {
+      type: 'tap_select',
+      prompt: 'Venezuelan way to say «cool» or «great»?',
+      options: ['Bueno', 'Chévere', 'Bien', 'Mucho gusto'],
+      correct: 1,
+      explain: '«Chévere» is everywhere in Venezuela — adjective, exclamation, agreement, all of it.',
+    },
+    {
+      type: 'speak',
+      prompt: 'Say it out loud.',
+      target: 'Mucho gusto',
+      translation: 'nice to meet you',
+      explain: 'Roll the «g» softly. The «u» after «g» is silent before «e» or «i».',
+    },
+    {
+      type: 'translate',
+      prompt: 'Translate — first meeting someone.',
+      source: 'Hello, nice to meet you.',
+      correct: ['hola, mucho gusto', 'hola mucho gusto'],
+      explain: 'Standard first-meeting greeting. You can also add your name: «Hola, mucho gusto, soy Matthew».',
+    },
+    {
+      type: 'speak',
+      prompt: 'Greet someone in the morning.',
+      target: 'Buenos días',
+      translation: 'good morning',
+      explain: 'Crisp «d» sound — closer to English «d» than English «th» when starting a word.',
+    },
+  ],
 };
 
-// ============================================================
-// DOM HELPERS
-// ============================================================
-const $ = sel => document.querySelector(sel);
-const $$ = sel => document.querySelectorAll(sel);
+// ─────────── LESSONS L2-L8 ───────────
+const LESSON_2 = {
+  id: 'L2', title: 'Por favor, gracias',
+  vocabPreview: [['Por favor','please'],['Gracias','thank you'],['De nada','you\'re welcome'],['Perdón','sorry / excuse me'],['Lo siento','I\'m sorry'],['Con permiso','excuse me (passing)'],['Salud','bless you / cheers']],
+  vocabulary: [['Por favor','please'],['Gracias','thank you'],['Muchas gracias','thank you very much'],['De nada','you\'re welcome'],['Perdón','sorry / excuse me'],['Lo siento','I\'m sorry'],['Con permiso','excuse me (passing through)'],['Salud','bless you / cheers'],['Disculpe','excuse me (formal)']],
+  exercises: [
+    { type:'intro', title:'Manners', body:'Politeness markers are non-negotiable in Spanish — even more than English. «Por favor» softens any request; «gracias» closes any exchange. Tap each phrase to hear it.', vocab:[['Por favor','please'],['Gracias','thank you'],['Muchas gracias','thank you very much'],['De nada','you\'re welcome'],['Perdón','sorry / excuse me'],['Lo siento','I\'m sorry'],['Con permiso','excuse me (passing)'],['Disculpe','excuse me (formal)'],['Salud','bless you']] },
+    { type:'tap_select', prompt:'How do you say «thank you»?', options:['Hola','Adiós','Gracias','Perdón'], correct:2, explain:'«Gracias» — universal thank you.' },
+    { type:'listen', audio:'Por favor', prompt:'Listen, then choose what was said.', options:['Lo siento','Por favor','Buenos días','De nada'], correct:1, explain:'«Por favor» = please. Use at the end of any request.' },
+    { type:'tap_select', prompt:'Someone says «gracias». You respond:', options:['Perdón','Hola','De nada','Salud'], correct:2, explain:'«De nada» literally means «of nothing» — i.e. «it was nothing».' },
+    { type:'fill_blank', prompt:'You bumped someone — apologize.', sentence:'___, no te vi.', correct:['perdón','perdon','lo siento'], explain:'«Perdón» (excuse me) or «Lo siento» (I\'m sorry) both work. «Perdón» is more casual.' },
+    { type:'arrange', prompt:'Arrange — «Thank you very much.»', tokens:['gracias','Muchas'], correct:['Muchas','gracias'], explain:'«Muchas gracias» — adjective before noun, agreeing in gender/number.' },
+    { type:'translate', prompt:'Translate.', source:'Excuse me, where is the bathroom?', correct:['perdón, ¿dónde está el baño?','perdon donde esta el baño','disculpe, ¿dónde está el baño?','perdón dónde está el baño','disculpe donde esta el baño'], explain:'«Disculpe» is a touch more formal. «Perdón» works in any context.' },
+    { type:'listen', audio:'Lo siento mucho', prompt:'Listen and choose.', options:['Excuse me','I\'m very sorry','Thank you a lot','Please come in'], correct:1, explain:'«Lo siento mucho» — used for genuine apologies, condolences, regret. Stronger than «perdón».' },
+    { type:'speak', prompt:'Say it out loud.', target:'Muchas gracias', translation:'thank you very much', explain:'Soft «g» — closer to English «g» than English «h».' },
+    { type:'tap_select', prompt:'Someone sneezes. You say:', options:['Salud','Chévere','De nada','Hola'], correct:0, explain:'«Salud» (literally «health») — also used as «cheers» when toasting.' },
+    { type:'translate', prompt:'Translate.', source:'I\'m sorry, please.', correct:['lo siento, por favor','perdón, por favor'], explain:'Both work. «Lo siento» = sorry; «por favor» = please.' },
+  ],
+};
+
+const LESSON_3 = {
+  id: 'L3', title: 'El alfabeto',
+  vocabPreview: [['ñ','ny sound'],['ll','y sound'],['rr','rolled r'],['h','silent'],['j','English h'],['v','soft b'],['z','s sound (LatAm)']],
+  vocabulary: [['ñ','ny sound (mañana, niño)'],['ll','y sound (lluvia, calle)'],['rr','rolled r (perro, carro)'],['h','silent (hola, hospital)'],['j','English h (jamón, hijo)'],['v','soft b (vaca, vivir)'],['z','s sound in LatAm (zapato)'],['mañana','tomorrow / morning'],['lluvia','rain'],['perro','dog']],
+  exercises: [
+    { type:'intro', title:'The Alphabet — what\'s different', body:'Most letters work like English. Five behave differently and trip up beginners: ñ, ll, rr, h, j. Master these and you\'re 80% there.', vocab:[['ñ','ny sound — mañana'],['ll','y sound — lluvia'],['rr','rolled r — perro'],['h','silent — hola'],['j','English h — jamón'],['v','soft b — vaca'],['z','s sound (LatAm) — zapato']] },
+    { type:'listen', audio:'mañana', prompt:'The «ñ» sound. Listen, then choose.', options:['manana','manyana / mañana','manjana','mahana'], correct:1, explain:'«ñ» = English «ny» as in «canyon». «mañana» sounds like «mahn-YAH-nah».' },
+    { type:'listen', audio:'lluvia', prompt:'The «ll» sound. Listen, then choose what you heard.', options:['l-l-uvia','yuvia (y sound)','luvia (silent l)','jhuvia'], correct:1, explain:'«ll» = «y» sound across Latin America. «lluvia» (rain) = «YOO-vyah».' },
+    { type:'listen', audio:'perro', prompt:'The rolled «rr». Listen.', options:['pero (single tap)','perro (trill)','peho','pelo'], correct:1, explain:'«rr» between vowels = trilled r. Distinct from «r»: «pero» (but) vs «perro» (dog).' },
+    { type:'tap_select', prompt:'How is the «h» pronounced in «hola»?', options:['Like English h','Silent','Like English j','Like a sigh'], correct:1, explain:'Spanish «h» is always silent. «Hola» = «OH-la».' },
+    { type:'listen', audio:'jamón', prompt:'The «j» sound (jamón = ham). Listen.', options:['jamon (English j)','hamon (English h)','yamon','zhamon'], correct:1, explain:'Spanish «j» = harsh English «h». «Jamón» = «ha-MOHN».' },
+    { type:'fill_blank', prompt:'The «ny» sound letter:', sentence:'ma___ana = tomorrow', correct:['ñ','n'], explain:'«ñ» — distinct letter in Spanish. Without the tilde it\'s just «n».' },
+    { type:'intro', title:'🇻🇪 Caribbean ear training', body:'Venezuelan, Cuban, Puerto Rican, Dominican, and coastal Colombian Spanish all soften or aspirate the «s» at the end of syllables. «Buenos días» becomes «buenoh díah». Train your ear — this is the single biggest listening hurdle for North American learners.', vocab:[['estoy','I am — sounds like «ehtoy»'],['más','more — sounds like «mah»'],['los días','the days — sounds like «loh díah»']] },
+    { type:'listen', audio:'Buenos días', prompt:'Listen — train for the soft «s».', options:['Bueno día','Buenos días','Buenos noche','Buen día'], correct:1, explain:'Even when the «s» is dropped or aspirated, the meaning stays. Train the ear, not the mouth — you produce clear «s», but expect to hear it dropped.' },
+    { type:'speak', prompt:'Say «mañana».', target:'mañana', translation:'tomorrow / morning', explain:'Stress on the second syllable: ma-ÑA-na.' },
+    { type:'speak', prompt:'Say «señorita».', target:'señorita', translation:'young woman / Miss', explain:'Stress on RI: se-ño-RI-ta. Practice the «ñ».' },
+  ],
+};
+
+const LESSON_4 = {
+  id: 'L4', title: 'Soy / Me llamo',
+  vocabPreview: [['Soy','I am'],['Me llamo','my name is'],['Soy de','I\'m from'],['¿Cómo te llamas?','what\'s your name?'],['¿De dónde eres?','where are you from?']],
+  vocabulary: [['Soy','I am'],['Me llamo','my name is (literally: I call myself)'],['Soy de','I\'m from'],['¿Cómo te llamas?','what\'s your name?'],['¿De dónde eres?','where are you from?'],['Soy estadounidense','I\'m American (USA)'],['Soy estudiante','I\'m a student'],['Igualmente','likewise']],
+  exercises: [
+    { type:'intro', title:'Introducing yourself', body:'Two ways to give your name: «Soy [name]» (I am) or «Me llamo [name]» (I call myself). Both work; «me llamo» is slightly more formal.', vocab:[['Soy Matthew','I\'m Matthew'],['Me llamo Matthew','my name is Matthew'],['Soy de los Estados Unidos','I\'m from the United States'],['Soy estudiante','I\'m a student'],['¿Cómo te llamas?','what\'s your name?'],['¿De dónde eres?','where are you from?'],['Igualmente','likewise']] },
+    { type:'tap_select', prompt:'«I am» in Spanish:', options:['Estoy','Tengo','Soy','Llamo'], correct:2, explain:'«Soy» = I am (identity, origin, profession). From the verb «ser».' },
+    { type:'fill_blank', prompt:'Give your name with «llamo».', sentence:'_____ Matthew.', correct:['me llamo'], explain:'«Me llamo» — literally «I call myself». Reflexive, requires «me».' },
+    { type:'listen', audio:'Mucho gusto, soy Ana', prompt:'Listen and choose what was said.', options:['Hello, my name is Ana','Nice to meet you, I am Ana','I am Ana, goodbye','Hi Ana, nice to meet'], correct:1, explain:'«Mucho gusto, soy Ana» = «Nice to meet you, I am Ana».' },
+    { type:'arrange', prompt:'Arrange — «My name is Carlos, nice to meet you.»', tokens:['gusto','Carlos,','Me','mucho','llamo'], correct:['Me','llamo','Carlos,','mucho','gusto'], explain:'Standard self-introduction structure.' },
+    { type:'translate', prompt:'Translate.', source:'I\'m from the United States.', correct:['soy de los estados unidos','soy de estados unidos'], explain:'«Soy de [place]» — origin. «Estados Unidos» often takes «los» but you\'ll hear both.' },
+    { type:'tap_select', prompt:'How do you ask «What\'s your name?»', options:['¿Quién eres?','¿Cómo te llamas?','¿De dónde eres?','¿Qué tal?'], correct:1, explain:'«¿Cómo te llamas?» — literally «how do you call yourself?»' },
+    { type:'translate', prompt:'Translate.', source:'Where are you from?', correct:['¿de dónde eres?','de donde eres','de dónde eres'], explain:'«¿De dónde eres?» — uses «ser» (origin = permanent identity).' },
+    { type:'speak', prompt:'Introduce yourself with your name.', target:'Me llamo Matthew', translation:'my name is Matthew', explain:'Adjust to your name. The «ll» sounds like «y».' },
+    { type:'translate', prompt:'They said «mucho gusto». Reply.', source:'Likewise.', correct:['igualmente'], explain:'«Igualmente» — the polite reciprocal response to «mucho gusto».' },
+  ],
+};
+
+const LESSON_5 = {
+  id: 'L5', title: 'Yo, tú, él, ella',
+  vocabPreview: [['Yo','I'],['Tú','you (informal)'],['Usted','you (formal)'],['Él','he'],['Ella','she'],['Nosotros','we'],['Ustedes','you all'],['Ellos / Ellas','they']],
+  vocabulary: [['Yo','I'],['Tú','you (informal)'],['Usted','you (formal)'],['Él','he'],['Ella','she'],['Nosotros','we (m)'],['Nosotras','we (f)'],['Ustedes','you all (plural)'],['Ellos','they (m / mixed)'],['Ellas','they (f)']],
+  exercises: [
+    { type:'intro', title:'Subject pronouns — Latin American', body:'In Latin America the plural «you» is always «ustedes» — never «vosotros». In Venezuela, «tú» is standard for informal you; some regions use «vos» but Venezuela stays with «tú». Note: subject pronouns are often dropped in Spanish since the verb ending tells you who.', vocab:[['Yo','I'],['Tú','you (informal singular)'],['Usted','you (formal singular)'],['Él','he'],['Ella','she'],['Nosotros / Nosotras','we (m / f)'],['Ustedes','you all (always)'],['Ellos / Ellas','they (m or mixed / f)']] },
+    { type:'tap_select', prompt:'«I» in Spanish:', options:['Tú','Yo','Él','Me'], correct:1, explain:'«Yo» = I. «Me» is an object pronoun (different role).' },
+    { type:'tap_select', prompt:'«You» (formal, e.g. to a stranger or elder):', options:['Tú','Usted','Vosotros','Ellos'], correct:1, explain:'«Usted» — formal you. Conjugates with third-person verbs (like «él/ella»).' },
+    { type:'tap_select', prompt:'«You all» (plural) in Latin America:', options:['Vosotros','Ustedes','Tú','Nosotros'], correct:1, explain:'In Latin America, always «ustedes». «Vosotros» is Spain only.' },
+    { type:'fill_blank', prompt:'Fill the pronoun.', sentence:'_____ es mi amigo. (he is my friend)', correct:['él'], explain:'«Él» (with accent) = he. «El» (no accent) = the.' },
+    { type:'listen', audio:'ella es mi hermana', prompt:'Listen and choose.', options:['He is my brother','She is my sister','We are sisters','They are family'], correct:1, explain:'«Ella es mi hermana» = «She is my sister».' },
+    { type:'arrange', prompt:'Arrange — «We are friends.»', tokens:['amigos','Nosotros','somos'], correct:['Nosotros','somos','amigos'], explain:'Subject pronoun + ser conjugation + complement. «Somos» = we are.' },
+    { type:'translate', prompt:'Translate.', source:'They are students.', correct:['ellos son estudiantes','son estudiantes','ellas son estudiantes'], explain:'Subject pronoun is optional in Spanish. «Son estudiantes» alone is fine.' },
+    { type:'tap_select', prompt:'In a Venezuelan group of friends, you address them as:', options:['Vosotros','Ustedes','Tú','Nosotros'], correct:1, explain:'Always «ustedes» in Venezuela — even for close friends. «Vosotros» would sound foreign / Spanish.' },
+    { type:'speak', prompt:'Say «she».', target:'ella', translation:'she', explain:'«ll» = «y» sound. «EH-yah».' },
+  ],
+};
+
+const LESSON_6 = {
+  id: 'L6', title: 'Ser vs Estar',
+  vocabPreview: [['Soy / Eres / Es','I am / you are / he is (ser)'],['Estoy / Estás / Está','I am / you are / he is (estar)'],['Permanent','use ser'],['Temporary / location','use estar']],
+  vocabulary: [['Soy','I am (ser — identity)'],['Eres','you are (ser)'],['Es','he/she is (ser)'],['Somos','we are (ser)'],['Son','they/you-all are (ser)'],['Estoy','I am (estar — state)'],['Estás','you are (estar)'],['Está','he/she/it is (estar)'],['Estamos','we are (estar)'],['Están','they/you-all are (estar)'],['Cansado/a','tired'],['Feliz','happy'],['Triste','sad']],
+  exercises: [
+    { type:'intro', title:'Ser vs Estar — the big one', body:'Spanish has two «to be» verbs. SER for permanent identity (who you are, where you\'re from, profession). ESTAR for temporary state (mood, location, condition). Get this wrong and meaning shifts: «soy aburrido» = «I\'m a boring person» / «estoy aburrido» = «I\'m bored right now».', vocab:[['SER — Soy / Eres / Es / Somos / Son','identity, origin, profession, time'],['ESTAR — Estoy / Estás / Está / Estamos / Están','location, mood, condition, ongoing actions']] },
+    { type:'tap_select', prompt:'«I am happy [right now]»:', options:['Soy feliz','Estoy feliz','Tengo feliz','Hay feliz'], correct:1, explain:'Mood = temporary = ESTAR. «Estoy feliz» — happy in this moment.' },
+    { type:'tap_select', prompt:'«She is a doctor»:', options:['Ella está doctora','Ella es doctora','Ella tiene doctora','Ella hay doctora'], correct:1, explain:'Profession = identity = SER. «Es doctora».' },
+    { type:'fill_blank', prompt:'Origin — use ser.', sentence:'Yo _____ de Venezuela.', correct:['soy'], explain:'«Soy de [place]» — origin is permanent → ser.' },
+    { type:'fill_blank', prompt:'Temperature of the coffee — temporary state.', sentence:'El café _____ caliente.', correct:['está'], explain:'«Está caliente» — the coffee is hot right now (will cool down). Temporary → estar.' },
+    { type:'translate', prompt:'Translate.', source:'I am tired.', correct:['estoy cansado','estoy cansada'], explain:'Tiredness is temporary → estar. «Cansado» (m) / «cansada» (f).' },
+    { type:'listen', audio:'estamos en la casa', prompt:'Listen and choose.', options:['We are family','We are at the house','We are tired','We are hungry'], correct:1, explain:'Location → estar. «Estamos en la casa» = «we are at home».' },
+    { type:'tap_select', prompt:'«Carlos is tall» (his height — permanent trait):', options:['Carlos está alto','Carlos es alto','Carlos tiene alto','Carlos hay alto'], correct:1, explain:'Physical trait = identity = SER. «Es alto».' },
+    { type:'arrange', prompt:'Arrange — «She is at the school.»', tokens:['está','la','Ella','en','escuela'], correct:['Ella','está','en','la','escuela'], explain:'Location → estar. «Está en la escuela».' },
+    { type:'translate', prompt:'Translate — profession.', source:'I am a student.', correct:['soy estudiante','yo soy estudiante'], explain:'Profession = ser. Note: no «un/una» before profession — «soy estudiante», not «soy un estudiante».' },
+    { type:'speak', prompt:'Say it.', target:'Soy estudiante', translation:'I am a student', explain:'No «un» needed. Stress on «soy» and «-DIAN-».' },
+    { type:'translate', prompt:'Translate — feeling right now.', source:'I am sad today.', correct:['estoy triste hoy','hoy estoy triste'], explain:'Mood → estar. «Estoy triste hoy» or «Hoy estoy triste» both work.' },
+  ],
+};
+
+const LESSON_7 = {
+  id: 'L7', title: 'Tengo / Tienes',
+  vocabPreview: [['Tengo','I have'],['Tienes','you have'],['Tiene','he/she has'],['Tenemos','we have'],['Tienen','they have'],['Tengo hambre','I\'m hungry (idiom)'],['Tengo años','I am ___ years old (idiom)']],
+  vocabulary: [['Tengo','I have'],['Tienes','you have (informal)'],['Tiene','he/she/you-formal has/have'],['Tenemos','we have'],['Tienen','they/you-all have'],['Tengo hambre','I\'m hungry'],['Tengo sed','I\'m thirsty'],['Tengo frío','I\'m cold'],['Tengo calor','I\'m hot'],['Tengo sueño','I\'m sleepy'],['¿Cuántos años tienes?','how old are you?']],
+  exercises: [
+    { type:'intro', title:'Tener — to have (irregular)', body:'«Tener» is irregular. Memorize the conjugation as a unit: tengo, tienes, tiene, tenemos, tienen. It\'s also used in idioms where English uses «to be»: tengo hambre = I\'m hungry, tengo años = I am ___ years old.', vocab:[['Tengo','I have'],['Tienes','you have'],['Tiene','he/she has'],['Tenemos','we have'],['Tienen','they have'],['Tengo hambre','I\'m hungry (lit: I have hunger)'],['Tengo sed','I\'m thirsty'],['Tengo frío','I\'m cold'],['Tengo calor','I\'m hot'],['Tengo sueño','I\'m sleepy']] },
+    { type:'tap_select', prompt:'«I have»:', options:['Tienes','Tengo','Tiene','Tenemos'], correct:1, explain:'«Tengo» — first person. Note: irregular «-go» ending (just memorize).' },
+    { type:'fill_blank', prompt:'Fill the conjugation.', sentence:'Tú _____ un perro. (you have a dog)', correct:['tienes'], explain:'«Tienes» = you have. The «ie» diphthong appears in tú/él/ella/ellos forms.' },
+    { type:'translate', prompt:'Translate.', source:'I have two brothers.', correct:['tengo dos hermanos'], explain:'«Tengo dos hermanos» — direct equivalent. «Hermanos» can mean brothers OR mixed siblings.' },
+    { type:'listen', audio:'tengo hambre', prompt:'Listen and choose the meaning.', options:['I have a name','I\'m hungry','I have a family','I\'m happy'], correct:1, explain:'Idiom alert: «tengo hambre» literally = «I have hunger». In Spanish, hunger/thirst/cold/heat are things you HAVE, not things you ARE.' },
+    { type:'tap_select', prompt:'«I\'m thirsty»:', options:['Soy sed','Estoy sed','Tengo sed','Hay sed'], correct:2, explain:'Always «tengo» for thirst. NEVER «soy sed» or «estoy sed» — those are wrong in Spanish.' },
+    { type:'tap_select', prompt:'«How old are you?» (informal)', options:['¿Cómo eres?','¿Cuántos años tienes?','¿Dónde estás?','¿Quién eres?'], correct:1, explain:'«¿Cuántos años tienes?» — literally «how many years do you have?». Another idiom where Spanish uses tener instead of ser.' },
+    { type:'translate', prompt:'Translate.', source:'I am 30 years old.', correct:['tengo 30 años','tengo treinta años'], explain:'«Tengo [number] años». NOT «soy 30 años» — that\'s a beginner trap.' },
+    { type:'arrange', prompt:'Arrange — «We have a big house.»', tokens:['casa','grande','una','Tenemos'], correct:['Tenemos','una','casa','grande'], explain:'Adjective AFTER noun in Spanish: «casa grande», not «grande casa».' },
+    { type:'speak', prompt:'Tell someone you\'re hungry.', target:'Tengo hambre', translation:'I\'m hungry (lit: I have hunger)', explain:'«Hambre» — silent h. «AHM-bre».' },
+  ],
+};
+
+const LESSON_8 = {
+  id: 'L8', title: '¿Quién eres?',
+  vocabPreview: [['¿Qué?','what?'],['¿Quién?','who?'],['¿Dónde?','where?'],['¿Cuándo?','when?'],['¿Cómo?','how?'],['¿Cuánto?','how much?'],['¿Por qué?','why?']],
+  vocabulary: [['¿Qué?','what?'],['¿Quién?','who?'],['¿Quiénes?','who? (plural)'],['¿Dónde?','where?'],['¿Adónde?','where to?'],['¿Cuándo?','when?'],['¿Cómo?','how?'],['¿Cuánto?','how much?'],['¿Cuántos?','how many?'],['¿Por qué?','why?'],['Porque','because']],
+  exercises: [
+    { type:'intro', title:'Question words', body:'Spanish question words always carry a written accent (¿qué? not ¿que?). And remember the inverted question mark «¿» that opens every question. «Por qué» (why, two words) vs «Porque» (because, one word) — easy to confuse.', vocab:[['¿Qué?','what?'],['¿Quién?','who? (singular)'],['¿Quiénes?','who? (plural)'],['¿Dónde?','where?'],['¿Adónde?','where to? (with motion)'],['¿Cuándo?','when?'],['¿Cómo?','how? / what?'],['¿Cuánto/-a/-os/-as?','how much / how many?'],['¿Por qué?','why?'],['Porque','because']] },
+    { type:'tap_select', prompt:'«Where?» in Spanish:', options:['¿Cuándo?','¿Dónde?','¿Cómo?','¿Quién?'], correct:1, explain:'«¿Dónde?» — where. With motion (toward), use «¿Adónde?»: «¿Adónde vas?» = «where are you going?».' },
+    { type:'fill_blank', prompt:'Fill the question word.', sentence:'¿_____ vives? (where do you live?)', correct:['dónde','donde'], explain:'«¿Dónde vives?» — location, no motion → ¿dónde?' },
+    { type:'listen', audio:'¿Cómo te llamas?', prompt:'Listen and choose.', options:['What\'s your name?','How are you?','Where are you from?','Who are you?'], correct:0, explain:'«¿Cómo te llamas?» — literally «how do you call yourself?» — i.e. «what\'s your name?»' },
+    { type:'translate', prompt:'Translate.', source:'Who is she?', correct:['¿quién es ella?','quien es ella'], explain:'«¿Quién es ella?» — singular. For plural «who», use «¿quiénes?».' },
+    { type:'tap_select', prompt:'«Why?»', options:['¿Quién?','¿Cuándo?','¿Por qué?','¿Qué?'], correct:2, explain:'«¿Por qué?» — two words, with accent. The answer «porque» (because) is one word, no accent. Common confusion.' },
+    { type:'arrange', prompt:'Arrange — «Why are you here?»', tokens:['estás','aquí','¿Por','qué'], correct:['¿Por','qué','estás','aquí'], explain:'«¿Por qué estás aquí?» — «por qué» as two words; estás (estar = location).' },
+    { type:'fill_blank', prompt:'Fill the question word.', sentence:'¿_____ años tienes? (how old are you?)', correct:['cuántos','cuantos'], explain:'«¿Cuántos años tienes?» — «cuántos» agrees with masculine plural «años».' },
+    { type:'translate', prompt:'Translate.', source:'When is the party?', correct:['¿cuándo es la fiesta?','cuando es la fiesta'], explain:'«¿Cuándo es la fiesta?» — time/date → ser (scheduled events use ser, not estar).' },
+    { type:'listen', audio:'¿Quién eres?', prompt:'Listen and choose.', options:['What is this?','Who are you?','Where are you?','When are you?'], correct:1, explain:'«¿Quién eres?» — «Who are you?». «Eres» is the «tú» form of ser.' },
+    { type:'speak', prompt:'Ask where someone is.', target:'¿Dónde estás?', translation:'where are you?', explain:'Location → estar → estás. Stress: DON-de es-TAS.' },
+  ],
+};
+
+const LESSONS = { L1: LESSON_1, L2: LESSON_2, L3: LESSON_3, L4: LESSON_4, L5: LESSON_5, L6: LESSON_6, L7: LESSON_7, L8: LESSON_8 };
+
+// ─────────── STATE ───────────
+let user = null;
+let progress = {
+  completed: {},   // { L1: ISO_date, L2: ... }
+  xp: 0,
+  streak: 0,
+  last_active: null,
+  created_at: null,
+  library: {},     // { 'normalized_es': { es, en, lessonIds, added, interval, ease, reviews, next_review, last_quality } }
+};
+
+let currentLesson = null;     // active lesson during play
+let currentExerciseIdx = 0;
+let currentXpRunning = 0;
+let currentMistakes = [];
+let currentAnswered = false;
+let currentResult = null;     // 'correct' | 'wrong' | null
+
+// Review session state
+let reviewQueue = [];
+let reviewIdx = 0;
+let reviewRevealed = false;
+let reviewCorrect = 0;
+
+// ─────────── HELPERS ───────────
+const $ = s => document.querySelector(s);
+const $$ = s => Array.from(document.querySelectorAll(s));
 
 function showScreen(name) {
-  ['loading-screen', 'auth-screen', 'app'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.hidden = (id !== name);
+  $$('.screen').forEach(s => s.classList.remove('active'));
+  $('#screen-' + name).classList.add('active');
+  if (['home','learn','library','profile'].includes(name)) {
+    $('#bottom-nav').classList.add('show');
+    $$('.nav-btn').forEach(b => b.classList.toggle('active', b.dataset.screen === name));
+  } else {
+    $('#bottom-nav').classList.remove('show');
+  }
+  $$('.screen.active')[0]?.scrollTo({ top: 0 });
+}
+
+function normalize(s) {
+  return (s||'').toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g,'')   // strip accents
+    .replace(/[¿?¡!.,;:"]/g,'')
+    .replace(/\s+/g,' ')
+    .trim();
+}
+
+function todayISO() { return new Date().toISOString().slice(0,10); }
+function daysBetween(a, b) {
+  if (!a || !b) return null;
+  const d1 = new Date(a + 'T00:00:00Z');
+  const d2 = new Date(b + 'T00:00:00Z');
+  return Math.round((d2 - d1) / 86400000);
+}
+
+// ─────────── TTS (text-to-speech) ───────────
+let voicesReady = null;
+function getVoices() {
+  return new Promise(resolve => {
+    let v = speechSynthesis.getVoices();
+    if (v && v.length) return resolve(v);
+    speechSynthesis.onvoiceschanged = () => resolve(speechSynthesis.getVoices());
   });
 }
-
-function showTab(tabName) {
-  $$('.tab-section').forEach(s => s.hidden = true);
-  const target = document.getElementById(tabName + '-tab');
-  if (target) {
-    target.hidden = false;
-    target.classList.remove('fade-in');
-    void target.offsetWidth;
-    target.classList.add('fade-in');
-  }
-  $$('.nav-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tabName));
-  window.scrollTo({ top: 0, behavior: 'instant' });
+async function speak(text, opts = {}) {
+  if (!('speechSynthesis' in window)) return;
+  speechSynthesis.cancel();
+  if (!voicesReady) voicesReady = await getVoices();
+  const utt = new SpeechSynthesisUtterance(text);
+  // Prefer Latin American Spanish voices
+  const prefs = ['es-MX','es-419','es-CO','es-VE','es-US','es-AR','es-ES','es'];
+  const voice = prefs.map(lang => voicesReady.find(v => v.lang && v.lang.toLowerCase().startsWith(lang.toLowerCase()))).find(Boolean);
+  if (voice) utt.voice = voice;
+  utt.lang = voice?.lang || 'es-MX';
+  utt.rate = opts.rate || 0.92;
+  utt.pitch = 1.0;
+  if (opts.onend) utt.onend = opts.onend;
+  if (opts.onstart) utt.onstart = opts.onstart;
+  speechSynthesis.speak(utt);
 }
 
-function toast(message, type = 'default') {
-  const t = document.createElement('div');
-  t.className = `toast ${type}`;
-  t.textContent = message;
-  $('#toast-container').appendChild(t);
-  setTimeout(() => {
-    t.classList.add('out');
-    setTimeout(() => t.remove(), 300);
-  }, 2400);
-}
-
-// ============================================================
-// AUTH FLOW
-// ============================================================
-function setAuthMode(mode) {
-  state.authMode = mode;
-  $$('.auth-tab').forEach(t => t.classList.toggle('active', t.dataset.tab === mode));
-  const indicator = $('.auth-tab-indicator');
-  indicator.classList.toggle('right', mode === 'signup');
-  $('#auth-submit').textContent = mode === 'signin' ? 'Sign In' : 'Create Account';
-  $('#auth-password').autocomplete = mode === 'signin' ? 'current-password' : 'new-password';
-  $('#auth-message-slot').innerHTML = '';
-}
-
-function setAuthMessage(text, kind = 'error') {
-  const slot = $('#auth-message-slot');
-  slot.innerHTML = '';
-  if (!text) return;
-  const div = document.createElement('div');
-  div.className = kind === 'success' ? 'auth-success' : 'auth-error';
-  div.textContent = text;
-  slot.appendChild(div);
-}
-
-async function handleAuthSubmit(e) {
-  e.preventDefault();
-  const email = $('#auth-email').value.trim();
-  const password = $('#auth-password').value;
-  const submitBtn = $('#auth-submit');
-  if (!email || !password) return;
-
-  submitBtn.disabled = true;
-  submitBtn.textContent = state.authMode === 'signin' ? 'Signing in...' : 'Creating account...';
-  setAuthMessage('');
-
-  try {
-    if (state.authMode === 'signin') {
-      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-      if (error) throw error;
-      state.user = data.user;
-      await loadProgress();
-      enterApp();
-    } else {
-      const { data, error } = await supabase.auth.signUp({ email, password });
-      if (error) throw error;
-      if (data.user && !data.session) {
-        setAuthMessage('Account created. Check your email to verify (or sign in directly if confirmation is disabled).', 'success');
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Create Account';
-        return;
-      }
-      state.user = data.user;
-      await initProgress();
-      enterApp();
-    }
-  } catch (err) {
-    console.error('Auth error:', err);
-    setAuthMessage(err.message || 'Authentication failed. Check your credentials and try again.');
-    submitBtn.disabled = false;
-    submitBtn.textContent = state.authMode === 'signin' ? 'Sign In' : 'Create Account';
-  }
-}
-
-async function signOut() {
-  await supabase.auth.signOut();
-  state.user = null;
-  state.progress = { current_level: 'A1', current_lesson: 1, completed_lessons: [], streak: 0, last_active: null, total_xp: 0 };
-  showScreen('auth-screen');
-  setAuthMode('signin');
-  $('#auth-form').reset();
-}
-
-// ============================================================
-// PROGRESS — Supabase + localStorage fallback
-// ============================================================
+// ─────────── SUPABASE PROGRESS ───────────
 async function loadProgress() {
-  if (!state.user) return;
-  try {
-    const { data, error } = await supabase
-      .from('progress')
-      .select('*')
-      .eq('user_id', state.user.id)
-      .maybeSingle();
-
-    if (error && error.code !== 'PGRST116') throw error;
-
-    if (!data) {
-      await initProgress();
-    } else {
-      state.progress = {
-        current_level: data.current_level || 'A1',
-        current_lesson: data.current_lesson || 1,
-        completed_lessons: Array.isArray(data.completed_lessons) ? data.completed_lessons : [],
-        streak: data.streak || 0,
-        last_active: data.last_active,
-        total_xp: data.total_xp || 0
-      };
-      await updateStreakOnLoad();
-    }
-  } catch (err) {
-    console.warn('Supabase progress load failed, using local cache:', err);
-    const cached = localStorage.getItem('sp_progress_' + state.user.id);
-    if (cached) {
-      try { state.progress = { ...state.progress, ...JSON.parse(cached) }; } catch {}
-    }
+  if (!user) return;
+  const { data, error } = await sb.from('progress').select('*').eq('user_id', user.id).maybeSingle();
+  if (error) console.warn('progress load error', error);
+  if (data) {
+    progress.completed = data.completed || {};
+    progress.xp = data.xp || 0;
+    progress.streak = data.streak || 0;
+    progress.last_active = data.last_active || null;
+    progress.created_at = data.created_at || null;
+    progress.library = data.library || {};
+  } else {
+    // first-time user: insert blank row
+    const { data: ins } = await sb.from('progress').insert({
+      user_id: user.id,
+      completed: {},
+      xp: 0,
+      streak: 0,
+      last_active: null,
+      library: {},
+    }).select().single();
+    if (ins) progress.created_at = ins.created_at;
   }
-  cacheProgressLocal();
+  // Compute streak based on activity gap
+  updateStreakOnLoad();
 }
 
-async function initProgress() {
-  if (!state.user) return;
-  const today = new Date().toISOString().slice(0, 10);
-  state.progress = {
-    current_level: 'A1',
-    current_lesson: 1,
-    completed_lessons: [],
-    streak: 1,
-    last_active: today,
-    total_xp: 0
+function updateStreakOnLoad() {
+  const today = todayISO();
+  if (!progress.last_active) return;
+  const gap = daysBetween(progress.last_active, today);
+  if (gap === null) return;
+  if (gap > 1) progress.streak = 0; // broke streak
+  // gap of 0 or 1: streak intact (1 means they need a lesson today to bump it)
+}
+
+async function saveProgress(opts = {}) {
+  if (!user) return;
+  const today = todayISO();
+  if (opts.activity) {
+    if (progress.last_active !== today) {
+      const gap = daysBetween(progress.last_active, today);
+      if (gap === 1) progress.streak += 1;
+      else if (gap > 1 || !progress.last_active) progress.streak = 1;
+      progress.last_active = today;
+    }
+  }
+  const payload = {
+    completed: progress.completed,
+    xp: progress.xp,
+    streak: progress.streak,
+    last_active: progress.last_active,
+    library: progress.library,
   };
-  try {
-    const { error } = await supabase.from('progress').insert({
-      user_id: state.user.id,
-      current_level: 'A1',
-      current_lesson: 1,
-      completed_lessons: [],
-      streak: 1,
-      last_active: today,
-      total_xp: 0
-    });
-    if (error) throw error;
-  } catch (err) {
-    console.warn('Could not init progress in Supabase:', err);
-  }
-  cacheProgressLocal();
-}
-
-async function updateStreakOnLoad() {
-  const today = new Date().toISOString().slice(0, 10);
-  if (state.progress.last_active === today) return;
-  const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
-  if (state.progress.last_active === yesterday) {
-    state.progress.streak += 1;
-  } else if (!state.progress.last_active) {
-    state.progress.streak = 1;
-  } else {
-    state.progress.streak = 1;
-  }
-  state.progress.last_active = today;
-  await saveProgress({ streak: state.progress.streak, last_active: today });
-}
-
-async function saveProgress(patch) {
-  if (!state.user) return;
-  state.progress = { ...state.progress, ...patch };
-  cacheProgressLocal();
-  try {
-    const { error } = await supabase
-      .from('progress')
-      .update({ ...patch, updated_at: new Date().toISOString() })
-      .eq('user_id', state.user.id);
-    if (error) throw error;
-  } catch (err) {
-    console.warn('Save failed (cached locally):', err);
+  const { error } = await sb.from('progress').update(payload).eq('user_id', user.id);
+  if (error) {
+    // Fallback if `library` column doesn't exist yet — save without it
+    if (String(error.message||'').toLowerCase().includes('library')) {
+      delete payload.library;
+      const { error: e2 } = await sb.from('progress').update(payload).eq('user_id', user.id);
+      if (e2) console.warn('progress save error', e2);
+      console.warn('Library column missing — run the Build 3 SQL migration. Library will not persist until then.');
+    } else {
+      console.warn('progress save error', error);
+    }
   }
 }
 
-function cacheProgressLocal() {
-  if (state.user) {
-    try { localStorage.setItem('sp_progress_' + state.user.id, JSON.stringify(state.progress)); } catch {}
-  }
+// ─────────── LIBRARY + SM-2 SPACED REPETITION ───────────
+function libraryKey(es) {
+  return normalize(es);
 }
 
-// ============================================================
-// LESSON ACTIONS
-// ============================================================
-async function toggleLessonComplete(lessonId, fromModal = false) {
-  const completed = [...state.progress.completed_lessons];
-  const idx = completed.indexOf(lessonId);
-  let xpDelta = 0;
-  if (idx >= 0) {
-    completed.splice(idx, 1);
-    xpDelta = -10;
-  } else {
-    completed.push(lessonId);
-    xpDelta = 10;
-  }
-  completed.sort((a, b) => a - b);
-
-  // Determine next current lesson: smallest id not in completed
-  let nextCurrent = 1;
-  for (let i = 1; i <= TOTAL_A1_LESSONS; i++) {
-    if (!completed.includes(i)) { nextCurrent = i; break; }
-    if (i === TOTAL_A1_LESSONS) nextCurrent = TOTAL_A1_LESSONS; // all done
-  }
-
-  const newXp = Math.max(0, state.progress.total_xp + xpDelta);
-  await saveProgress({ completed_lessons: completed, current_lesson: nextCurrent, total_xp: newXp });
-  renderAll();
-  if (fromModal) closeLessonModal();
-  toast(idx >= 0 ? 'Lesson unmarked' : 'Lesson marked complete ✓', idx >= 0 ? 'default' : 'success');
-}
-
-// ============================================================
-// LESSON MODAL
-// ============================================================
-function openLessonModal(lessonId) {
-  const lesson = LESSON_INDEX[lessonId];
-  if (!lesson) return;
-  const isCompleted = state.progress.completed_lessons.includes(lessonId);
-
-  const overlay = document.createElement('div');
-  overlay.className = 'modal-overlay';
-  overlay.id = 'lesson-modal';
-  overlay.innerHTML = `
-    <div class="modal" role="dialog" aria-modal="true">
-      <div class="modal-handle"></div>
-      <div class="modal-eyebrow">Unit ${lesson.unit} · ${lesson.unitTitle} · Lesson ${lesson.id}</div>
-      <h2 class="modal-title">${lesson.title}</h2>
-      <p class="modal-subtitle">${lesson.subtitle}</p>
-
-      <div class="modal-section">
-        <div class="modal-section-label">What you'll learn</div>
-        <div class="modal-section-text">${lesson.focus}</div>
-      </div>
-
-      ${lesson.vz ? `
-        <div class="modal-section" style="background: var(--terracotta-soft);">
-          <div class="modal-vz-tag">★ Venezuelan note</div>
-          <div class="modal-section-text" style="color: var(--terracotta-deep);">${lesson.vz}</div>
-        </div>
-      ` : ''}
-
-      <div class="modal-actions">
-        <button class="btn-disabled" disabled>Start lesson</button>
-        <button class="btn-secondary ${isCompleted ? 'completed' : ''}" data-action="toggle-complete" data-id="${lessonId}">
-          ${isCompleted ? '✓ Marked complete · tap to undo' : 'Mark as already known'}
-        </button>
-        <button class="btn-secondary" data-action="close-modal">Close</button>
-      </div>
-    </div>
-  `;
-  document.body.appendChild(overlay);
-  overlay.addEventListener('click', e => {
-    if (e.target === overlay) closeLessonModal();
+function populateLibraryFromLesson(lessonId) {
+  const lesson = LESSONS[lessonId];
+  if (!lesson || !lesson.vocabulary) return 0;
+  let added = 0;
+  const today = todayISO();
+  lesson.vocabulary.forEach(([es, en]) => {
+    const key = libraryKey(es);
+    if (!key) return;
+    if (progress.library[key]) {
+      // Already exists — just register that this lesson also taught it
+      const lessons = progress.library[key].lessonIds || [];
+      if (!lessons.includes(lessonId)) lessons.push(lessonId);
+      progress.library[key].lessonIds = lessons;
+    } else {
+      progress.library[key] = {
+        es, en,
+        lessonIds: [lessonId],
+        added: today,
+        interval: 0,
+        ease: 2.5,
+        reviews: 0,
+        next_review: today, // available for review immediately
+        last_quality: null,
+      };
+      added++;
+    }
   });
+  return added;
 }
 
-function closeLessonModal() {
-  const m = document.getElementById('lesson-modal');
-  if (m) m.remove();
-}
-
-// ============================================================
-// RENDER
-// ============================================================
-function renderHome() {
-  const completed = state.progress.completed_lessons.length;
-  const pct = Math.round((completed / TOTAL_A1_LESSONS) * 100);
-
-  $('#progress-fill').style.width = pct + '%';
-  $('#progress-pct-num').textContent = pct;
-  $('#stat-completed').textContent = completed;
-  $('#stat-xp').textContent = state.progress.total_xp;
-  $('#stat-streak').textContent = state.progress.streak;
-  $('#streak-num').textContent = state.progress.streak;
-  $('#level-badge').textContent = state.progress.current_level;
-
-  const currentLesson = LESSON_INDEX[state.progress.current_lesson];
-  if (currentLesson) {
-    $('#hero-num').textContent = `Lesson ${currentLesson.id} of ${TOTAL_A1_LESSONS}`;
-    $('#hero-title').textContent = currentLesson.title;
-    $('#hero-subtitle').textContent = currentLesson.subtitle;
+// SM-2 algorithm. Quality: 1=Again, 2=Hard, 3=Good, 4=Easy
+function scheduleSRS(item, quality) {
+  const q = quality + 1; // map 1-4 to 2-5 for SM-2
+  if (quality < 2) {
+    // Failed (Again or Hard slip): reset
+    item.reviews = 0;
+    item.interval = 1;
+  } else {
+    item.reviews = (item.reviews || 0) + 1;
+    if (item.reviews === 1) item.interval = 1;
+    else if (item.reviews === 2) item.interval = quality === 4 ? 4 : 3;
+    else item.interval = Math.max(1, Math.round(item.interval * (item.ease || 2.5)));
+    // Easy bump
+    if (quality === 4) item.interval = Math.round(item.interval * 1.3);
   }
+  item.ease = Math.max(1.3, (item.ease || 2.5) + (0.1 - (5-q)*(0.08 + (5-q)*0.02)));
+  const next = new Date();
+  next.setDate(next.getDate() + item.interval);
+  item.next_review = next.toISOString().slice(0,10);
+  item.last_quality = quality;
 }
 
-function renderCurriculum() {
-  const list = $('#curriculum-list');
+function getDueItems() {
+  const today = todayISO();
+  return Object.values(progress.library).filter(it => !it.next_review || it.next_review <= today);
+}
+
+function getLibraryStats() {
+  const items = Object.values(progress.library);
+  const due = getDueItems();
+  const learned = items.filter(it => (it.reviews || 0) > 0).length;
+  return { total: items.length, due: due.length, learned };
+}
+
+// ─────────── DASHBOARD RENDER ───────────
+function getNextLessonId() {
+  const all = Object.keys(LESSON_META).sort((a,b)=>LESSON_META[a].n - LESSON_META[b].n);
+  for (const id of all) if (!progress.completed[id]) return id;
+  return all[all.length - 1];
+}
+
+function renderDashboard() {
+  const totalDone = Object.keys(progress.completed).length;
+  $('#progress-done').textContent = totalDone;
+  $('#progress-fill').style.width = (totalDone/30*100) + '%';
+  $('#xp-count').textContent = progress.xp;
+  $('#streak-count').textContent = progress.streak;
+  $('#streak-stat').innerHTML = progress.streak + '<span class="stat-unit">d</span>';
+
+  // Review banner
+  const stats = getLibraryStats();
+  const banner = $('#review-banner');
+  if (stats.due > 0) {
+    $('#review-banner-count').textContent = stats.due;
+    banner.classList.add('show');
+  } else {
+    banner.classList.remove('show');
+  }
+
+  const nextId = getNextLessonId();
+  const meta = LESSON_META[nextId];
+  $('#hero-eyebrow').textContent = `UNIT ${meta.unit} · LESSON ${meta.n}`;
+  $('#hero-title').textContent = meta.title;
+  $('#hero-sub').textContent = meta.sub;
+  $('#hero-cta-text').textContent = progress.completed[nextId] ? 'Review lesson' : 'Start lesson';
+  $('#hero-cta').dataset.lessonId = nextId;
+  $('#today-meta').textContent = `UNIT ${meta.unit}`;
+
+  // Today's path = lessons in current unit
+  const unit = UNITS.find(u => u.num === meta.unit);
+  const list = $('#today-lessons .lesson-list');
   list.innerHTML = '';
-  $('#curr-completed').textContent = state.progress.completed_lessons.length;
+  unit.lessons.forEach(id => list.appendChild(buildLessonRow(id, nextId)));
+}
 
-  CURRICULUM.units.forEach(unit => {
-    const block = document.createElement('div');
-    block.className = 'unit-block';
+function buildLessonRow(id, currentId) {
+  const m = LESSON_META[id];
+  const done = !!progress.completed[id];
+  const isCurrent = id === currentId;
+  const hasContent = !!LESSONS[id];
+  const row = document.createElement('button');
+  row.className = 'lesson' + (done?' complete':'') + (isCurrent?' current':'') + (hasContent?' has-content':'');
+  row.innerHTML = `
+    <div class="lesson-circle" data-toggle="${id}" title="Mark complete"><span class="num-text">${m.n}</span></div>
+    <div class="lesson-info">
+      <div class="lesson-title-row">
+        <div class="lesson-title">${m.title}</div>
+        <span class="lesson-tag">PLAYABLE</span>
+      </div>
+      <div class="lesson-sub">${m.sub} · ${m.xp} XP</div>
+    </div>
+    <div class="lesson-arrow">›</div>
+  `;
+  row.addEventListener('click', e => {
+    if (e.target.closest('.lesson-circle')) {
+      e.stopPropagation();
+      toggleComplete(id);
+      return;
+    }
+    openLessonModal(id);
+  });
+  return row;
+}
 
-    const unitCompleted = unit.lessons.filter(l => state.progress.completed_lessons.includes(l.id)).length;
-    const unitTotal = unit.lessons.length;
-
-    block.innerHTML = `
-      <div class="unit-header">
-        <div class="unit-num">Unit ${String(unit.num).padStart(2, '0')}</div>
-        <div class="unit-title">${unit.title}</div>
-        <div class="unit-progress">${unitCompleted}/${unitTotal}</div>
+// ─────────── CURRICULUM RENDER ───────────
+function renderCurriculum() {
+  const root = $('#curriculum-content');
+  root.innerHTML = '';
+  const currentId = getNextLessonId();
+  UNITS.forEach(u => {
+    const unitEl = document.createElement('div');
+    unitEl.className = 'unit';
+    unitEl.innerHTML = `
+      <div class="unit-head">
+        <span class="unit-num">UNIT ${u.num}</span>
+        <span class="unit-title">${u.title}</span>
+        <span class="unit-line"></span>
       </div>
       <div class="lesson-list"></div>
     `;
-    const ul = block.querySelector('.lesson-list');
-
-    unit.lessons.forEach(lesson => {
-      const isCompleted = state.progress.completed_lessons.includes(lesson.id);
-      const isCurrent = lesson.id === state.progress.current_lesson && !isCompleted;
-      const card = document.createElement('button');
-      card.className = 'lesson-card' + (isCompleted ? ' completed' : '') + (isCurrent ? ' current' : '');
-      card.dataset.lessonId = lesson.id;
-      card.innerHTML = `
-        <div class="lesson-checkbox" data-action="quick-toggle" data-id="${lesson.id}" role="checkbox" aria-checked="${isCompleted}"></div>
-        <div class="lesson-content">
-          <div class="lesson-num">Lesson ${String(lesson.id).padStart(2, '0')}${lesson.vz ? ' · VZ' : ''}</div>
-          <div class="lesson-title">${lesson.title}</div>
-          <div class="lesson-subtitle">${lesson.subtitle}</div>
-        </div>
-        <div class="lesson-arrow">→</div>
-      `;
-      ul.appendChild(card);
-    });
-
-    list.appendChild(block);
+    const list = unitEl.querySelector('.lesson-list');
+    u.lessons.forEach(id => list.appendChild(buildLessonRow(id, currentId)));
+    root.appendChild(unitEl);
   });
 }
 
-function renderProfile() {
-  if (!state.user) return;
-  const email = state.user.email || '—';
-  $('#profile-email').textContent = email;
-  $('#profile-avatar').textContent = (email[0] || 'U').toUpperCase();
-  if (state.user.created_at) {
-    const d = new Date(state.user.created_at);
-    $('#profile-meta').textContent = `Member since ${d.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}`;
+async function toggleComplete(id) {
+  const today = new Date().toISOString();
+  if (progress.completed[id]) {
+    delete progress.completed[id];
+  } else {
+    progress.completed[id] = today;
+    progress.xp += LESSON_META[id].xp;
   }
-}
-
-function renderAll() {
-  renderHome();
+  await saveProgress({ activity: true });
+  renderDashboard();
   renderCurriculum();
   renderProfile();
 }
 
-// ============================================================
-// EVENT WIRING
-// ============================================================
-function wireEvents() {
-  // Auth tab toggle
-  $$('.auth-tab').forEach(tab => {
-    tab.addEventListener('click', () => setAuthMode(tab.dataset.tab));
-  });
-  $('#auth-form').addEventListener('submit', handleAuthSubmit);
+// ─────────── LESSON MODAL ───────────
+function openLessonModal(id) {
+  const m = LESSON_META[id];
+  const lesson = LESSONS[id];
+  $('#modal-eyebrow').textContent = `UNIT ${m.unit} · LESSON ${m.n}`;
+  $('#modal-title').textContent = m.title;
+  $('#modal-sub').textContent = m.sub + ' · ' + m.xp + ' XP';
 
-  // Bottom nav
-  $$('#bottom-nav .nav-btn').forEach(btn => {
-    btn.addEventListener('click', () => showTab(btn.dataset.tab));
-  });
-
-  // Global delegation
-  document.addEventListener('click', async (e) => {
-    const actionEl = e.target.closest('[data-action]');
-    if (actionEl) {
-      e.stopPropagation();
-      const action = actionEl.dataset.action;
-
-      if (action === 'open-current-lesson') {
-        openLessonModal(state.progress.current_lesson);
-      } else if (action === 'quick-toggle') {
-        e.preventDefault();
-        await toggleLessonComplete(parseInt(actionEl.dataset.id, 10));
-      } else if (action === 'toggle-complete') {
-        await toggleLessonComplete(parseInt(actionEl.dataset.id, 10), true);
-      } else if (action === 'close-modal') {
-        closeLessonModal();
-      } else if (action === 'sign-out') {
-        if (confirm('Sign out of SpanishPath?')) signOut();
-      } else if (action === 'reset-progress') {
-        if (confirm('Reset all your progress? This cannot be undone.')) {
-          await saveProgress({ completed_lessons: [], current_lesson: 1, total_xp: 0 });
-          renderAll();
-          toast('Progress reset', 'default');
-        }
-      } else if (action === 'export-progress') {
-        const blob = new Blob([JSON.stringify(state.progress, null, 2)], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `spanishpath-progress-${new Date().toISOString().slice(0, 10)}.json`;
-        a.click();
-        URL.revokeObjectURL(url);
-        toast('Progress exported', 'success');
-      }
-      return;
-    }
-
-    // Lesson card tap (not on checkbox)
-    const lessonCard = e.target.closest('.lesson-card');
-    if (lessonCard && !e.target.closest('.lesson-checkbox')) {
-      openLessonModal(parseInt(lessonCard.dataset.lessonId, 10));
-    }
-  });
-
-  // ESC closes modal
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeLessonModal();
-  });
-}
-
-// ============================================================
-// BOOT
-// ============================================================
-function enterApp() {
-  showScreen('app');
-  showTab('home');
-  renderAll();
-}
-
-async function boot() {
-  wireEvents();
-  setAuthMode('signin');
-
-  // Check existing session
-  const { data: { session } } = await supabase.auth.getSession();
-  if (session?.user) {
-    state.user = session.user;
-    await loadProgress();
-    enterApp();
+  if (lesson) {
+    $('#modal-vocab').style.display = 'block';
+    const ul = $('#modal-vocab-list');
+    ul.innerHTML = '';
+    lesson.vocabPreview.forEach(([es,en]) => {
+      const li = document.createElement('li');
+      li.innerHTML = `<b>${es}</b><span>${en}</span>`;
+      ul.appendChild(li);
+    });
+    $('#modal-start').textContent = progress.completed[id] ? 'Replay lesson' : 'Start lesson';
+    $('#modal-start').style.display = 'inline-flex';
   } else {
-    showScreen('auth-screen');
+    $('#modal-vocab').style.display = 'none';
+    $('#modal-start').textContent = 'Lesson content coming soon';
+    $('#modal-start').style.display = 'inline-flex';
+    $('#modal-start').disabled = true;
+  }
+  $('#modal-start').disabled = !lesson;
+
+  if (m.dialect) {
+    $('#modal-dialect').style.display = 'block';
+    $('#modal-dialect-text').textContent = m.dialect;
+  } else {
+    $('#modal-dialect').style.display = 'none';
   }
 
-  // Watch for auth state changes
-  supabase.auth.onAuthStateChange((event, session) => {
-    if (event === 'SIGNED_OUT') {
-      showScreen('auth-screen');
+  $('#modal-mark-complete').textContent = progress.completed[id] ? 'Mark incomplete' : 'Mark complete (skip)';
+  $('#modal-backdrop').classList.add('show');
+  $('#modal-backdrop').dataset.lessonId = id;
+}
+
+function closeModal() { $('#modal-backdrop').classList.remove('show'); }
+
+// ─────────── LESSON ENGINE ───────────
+function startLesson(id) {
+  const lesson = LESSONS[id];
+  if (!lesson) return;
+  currentLesson = { id, ...lesson };
+  currentExerciseIdx = 0;
+  currentXpRunning = 0;
+  currentMistakes = [];
+  currentAnswered = false;
+  currentResult = null;
+  $('#lesson-xp-running').textContent = '0';
+  showScreen('lesson');
+  renderExercise();
+}
+
+function exitLesson(toScreen = 'home') {
+  speechSynthesis.cancel();
+  currentLesson = null;
+  showScreen(toScreen);
+}
+
+function renderExercise() {
+  const ex = currentLesson.exercises[currentExerciseIdx];
+  const total = currentLesson.exercises.length;
+  const pct = (currentExerciseIdx / total) * 100;
+  $('#lesson-progress-fill').style.width = pct + '%';
+  $('#feedback').classList.remove('show','correct','wrong');
+  currentAnswered = false;
+  currentResult = null;
+  const checkBtn = $('#btn-check');
+  checkBtn.textContent = ex.type === 'intro' ? 'Continue' : 'Check';
+  checkBtn.disabled = false;
+  checkBtn.className = 'btn btn-primary';
+  // Build the exercise body
+  const area = $('#exercise-area');
+  area.innerHTML = '';
+  area.classList.remove('shake');
+  const wrapper = document.createElement('div');
+  wrapper.className = 'fade-in';
+  switch (ex.type) {
+    case 'intro': wrapper.appendChild(buildIntro(ex)); break;
+    case 'tap_select': wrapper.appendChild(buildTapSelect(ex)); break;
+    case 'listen': wrapper.appendChild(buildListen(ex)); break;
+    case 'fill_blank': wrapper.appendChild(buildFillBlank(ex)); break;
+    case 'arrange': wrapper.appendChild(buildArrange(ex)); break;
+    case 'translate': wrapper.appendChild(buildTranslate(ex)); break;
+    case 'speak': wrapper.appendChild(buildSpeak(ex)); break;
+    default: wrapper.textContent = 'Unknown exercise type.';
+  }
+  area.appendChild(wrapper);
+}
+
+// --- Builders ---
+function eyebrowFor(n, total) {
+  return `EXERCISE ${n} OF ${total}`;
+}
+function exHeader(ex) {
+  const eb = document.createElement('div');
+  eb.className = 'exercise-prompt-eyebrow';
+  eb.textContent = eyebrowFor(currentExerciseIdx + 1, currentLesson.exercises.length);
+  const p = document.createElement('div');
+  p.className = 'exercise-prompt';
+  p.textContent = ex.prompt || ex.title || '';
+  const wrap = document.createDocumentFragment();
+  wrap.appendChild(eb);
+  wrap.appendChild(p);
+  return wrap;
+}
+
+function buildIntro(ex) {
+  const f = document.createDocumentFragment();
+  f.appendChild(exHeader(ex));
+  const card = document.createElement('div');
+  card.className = 'intro-card';
+  if (ex.body) {
+    const b = document.createElement('div');
+    b.className = 'intro-body';
+    b.textContent = ex.body;
+    card.appendChild(b);
+  }
+  if (ex.vocab && ex.vocab.length) {
+    const list = document.createElement('div');
+    list.className = 'intro-vocab';
+    ex.vocab.forEach(([es,en]) => {
+      const row = document.createElement('div');
+      row.className = 'intro-vocab-row';
+      row.innerHTML = `
+        <div class="intro-row-flex">
+          <button class="intro-speak" aria-label="Listen">▶</button>
+          <span class="intro-es">${es}</span>
+        </div>
+        <span class="intro-divider">·</span>
+        <span class="intro-en">${en}</span>
+      `;
+      row.querySelector('.intro-speak').addEventListener('click', () => speak(es));
+      list.appendChild(row);
+    });
+    card.appendChild(list);
+  }
+  f.appendChild(card);
+  return f;
+}
+
+function buildTapSelect(ex) {
+  const f = document.createDocumentFragment();
+  f.appendChild(exHeader(ex));
+  const grid = document.createElement('div');
+  grid.className = 'options-grid';
+  ex.options.forEach((opt, i) => {
+    const tile = document.createElement('button');
+    tile.className = 'option-tile';
+    tile.dataset.idx = i;
+    tile.innerHTML = `<span class="option-text">${opt}</span><span class="option-letter">${String.fromCharCode(65+i)}</span>`;
+    tile.addEventListener('click', () => {
+      if (currentAnswered) return;
+      $$('.option-tile').forEach(t => t.classList.remove('selected'));
+      tile.classList.add('selected');
+      tile.dataset.selected = 'true';
+    });
+    grid.appendChild(tile);
+  });
+  f.appendChild(grid);
+  return f;
+}
+
+function buildListen(ex) {
+  const f = document.createDocumentFragment();
+  f.appendChild(exHeader(ex));
+  const card = document.createElement('div');
+  card.className = 'listen-card';
+  card.innerHTML = `
+    <button class="listen-button" id="listen-play" aria-label="Play audio">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+    </button>
+    <div class="listen-replay"><span>Tap to replay</span></div>
+  `;
+  f.appendChild(card);
+
+  // Auto-play once on render
+  setTimeout(() => speak(ex.audio, { onstart: () => $('#listen-play')?.classList.add('playing'), onend: () => $('#listen-play')?.classList.remove('playing') }), 300);
+  card.querySelector('#listen-play').addEventListener('click', () => {
+    speak(ex.audio, { onstart: () => $('#listen-play').classList.add('playing'), onend: () => $('#listen-play').classList.remove('playing') });
+  });
+
+  const grid = document.createElement('div');
+  grid.className = 'options-grid';
+  ex.options.forEach((opt, i) => {
+    const tile = document.createElement('button');
+    tile.className = 'option-tile';
+    tile.dataset.idx = i;
+    tile.innerHTML = `<span class="option-text">${opt}</span><span class="option-letter">${String.fromCharCode(65+i)}</span>`;
+    tile.addEventListener('click', () => {
+      if (currentAnswered) return;
+      $$('.option-tile').forEach(t => t.classList.remove('selected'));
+      tile.classList.add('selected');
+      tile.dataset.selected = 'true';
+    });
+    grid.appendChild(tile);
+  });
+  f.appendChild(grid);
+  return f;
+}
+
+function buildFillBlank(ex) {
+  const f = document.createDocumentFragment();
+  f.appendChild(exHeader(ex));
+  const sd = document.createElement('div');
+  sd.className = 'sentence-display';
+  sd.innerHTML = ex.sentence.replace('___','<span class="blank-slot">_______</span>');
+  f.appendChild(sd);
+  const inp = document.createElement('input');
+  inp.className = 'text-input';
+  inp.id = 'fill-input';
+  inp.type = 'text';
+  inp.autocomplete = 'off';
+  inp.autocapitalize = 'none';
+  inp.spellcheck = false;
+  inp.placeholder = 'Type the missing word…';
+  f.appendChild(inp);
+  setTimeout(() => inp.focus(), 200);
+  inp.addEventListener('keydown', e => { if (e.key === 'Enter') $('#btn-check').click(); });
+  return f;
+}
+
+function buildArrange(ex) {
+  const f = document.createDocumentFragment();
+  f.appendChild(exHeader(ex));
+  const zone = document.createElement('div');
+  zone.className = 'arrange-zone';
+  zone.id = 'arrange-zone';
+  f.appendChild(zone);
+  const pool = document.createElement('div');
+  pool.className = 'arrange-pool';
+  // Shuffle tokens for display
+  const shuffled = [...ex.tokens]; // already provided in scrambled order
+  shuffled.forEach((tok, i) => {
+    const t = document.createElement('button');
+    t.className = 'token';
+    t.textContent = tok;
+    t.dataset.original = tok;
+    t.dataset.poolIdx = i;
+    t.addEventListener('click', () => {
+      if (currentAnswered) return;
+      if (t.classList.contains('invisible')) return;
+      // Place into zone
+      const placed = document.createElement('button');
+      placed.className = 'token placed';
+      placed.textContent = tok;
+      placed.dataset.poolIdx = i;
+      placed.addEventListener('click', () => {
+        if (currentAnswered) return;
+        // Remove from zone, restore in pool
+        placed.remove();
+        const orig = pool.querySelector(`[data-pool-idx="${i}"]`);
+        if (orig) orig.classList.remove('invisible');
+      });
+      zone.appendChild(placed);
+      t.classList.add('invisible');
+    });
+    pool.appendChild(t);
+  });
+  f.appendChild(pool);
+  return f;
+}
+
+function buildTranslate(ex) {
+  const f = document.createDocumentFragment();
+  f.appendChild(exHeader(ex));
+  const sd = document.createElement('div');
+  sd.className = 'sentence-display';
+  sd.style.fontStyle = 'italic';
+  sd.style.color = 'var(--ink-soft)';
+  sd.textContent = '«' + ex.source + '»';
+  f.appendChild(sd);
+  const inp = document.createElement('input');
+  inp.className = 'text-input';
+  inp.id = 'translate-input';
+  inp.type = 'text';
+  inp.autocomplete = 'off';
+  inp.autocapitalize = 'none';
+  inp.spellcheck = false;
+  inp.placeholder = 'Type your translation…';
+  f.appendChild(inp);
+  setTimeout(() => inp.focus(), 200);
+  inp.addEventListener('keydown', e => { if (e.key === 'Enter') $('#btn-check').click(); });
+  return f;
+}
+
+function buildSpeak(ex) {
+  const f = document.createDocumentFragment();
+  f.appendChild(exHeader(ex));
+  const card = document.createElement('div');
+  card.className = 'speak-card';
+  card.innerHTML = `
+    <div class="speak-target">${ex.target}</div>
+    <div class="speak-translation">${ex.translation}</div>
+    <button class="intro-speak" id="speak-listen" style="margin: 0 auto 16px; width: 36px; height: 36px;" aria-label="Listen">▶</button>
+    <button class="mic-button" id="mic-btn" aria-label="Record speech">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="9" y="3" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0014 0M12 18v3"/></svg>
+    </button>
+    <div class="mic-status" id="mic-status">Tap mic to speak</div>
+    <div class="speak-heard" id="speak-heard"></div>
+  `;
+  f.appendChild(card);
+
+  // Pre-pronounce after render
+  setTimeout(() => speak(ex.target), 300);
+
+  card.querySelector('#speak-listen').addEventListener('click', () => speak(ex.target));
+
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const micBtn = card.querySelector('#mic-btn');
+  const statusEl = card.querySelector('#mic-status');
+  const heardEl = card.querySelector('#speak-heard');
+
+  if (!SR) {
+    statusEl.textContent = 'Speech not supported on this device';
+    micBtn.style.opacity = '0.5';
+    micBtn.disabled = true;
+    // Allow user to bypass
+    setTimeout(() => {
+      window.__speakHeard = '';
+      window.__speakBypass = true;
+    }, 0);
+    return f;
+  }
+
+  let recognition = null;
+  let isListening = false;
+
+  micBtn.addEventListener('click', () => {
+    if (currentAnswered) return;
+    if (isListening) { recognition?.stop(); return; }
+
+    speechSynthesis.cancel();
+    recognition = new SR();
+    recognition.lang = 'es-MX';
+    recognition.continuous = false;
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 3;
+
+    recognition.onstart = () => {
+      isListening = true;
+      micBtn.classList.add('listening');
+      statusEl.textContent = 'Listening… speak now';
+      heardEl.classList.remove('show');
+    };
+    recognition.onerror = (e) => {
+      isListening = false;
+      micBtn.classList.remove('listening');
+      if (e.error === 'not-allowed') {
+        statusEl.textContent = 'Microphone blocked — check browser permissions';
+      } else if (e.error === 'no-speech') {
+        statusEl.textContent = 'Didn\'t hear anything — try again';
+      } else {
+        statusEl.textContent = 'Error: ' + e.error;
+      }
+    };
+    recognition.onend = () => {
+      isListening = false;
+      micBtn.classList.remove('listening');
+    };
+    recognition.onresult = (e) => {
+      const alts = [];
+      for (let i = 0; i < e.results[0].length; i++) alts.push(e.results[0][i].transcript);
+      const heard = alts[0] || '';
+      window.__speakHeard = heard;
+      window.__speakAlternatives = alts;
+      heardEl.textContent = '«' + heard + '»';
+      heardEl.classList.add('show');
+      statusEl.textContent = 'Got it — tap Check';
+    };
+    try { recognition.start(); } catch(err) { statusEl.textContent = 'Could not start mic'; }
+  });
+
+  return f;
+}
+
+// --- Check answers ---
+function checkAnswer() {
+  const ex = currentLesson.exercises[currentExerciseIdx];
+
+  if (ex.type === 'intro') {
+    advance();
+    return;
+  }
+
+  let isCorrect = false;
+  let yourAnswer = '';
+
+  switch (ex.type) {
+    case 'tap_select':
+    case 'listen': {
+      const sel = $$('.option-tile').findIndex(t => t.dataset.selected === 'true');
+      if (sel < 0) { flashShake(); return; }
+      yourAnswer = ex.options[sel];
+      isCorrect = sel === ex.correct;
+      $$('.option-tile').forEach((t, i) => {
+        t.classList.remove('selected');
+        if (i === ex.correct) t.classList.add('correct');
+        else if (i === sel && !isCorrect) t.classList.add('wrong');
+      });
+      break;
     }
+    case 'fill_blank': {
+      const v = $('#fill-input').value;
+      yourAnswer = v;
+      const norm = normalize(v);
+      isCorrect = ex.correct.some(c => normalize(c) === norm);
+      $('#fill-input').classList.add(isCorrect ? 'correct' : 'wrong');
+      $('#fill-input').disabled = true;
+      break;
+    }
+    case 'arrange': {
+      const placed = $$('#arrange-zone .token').map(t => t.textContent);
+      yourAnswer = placed.join(' ');
+      const expected = ex.correct.join(' ');
+      isCorrect = normalize(yourAnswer) === normalize(expected);
+      break;
+    }
+    case 'translate': {
+      const v = $('#translate-input').value;
+      yourAnswer = v;
+      const norm = normalize(v);
+      isCorrect = ex.correct.some(c => normalize(c) === norm);
+      $('#translate-input').classList.add(isCorrect ? 'correct' : 'wrong');
+      $('#translate-input').disabled = true;
+      break;
+    }
+    case 'speak': {
+      if (window.__speakBypass) { isCorrect = true; yourAnswer = '(skipped)'; break; }
+      const heard = (window.__speakHeard||'').trim();
+      const alts = window.__speakAlternatives || [heard];
+      yourAnswer = heard;
+      const targetN = normalize(ex.target);
+      isCorrect = alts.some(a => {
+        const n = normalize(a);
+        if (!n) return false;
+        return n === targetN || n.includes(targetN) || targetN.includes(n);
+      });
+      window.__speakHeard = '';
+      window.__speakAlternatives = null;
+      break;
+    }
+  }
+
+  showFeedback(isCorrect, ex);
+  currentAnswered = true;
+  currentResult = isCorrect ? 'correct' : 'wrong';
+  if (isCorrect) {
+    const xpEarned = ex.type === 'speak' ? 5 : 4;
+    currentXpRunning += xpEarned;
+    $('#lesson-xp-running').textContent = currentXpRunning;
+  } else {
+    currentMistakes.push({ ex, yourAnswer });
+  }
+  const checkBtn = $('#btn-check');
+  checkBtn.textContent = currentExerciseIdx === currentLesson.exercises.length - 1 ? 'Finish' : 'Continue';
+  checkBtn.className = 'btn ' + (isCorrect ? 'btn-terracotta' : 'btn-primary');
+}
+
+function showFeedback(isCorrect, ex) {
+  const fb = $('#feedback');
+  fb.classList.remove('correct','wrong');
+  fb.classList.add('show', isCorrect ? 'correct' : 'wrong');
+  let answerHtml = '';
+  if (!isCorrect) {
+    let correctText = '';
+    if (ex.type === 'tap_select' || ex.type === 'listen') correctText = ex.options[ex.correct];
+    else if (ex.type === 'fill_blank' || ex.type === 'translate') correctText = ex.correct[0];
+    else if (ex.type === 'arrange') correctText = ex.correct.join(' ');
+    else if (ex.type === 'speak') correctText = ex.target;
+    if (correctText) answerHtml = `<div class="answer-reveal">${correctText}</div>`;
+  }
+  fb.innerHTML = `
+    <b>${isCorrect ? 'Correct' : 'Not quite'}</b>
+    <div>${ex.explain || ''}</div>
+    ${answerHtml}
+  `;
+}
+
+function flashShake() {
+  const area = $('#exercise-area');
+  area.classList.remove('shake');
+  void area.offsetWidth;
+  area.classList.add('shake');
+}
+
+function advance() {
+  if (currentExerciseIdx < currentLesson.exercises.length - 1) {
+    currentExerciseIdx++;
+    renderExercise();
+  } else {
+    finishLesson();
+  }
+}
+
+async function finishLesson() {
+  speechSynthesis.cancel();
+  const id = currentLesson.id;
+  const meta = LESSON_META[id];
+  const wasComplete = !!progress.completed[id];
+  // Bonus XP for first-time completion
+  const lessonXp = wasComplete ? Math.round(meta.xp * 0.5) : meta.xp;
+  progress.completed[id] = new Date().toISOString();
+  progress.xp += lessonXp;
+  // Populate library with this lesson's vocab
+  const wordsAdded = populateLibraryFromLesson(id);
+  await saveProgress({ activity: true });
+  renderDashboard();
+  renderCurriculum();
+  renderProfile();
+  // Show completion screen INSIDE the lesson screen
+  $('#lesson-progress-fill').style.width = '100%';
+  const area = $('#exercise-area');
+  area.innerHTML = '';
+  $('#exercise-footer').style.display = 'none';
+  const score = currentLesson.exercises.filter(e => e.type !== 'intro').length;
+  const correct = score - currentMistakes.length;
+  const subText = wasComplete
+    ? 'Replayed for half XP — solid practice.'
+    : (wordsAdded > 0 ? `+${wordsAdded} word${wordsAdded===1?'':'s'} added to your library. ¡Chévere!` : 'You earned full lesson XP. ¡Chévere!');
+  area.innerHTML = `
+    <div class="complete-screen fade-in">
+      <div class="complete-mark">¡✓!</div>
+      <div class="complete-eyebrow">LESSON ${meta.n} COMPLETE</div>
+      <div class="complete-title">${meta.title}</div>
+      <div class="complete-sub">${subText}</div>
+      <div class="complete-stats">
+        <div class="complete-stat">
+          <div class="complete-stat-num">+${lessonXp}</div>
+          <div class="complete-stat-label">XP Earned</div>
+        </div>
+        <div class="complete-stat">
+          <div class="complete-stat-num">${correct}/${score}</div>
+          <div class="complete-stat-label">Correct</div>
+        </div>
+        <div class="complete-stat">
+          <div class="complete-stat-num">${progress.streak}</div>
+          <div class="complete-stat-label">Day Streak</div>
+        </div>
+      </div>
+      <div class="complete-actions">
+        <button class="btn btn-terracotta" id="complete-continue">Continue</button>
+        <button class="btn btn-ghost" id="complete-replay">Replay lesson</button>
+      </div>
+    </div>
+  `;
+  $('#complete-continue').addEventListener('click', () => {
+    $('#exercise-footer').style.display = '';
+    exitLesson('home');
+  });
+  $('#complete-replay').addEventListener('click', () => {
+    $('#exercise-footer').style.display = '';
+    startLesson(id);
   });
 }
 
-// Hide loading screen at minimum 600ms for clean transition
-const bootStart = Date.now();
-boot().catch(err => {
-  console.error('Boot failed:', err);
-  setTimeout(() => {
-    showScreen('auth-screen');
-    setAuthMessage('Could not initialize. Check your connection and refresh.');
-  }, Math.max(0, 600 - (Date.now() - bootStart)));
+// ─────────── LIBRARY RENDER ───────────
+let libFilter = 'all';
+let libSearch = '';
+
+function renderLibrary() {
+  const items = Object.values(progress.library);
+  const stats = getLibraryStats();
+  $('#lib-total').textContent = stats.total;
+  $('#lib-learned').textContent = stats.learned;
+  $('#lib-due').textContent = stats.due;
+  $('#lib-review-btn').disabled = stats.due === 0;
+  $('#lib-review-btn span:first-child').textContent = stats.due > 0 ? `Review now (${stats.due})` : 'Nothing due';
+  if (stats.due > 0) {
+    $('#lib-due-pill').style.display = 'inline-flex';
+    $('#lib-due-count').textContent = stats.due;
+  } else {
+    $('#lib-due-pill').style.display = 'none';
+  }
+
+  if (items.length === 0) {
+    $('#library-empty').style.display = 'block';
+    $('#library-content').style.display = 'none';
+    return;
+  }
+  $('#library-empty').style.display = 'none';
+  $('#library-content').style.display = 'block';
+
+  // Filter & search
+  const today = todayISO();
+  let filtered = items.slice();
+  if (libFilter === 'due') filtered = filtered.filter(it => !it.next_review || it.next_review <= today);
+  else if (libFilter === 'learned') filtered = filtered.filter(it => (it.reviews || 0) > 0);
+  else if (libFilter === 'new') filtered = filtered.filter(it => (it.reviews || 0) === 0);
+  if (libSearch) {
+    const s = normalize(libSearch);
+    filtered = filtered.filter(it => normalize(it.es).includes(s) || normalize(it.en).includes(s));
+  }
+  // Sort: due first, then by added date desc
+  filtered.sort((a, b) => {
+    const ad = (!a.next_review || a.next_review <= today) ? 0 : 1;
+    const bd = (!b.next_review || b.next_review <= today) ? 0 : 1;
+    if (ad !== bd) return ad - bd;
+    return (b.added || '').localeCompare(a.added || '');
+  });
+
+  const list = $('#lib-list');
+  list.innerHTML = '';
+  if (filtered.length === 0) {
+    list.innerHTML = '<div class="lib-empty-msg">No words match this filter.</div>';
+    return;
+  }
+  filtered.forEach(it => {
+    const card = document.createElement('div');
+    const due = !it.next_review || it.next_review <= today;
+    card.className = 'lib-card' + (due ? ' due' : '');
+    const lessonTag = (it.lessonIds && it.lessonIds[0]) ? `LESSON ${LESSON_META[it.lessonIds[0]]?.n || '?'}` : '';
+    let intervalText;
+    if ((it.reviews || 0) === 0) intervalText = 'New';
+    else if (due) intervalText = 'Due now';
+    else {
+      const days = daysBetween(today, it.next_review);
+      intervalText = days <= 0 ? 'Due now' : (days === 1 ? 'In 1 day' : `In ${days} days`);
+    }
+    card.innerHTML = `
+      <button class="lib-card-speak" aria-label="Listen">▶</button>
+      <div class="lib-card-text">
+        <div class="lib-card-es">${it.es}</div>
+        <div class="lib-card-en">${it.en}</div>
+      </div>
+      <div class="lib-card-meta">
+        <span class="lib-card-tag">${lessonTag}</span>
+        <div class="lib-card-interval">${intervalText}</div>
+      </div>
+    `;
+    card.querySelector('.lib-card-speak').addEventListener('click', e => {
+      e.stopPropagation();
+      speak(it.es);
+    });
+    list.appendChild(card);
+  });
+}
+
+function setLibFilter(f) {
+  libFilter = f;
+  $$('.lib-filter').forEach(b => b.classList.toggle('active', b.dataset.filter === f));
+  renderLibrary();
+}
+
+// ─────────── REVIEW SESSION ───────────
+function startReview() {
+  reviewQueue = getDueItems().slice();
+  if (reviewQueue.length === 0) return;
+  // Shuffle
+  for (let i = reviewQueue.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i+1));
+    [reviewQueue[i], reviewQueue[j]] = [reviewQueue[j], reviewQueue[i]];
+  }
+  reviewIdx = 0;
+  reviewCorrect = 0;
+  reviewRevealed = false;
+  showScreen('review');
+  renderReviewCard();
+}
+
+function renderReviewCard() {
+  if (reviewIdx >= reviewQueue.length) { return finishReview(); }
+  const it = reviewQueue[reviewIdx];
+  const total = reviewQueue.length;
+  $('#review-progress-fill').style.width = ((reviewIdx) / total * 100) + '%';
+  $('#review-counter').textContent = `${reviewIdx + 1}/${total}`;
+  reviewRevealed = false;
+  const area = $('#review-area');
+  const lessonTag = (it.lessonIds && it.lessonIds[0]) ? `LESSON ${LESSON_META[it.lessonIds[0]]?.n || '?'}` : '';
+  area.innerHTML = `
+    <div class="fade-in">
+      <div class="exercise-prompt-eyebrow">RECALL</div>
+      <div class="review-card">
+        <div class="review-eyebrow">CARD ${reviewIdx + 1} OF ${total}</div>
+        <div class="review-front">${it.es}</div>
+        <div class="review-back" id="review-back">${it.en}</div>
+        <div><span class="review-tag">${lessonTag}</span></div>
+        <div class="review-speak-row">
+          <button id="review-speak">▶ Listen</button>
+        </div>
+      </div>
+      <div class="review-actions">
+        <button class="btn btn-primary" id="btn-reveal">Show answer</button>
+        <div class="review-quality-grid" id="quality-grid">
+          <button class="q-btn q-again" data-q="1"><span class="q-btn-label">Again</span><span class="q-btn-interval">&lt;1d</span></button>
+          <button class="q-btn q-hard" data-q="2"><span class="q-btn-label">Hard</span><span class="q-btn-interval" id="q-hard-int">1d</span></button>
+          <button class="q-btn q-good" data-q="3"><span class="q-btn-label">Good</span><span class="q-btn-interval" id="q-good-int">3d</span></button>
+          <button class="q-btn q-easy" data-q="4"><span class="q-btn-label">Easy</span><span class="q-btn-interval" id="q-easy-int">5d</span></button>
+        </div>
+      </div>
+    </div>
+  `;
+  $('#review-speak').addEventListener('click', () => speak(it.es));
+  $('#btn-reveal').addEventListener('click', revealReviewCard);
+  $$('.q-btn').forEach(b => b.addEventListener('click', () => rateReviewCard(parseInt(b.dataset.q))));
+  // Auto-pronounce
+  setTimeout(() => speak(it.es), 250);
+  // Update interval previews based on this item's current state
+  updateQualityIntervals(it);
+}
+
+function updateQualityIntervals(it) {
+  // Lightweight projection of what each quality would produce
+  function project(quality) {
+    const copy = { ...it, ease: it.ease || 2.5, interval: it.interval || 0, reviews: it.reviews || 0 };
+    if (quality < 2) return 1;
+    copy.reviews++;
+    if (copy.reviews === 1) copy.interval = 1;
+    else if (copy.reviews === 2) copy.interval = quality === 4 ? 4 : 3;
+    else copy.interval = Math.max(1, Math.round(copy.interval * copy.ease));
+    if (quality === 4) copy.interval = Math.round(copy.interval * 1.3);
+    return copy.interval;
+  }
+  const fmt = d => d === 1 ? '1d' : d < 30 ? `${d}d` : `${Math.round(d/30)}mo`;
+  $('#q-hard-int').textContent = fmt(project(2));
+  $('#q-good-int').textContent = fmt(project(3));
+  $('#q-easy-int').textContent = fmt(project(4));
+}
+
+function revealReviewCard() {
+  reviewRevealed = true;
+  $('#review-back').classList.add('show');
+  $('#btn-reveal').style.display = 'none';
+  $('#quality-grid').classList.add('show');
+}
+
+async function rateReviewCard(quality) {
+  if (!reviewRevealed) return;
+  const it = reviewQueue[reviewIdx];
+  // Look up the live item by key (reviewQueue holds references but we want to update progress.library)
+  const key = libraryKey(it.es);
+  const live = progress.library[key];
+  if (live) {
+    scheduleSRS(live, quality);
+    if (quality >= 3) reviewCorrect++;
+  }
+  reviewIdx++;
+  // Save in background (don't block UI)
+  saveProgress();
+  if (reviewIdx >= reviewQueue.length) finishReview();
+  else renderReviewCard();
+}
+
+function finishReview() {
+  $('#review-progress-fill').style.width = '100%';
+  $('#review-counter').textContent = `${reviewQueue.length}/${reviewQueue.length}`;
+  const total = reviewQueue.length;
+  const xpEarned = reviewCorrect * 2;
+  progress.xp += xpEarned;
+  saveProgress({ activity: total > 0 });
+  renderDashboard();
+  renderLibrary();
+  renderProfile();
+  $('#review-area').innerHTML = `
+    <div class="complete-screen fade-in">
+      <div class="complete-mark">¡✓!</div>
+      <div class="complete-eyebrow">REVIEW COMPLETE</div>
+      <div class="complete-title">Nice work.</div>
+      <div class="complete-sub">${reviewCorrect}/${total} recalled. Cards are scheduled for their next review.</div>
+      <div class="complete-stats">
+        <div class="complete-stat">
+          <div class="complete-stat-num">+${xpEarned}</div>
+          <div class="complete-stat-label">XP Earned</div>
+        </div>
+        <div class="complete-stat">
+          <div class="complete-stat-num">${reviewCorrect}/${total}</div>
+          <div class="complete-stat-label">Recalled</div>
+        </div>
+        <div class="complete-stat">
+          <div class="complete-stat-num">${progress.streak}</div>
+          <div class="complete-stat-label">Day Streak</div>
+        </div>
+      </div>
+      <div class="complete-actions">
+        <button class="btn btn-terracotta" id="review-done">Done</button>
+      </div>
+    </div>
+  `;
+  $('#review-done').addEventListener('click', () => showScreen('home'));
+}
+
+function exitReview() {
+  speechSynthesis.cancel();
+  // Save any rated cards
+  saveProgress();
+  showScreen('home');
+}
+
+// ─────────── PROFILE ───────────
+function renderProfile() {
+  $('#profile-email').textContent = user?.email || '—';
+  if (progress.created_at) {
+    const d = new Date(progress.created_at);
+    const month = d.toLocaleString('en-US', { month: 'long' }).toUpperCase();
+    $('#profile-since').textContent = `MEMBER SINCE ${month} ${d.getFullYear()}`;
+  } else {
+    $('#profile-since').textContent = 'MEMBER SINCE TODAY';
+  }
+  $('#profile-lessons').textContent = Object.keys(progress.completed).length;
+  $('#profile-xp').textContent = progress.xp;
+  $('#profile-streak').textContent = progress.streak;
+}
+
+// ─────────── AUTH ───────────
+let authMode = 'signin';
+function setAuthMode(mode) {
+  authMode = mode;
+  if (mode === 'signin') {
+    $('#auth-title').textContent = 'Welcome back.';
+    $('#auth-sub').textContent = 'Sign in to continue your journey.';
+    $('#auth-submit').textContent = 'Sign in';
+    $('#auth-toggle-text').textContent = 'New to SpanishPath?';
+    $('#auth-toggle').textContent = 'Create account';
+    $('#auth-password').autocomplete = 'current-password';
+  } else {
+    $('#auth-title').textContent = 'Begin the path.';
+    $('#auth-sub').textContent = 'Create an account to save your progress.';
+    $('#auth-submit').textContent = 'Create account';
+    $('#auth-toggle-text').textContent = 'Already have an account?';
+    $('#auth-toggle').textContent = 'Sign in';
+    $('#auth-password').autocomplete = 'new-password';
+  }
+  hideAuthMessages();
+}
+function showAuthError(msg) {
+  $('#auth-error').textContent = msg; $('#auth-error').classList.add('show');
+  $('#auth-info').classList.remove('show');
+}
+function showAuthInfo(msg) {
+  $('#auth-info').textContent = msg; $('#auth-info').classList.add('show');
+  $('#auth-error').classList.remove('show');
+}
+function hideAuthMessages() {
+  $('#auth-error').classList.remove('show');
+  $('#auth-info').classList.remove('show');
+}
+
+async function handleAuthSubmit() {
+  const email = $('#auth-email').value.trim();
+  const password = $('#auth-password').value;
+  if (!email || !password) return showAuthError('Email and password are required.');
+  if (password.length < 6) return showAuthError('Password must be at least 6 characters.');
+  $('#auth-submit').disabled = true;
+  $('#auth-submit').textContent = authMode === 'signin' ? 'Signing in…' : 'Creating account…';
+  try {
+    if (authMode === 'signin') {
+      const { error } = await sb.auth.signInWithPassword({ email, password });
+      if (error) throw error;
+    } else {
+      const { data, error } = await sb.auth.signUp({ email, password });
+      if (error) throw error;
+      if (data?.user && !data.session) {
+        showAuthInfo('Check your email to confirm your account, then sign in.');
+        setAuthMode('signin');
+        $('#auth-submit').disabled = false;
+        $('#auth-submit').textContent = 'Sign in';
+        return;
+      }
+    }
+  } catch (err) {
+    showAuthError(err.message || 'Authentication failed.');
+    $('#auth-submit').disabled = false;
+    $('#auth-submit').textContent = authMode === 'signin' ? 'Sign in' : 'Create account';
+  }
+}
+
+async function handleSignOut() {
+  await sb.auth.signOut();
+  user = null;
+  progress = { completed:{}, xp:0, streak:0, last_active:null, created_at:null, library:{} };
+  showScreen('auth');
+  $('#auth-email').value = '';
+  $('#auth-password').value = '';
+  setAuthMode('signin');
+}
+
+async function handleSession(session) {
+  if (session?.user) {
+    user = session.user;
+    await loadProgress();
+    renderDashboard();
+    renderCurriculum();
+    renderLibrary();
+    renderProfile();
+    showScreen('home');
+  } else {
+    user = null;
+    showScreen('auth');
+  }
+  document.getElementById('loading').style.display = 'none';
+}
+
+// ─────────── EXPORT / RESET ───────────
+function exportProgress() {
+  const blob = new Blob([JSON.stringify({ user_email: user?.email, progress }, null, 2)], { type:'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `spanishpath-progress-${todayISO()}.json`;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 200);
+}
+async function resetAllProgress() {
+  if (!confirm('Erase all progress? This cannot be undone.')) return;
+  progress.completed = {};
+  progress.xp = 0;
+  progress.streak = 0;
+  progress.last_active = null;
+  progress.library = {};
+  await saveProgress();
+  renderDashboard(); renderCurriculum(); renderLibrary(); renderProfile();
+}
+
+// ─────────── EVENTS ───────────
+$('#auth-submit').addEventListener('click', handleAuthSubmit);
+$('#auth-toggle').addEventListener('click', () => setAuthMode(authMode === 'signin' ? 'signup' : 'signin'));
+$('#auth-password').addEventListener('keydown', e => { if (e.key === 'Enter') handleAuthSubmit(); });
+$('#auth-email').addEventListener('keydown', e => { if (e.key === 'Enter') $('#auth-password').focus(); });
+
+$$('.nav-btn').forEach(b => b.addEventListener('click', () => {
+  const target = b.dataset.screen;
+  showScreen(target);
+  if (target === 'library') renderLibrary();
+}));
+
+$('#hero-cta').addEventListener('click', () => {
+  const id = $('#hero-cta').dataset.lessonId;
+  if (LESSONS[id]) startLesson(id);
+  else openLessonModal(id);
 });
 
+$('#modal-backdrop').addEventListener('click', e => { if (e.target.id === 'modal-backdrop') closeModal(); });
+$('#modal-start').addEventListener('click', () => {
+  const id = $('#modal-backdrop').dataset.lessonId;
+  closeModal();
+  if (LESSONS[id]) startLesson(id);
+});
+$('#modal-mark-complete').addEventListener('click', () => {
+  const id = $('#modal-backdrop').dataset.lessonId;
+  toggleComplete(id);
+  closeModal();
+});
+
+$('#lesson-close').addEventListener('click', () => {
+  if (confirm('Exit this lesson? Your progress in this lesson will be lost.')) exitLesson('home');
+});
+
+$('#btn-check').addEventListener('click', () => {
+  if (!currentLesson) return;
+  const ex = currentLesson.exercises[currentExerciseIdx];
+  if (ex.type === 'intro') { advance(); return; }
+  if (currentAnswered) { advance(); return; }
+  checkAnswer();
+});
+
+// Library
+$('#lib-review-btn').addEventListener('click', startReview);
+$('#review-banner').addEventListener('click', startReview);
+$('#lib-search').addEventListener('input', e => {
+  libSearch = e.target.value;
+  renderLibrary();
+});
+$$('.lib-filter').forEach(b => b.addEventListener('click', () => setLibFilter(b.dataset.filter)));
+$('#review-close').addEventListener('click', () => {
+  if (confirm('Exit review? Cards you\'ve already rated will be saved.')) exitReview();
+});
+
+$('#btn-export').addEventListener('click', exportProgress);
+$('#btn-reset').addEventListener('click', resetAllProgress);
+$('#btn-signout').addEventListener('click', handleSignOut);
+
+// ─────────── INIT ───────────
+(async () => {
+  // Pre-warm voices on user gesture later
+  if ('speechSynthesis' in window) speechSynthesis.getVoices();
+
+  const { data: { session } } = await sb.auth.getSession();
+  await handleSession(session);
+  sb.auth.onAuthStateChange((_event, session) => handleSession(session));
+})();
 </script>
 </body>
 </html>
