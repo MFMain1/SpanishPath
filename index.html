@@ -2349,7 +2349,140 @@ const LESSON_22 = {
   ],
 };
 
-const LESSONS = { L1: LESSON_1, L2: LESSON_2, L3: LESSON_3, L4: LESSON_4, L5: LESSON_5, L6: LESSON_6, L7: LESSON_7, L8: LESSON_8, L9: LESSON_9, L10: LESSON_10, L11: LESSON_11, L12: LESSON_12, L13: LESSON_13, L14: LESSON_14, L15: LESSON_15, L16: LESSON_16, L17: LESSON_17, L18: LESSON_18, L19: LESSON_19, L20: LESSON_20, L21: LESSON_21, L22: LESSON_22 };
+const LESSON_23 = {
+  id: 'L23', title: 'Mi familia',
+  vocabPreview: [['la madre / mamá','mother / mom'],['el padre / papá','father / dad'],['el hermano / la hermana','brother / sister'],['el hijo / la hija','son / daughter'],['los abuelos','grandparents']],
+  vocabulary: [['la familia','the family'],['los padres','the parents'],['la madre','the mother'],['la mamá','mom'],['el padre','the father'],['el papá','dad'],['el hermano','the brother'],['la hermana','the sister'],['los hermanos','siblings (m or mixed)'],['el hijo','the son'],['la hija','the daughter'],['el esposo','the husband'],['la esposa','the wife'],['los abuelos','the grandparents'],['el abuelo','the grandfather'],['la abuela','the grandmother'],['el tío / la tía','uncle / aunt'],['el primo / la prima','cousin (m / f)']],
+  exercises: [
+    { type:'intro', title:'Family relationships', body:'Spanish handles family with a clean rule: masculine plural covers mixed groups. «Los hermanos» = siblings (could be all brothers OR mixed brothers/sisters). «Los padres» = parents (mother + father, not «multiple fathers»). Same for «los hijos» (children), «los tíos» (aunts and uncles), «los abuelos» (grandparents).', vocab:[['mi madre / mi padre','my mother / my father'],['mis padres','my parents (both)'],['mi hermano / mi hermana','my brother / my sister'],['mis hermanos','my siblings'],['mi esposo / mi esposa','my husband / my wife'],['mis abuelos','my grandparents (both)']] },
+    { type:'tap_select', prompt:'«Mother» (formal):', options:['la mamá','la madre','la hermana','la hija'], correct:1, explain:'«La madre» — formal. «La mamá» is everyday. Both are universal.' },
+    { type:'listen', audio:'mi hermano', prompt:'Listen and choose.', options:['my mother','my brother','my father','my friend'], correct:1, explain:'«Mi hermano» = my brother. «Hermana» (with -a) = sister.' },
+    { type:'fill_blank', prompt:'Fill in the possessive.', sentence:'Mi padre y mi madre son _____ padres. (my parents)', correct:['mis'], explain:'«Mis padres» — plural possessive. Two people = plural «mis» (not «mi»).' },
+    { type:'tap_select', prompt:'«Grandmother»:', options:['la tía','la prima','la abuela','la hija'], correct:2, explain:'«La abuela» = grandmother. Affectionate forms: «abuelita» (grandma).' },
+    { type:'translate', prompt:'Translate.', source:'I have two sisters.', correct:['tengo dos hermanas'], explain:'«Tengo dos hermanas» — feminine plural «hermanas». Use «tener» for possession.' },
+    { type:'arrange', prompt:'Arrange — «My sister is tall.»', tokens:['hermana','alta','Mi','es'], correct:['Mi','hermana','es','alta'], explain:'«Mi hermana es alta» — adjective agrees feminine. Use «ser» for height (permanent).' },
+    { type:'tap_select', prompt:'«Mis hermanos» can mean:', options:['Only brothers','Only sisters','Brothers OR mixed siblings','My grandparents'], correct:2, explain:'Masculine plural covers mixed groups. Two brothers = «mis hermanos», a brother + a sister = also «mis hermanos».' },
+    { type:'translate', prompt:'Translate.', source:'She is my aunt.', correct:['ella es mi tía','es mi tía'], explain:'«Ella es mi tía» — feminine «tía». Use «ser» for family relationships (identity).' },
+    { type:'fill_blank', prompt:'Fill in the family member.', sentence:'El hijo de mi tía es mi _____.', correct:['primo'], explain:'«Primo» — masculine cousin. The son of your aunt = your cousin (m).' },
+    { type:'speak', prompt:'Talk about your family.', target:'mi familia', translation:'my family', explain:'«mee fa-MEE-lee-ah». Practice the rolled «r» — single tap, not full trill.' },
+  ],
+};
+
+const LESSON_24 = {
+  id: 'L24', title: 'Mi casa',
+  vocabPreview: [['la sala','living room'],['la cocina','kitchen'],['el baño','bathroom'],['el dormitorio','bedroom'],['la cama','the bed'],['la mesa','the table']],
+  vocabulary: [['la casa','the house'],['el apartamento','the apartment'],['el cuarto','the room'],['la habitación','the room (alt)'],['la sala','the living room'],['el comedor','the dining room'],['la cocina','the kitchen'],['el baño','the bathroom'],['el dormitorio','the bedroom'],['el jardín','the garden / yard'],['la cama','the bed'],['la mesa','the table'],['la silla','the chair'],['el sofá','the sofa'],['la lámpara','the lamp'],['la ventana','the window'],['la puerta','the door']],
+  exercises: [
+    { type:'intro', title:'Rooms & furniture', body:'«Cuarto» and «habitación» both mean «room» — interchangeable. «Dormitorio» specifically = bedroom. Note article patterns: «el sofá» (m, despite -a ending) and «la cama» (f, despite -a ending — and that one IS predictable).', vocab:[['la sala','the living room'],['el comedor','the dining room (where you eat)'],['la cocina','the kitchen (also «cooking»)'],['el baño','the bathroom'],['el dormitorio','the bedroom'],['el sofá','the sofa (m, exception)'],['la cama','the bed'],['la puerta / la ventana','the door / window']] },
+    { type:'tap_select', prompt:'«The bathroom»:', options:['la cocina','el baño','la sala','el dormitorio'], correct:1, explain:'«El baño» — the bathroom. In a restaurant, ask «¿Dónde está el baño?»' },
+    { type:'listen', audio:'la cocina', prompt:'Listen and choose.', options:['the bathroom','the bedroom','the kitchen','the living room'], correct:2, explain:'«La cocina» — the kitchen. Same word means «cooking» (the activity) and «stove» in some contexts.' },
+    { type:'fill_blank', prompt:'Fill in — bedroom item.', sentence:'_____ está en el dormitorio. (the bed)', correct:['la cama'], explain:'«La cama está en el dormitorio» — feminine article «la». Estar for location.' },
+    { type:'tap_select', prompt:'Where do you eat at home?', options:['la cocina','el comedor','el dormitorio','el baño'], correct:1, explain:'«El comedor» — the dining room. Some homes don\'t have a separate one and eat in the kitchen.' },
+    { type:'translate', prompt:'Translate.', source:'There is a sofa in the living room.', correct:['hay un sofá en la sala'], explain:'«Hay un sofá en la sala» — «hay» for existence + indefinite article + location with «en».' },
+    { type:'arrange', prompt:'Arrange — «My house has three bedrooms.»', tokens:['dormitorios','tres','casa','tiene','Mi'], correct:['Mi','casa','tiene','tres','dormitorios'], explain:'«Mi casa tiene tres dormitorios» — «tener» works for buildings\' features just like for people.' },
+    { type:'tap_select', prompt:'Which is found in a kitchen?', options:['la cama','el sofá','la mesa','el jardín'], correct:2, explain:'«La mesa» — table. Found in kitchen and dining room. «Cama» is bed (bedroom), «sofá» is living room.' },
+    { type:'translate', prompt:'Translate.', source:'The window is open.', correct:['la ventana está abierta'], explain:'«La ventana está abierta» — estar for state (currently open). «Abierta» agrees feminine.' },
+    { type:'fill_blank', prompt:'Fill the room.', sentence:'Las flores están en _____. (the garden)', correct:['el jardín'], explain:'«El jardín» — the garden. Note the accent on the «í».' },
+    { type:'speak', prompt:'Say «my room».', target:'mi habitación', translation:'my room', explain:'«mee ah-bee-tah-see-OHN». Stress on the last syllable — note the accent.' },
+  ],
+};
+
+const LESSON_25 = {
+  id: 'L25', title: 'Posesivos',
+  vocabPreview: [['mi / mis','my'],['tu / tus','your'],['su / sus','his/her/your(formal)/their'],['nuestro/-a','our'],['nuestros/-as','our (plural)']],
+  vocabulary: [['mi / mis','my (singular / plural noun)'],['tu / tus','your (informal)'],['su / sus','his / her / your (formal) / their'],['nuestro / nuestros','our (m sing / m pl)'],['nuestra / nuestras','our (f sing / f pl)'],['mi casa','my house'],['mis amigos','my friends'],['nuestra familia','our family'],['sus libros','his/her/their books']],
+  exercises: [
+    { type:'intro', title:'Possessive adjectives', body:'Possessives in Spanish agree with the THING possessed, not the possessor. «Mi casa» (my house — sing) but «mis casas» (my houses — pl). «Su» is the tricky one — it can mean his / her / your (formal) / their. Context disambiguates, but you can clarify with «de él / de ella / de usted / de ellos» if needed. «Nuestro» (our) takes full gender agreement: nuestro/nuestra/nuestros/nuestras.', vocab:[['mi / mis','my'],['tu / tus','your (informal)'],['su / sus','his / her / your(usted) / their'],['nuestro / nuestra / nuestros / nuestras','our (4 forms)'],['mi hermano / mis hermanos','my brother / my brothers'],['nuestra casa / nuestras casas','our house / our houses']] },
+    { type:'tap_select', prompt:'«My house»:', options:['mis casa','mi casa','mí casa','mío casa'], correct:1, explain:'«Mi casa» — singular. «Mis» is for plural nouns: «mis casas».' },
+    { type:'listen', audio:'mis amigos', prompt:'Listen and choose.', options:['my friend','my friends','your friends','our friends'], correct:1, explain:'«Mis amigos» — plural noun → plural possessive «mis».' },
+    { type:'fill_blank', prompt:'Fill in — your books (informal).', sentence:'_____ libros son nuevos.', correct:['tus'], explain:'«Tus libros» — informal «your», plural noun → «tus».' },
+    { type:'tap_select', prompt:'«Our» — masculine plural form:', options:['nuestro','nuestra','nuestros','nuestras'], correct:2, explain:'«Nuestros» — agrees with masculine plural noun. «Nuestros amigos» = our friends.' },
+    { type:'translate', prompt:'Translate.', source:'Her family is from Venezuela.', correct:['su familia es de venezuela','su familia es venezolana'], explain:'«Su familia es de Venezuela» — «su» (her). To clarify it\'s «her», you could add «de ella»: «la familia de ella es de Venezuela».' },
+    { type:'arrange', prompt:'Arrange — «Our house is big.»', tokens:['casa','grande','es','Nuestra'], correct:['Nuestra','casa','es','grande'], explain:'«Nuestra casa es grande» — «casa» is feminine, so «nuestra» (not «nuestro»).' },
+    { type:'tap_select', prompt:'Which is correct for «my friends» (mixed group)?', options:['mi amigos','mis amigos','mis amigas','mías amigos'], correct:1, explain:'«Mis amigos» — masculine plural for mixed groups (default rule).' },
+    { type:'translate', prompt:'Translate.', source:'Their parents are nice.', correct:['sus padres son simpáticos','sus padres son amables'], explain:'«Sus padres son simpáticos» — «sus» (their, plural noun). «Padres» is plural → «sus», not «su».' },
+    { type:'fill_blank', prompt:'Choose the right form.', sentence:'_____ casa es bonita. (our house)', correct:['nuestra'], explain:'«Nuestra casa» — feminine singular «casa» → feminine singular «nuestra».' },
+    { type:'speak', prompt:'Say it.', target:'mi familia', translation:'my family', explain:'«mee fa-MEE-lee-ah». Soft, unstressed «mi».' },
+  ],
+};
+
+const LESSON_26 = {
+  id: 'L26', title: 'Describir personas',
+  vocabPreview: [['alto / bajo','tall / short'],['joven / mayor','young / older'],['simpático','nice / kind'],['inteligente','smart'],['divertido','fun'],['amable','kind']],
+  vocabulary: [['alto / alta','tall'],['bajo / baja','short (height)'],['joven','young (no gender change)'],['mayor','older'],['gordo / gorda','fat / overweight'],['delgado / delgada','thin / slim'],['rubio / rubia','blond'],['moreno / morena','dark-haired / dark-skinned'],['simpático / simpática','nice / kind'],['antipático / antipática','unpleasant'],['inteligente','smart (no gender change)'],['divertido / divertida','fun / funny'],['serio / seria','serious'],['amable','kind / friendly'],['perezoso / perezosa','lazy'],['trabajador / trabajadora','hard-working']],
+  exercises: [
+    { type:'intro', title:'Describing people', body:'Personality and appearance use SER (permanent identity), not estar. «Es simpático» = he is nice (always). Most adjectives agree gender/number: «alto / alta / altos / altas». Some don\'t change for gender: -e endings («inteligente»), -ista («realista»), -al («social»). «Trabajador» is irregular — adds -a for feminine: «trabajadora».', vocab:[['Mi madre es alta','My mother is tall'],['Mi padre es trabajador','My father is hard-working'],['Mis hermanos son inteligentes','My siblings are smart (no gender change for adj)'],['Es muy simpática','She\'s very nice'],['Son divertidos','They are fun']] },
+    { type:'tap_select', prompt:'«Nice / kind»:', options:['simpático','perezoso','antipático','serio'], correct:0, explain:'«Simpático» — friendly, nice, pleasant person. The default positive personality adjective.' },
+    { type:'listen', audio:'es muy alta', prompt:'Listen and choose.', options:['he is very tall','she is very tall','they are tall','we are tall'], correct:1, explain:'«Es muy alta» — feminine «-a» tells us subject is feminine (she). Singular «es».' },
+    { type:'fill_blank', prompt:'Fill in — describe your brother.', sentence:'Mi hermano es _____. (smart)', correct:['inteligente'], explain:'«Inteligente» ends in -e → no gender change. Same form for masculine and feminine.' },
+    { type:'tap_select', prompt:'«Lazy»:', options:['trabajador','perezoso','divertido','amable'], correct:1, explain:'«Perezoso» — lazy. Opposite of «trabajador» (hard-working).' },
+    { type:'translate', prompt:'Translate.', source:'She is hard-working.', correct:['ella es trabajadora','es trabajadora'], explain:'«Trabajadora» — irregular feminine form (adds -a, not change -o to -a). Most -dor/-tor adjectives follow this pattern.' },
+    { type:'arrange', prompt:'Arrange — «My mom is very kind.»', tokens:['amable','muy','mamá','Mi','es'], correct:['Mi','mamá','es','muy','amable'], explain:'«Mi mamá es muy amable» — «amable» ends in -e, doesn\'t change for gender.' },
+    { type:'tap_select', prompt:'Which is a personality trait (not physical)?', options:['alto','rubio','gordo','divertido'], correct:3, explain:'«Divertido» — fun / funny. Personality. The other three are all physical descriptions.' },
+    { type:'translate', prompt:'Translate.', source:'My friends are funny.', correct:['mis amigos son divertidos','mis amigas son divertidas'], explain:'«Mis amigos son divertidos» (m or mixed) or «mis amigas son divertidas» (all feminine). Adjective agrees with the group.' },
+    { type:'fill_blank', prompt:'Fill in.', sentence:'Mi abuela es muy _____. (kind / friendly)', correct:['amable','simpática'], explain:'Both «amable» and «simpática» work. «Amable» = kind/friendly; «simpática» = nice/likable. Slight nuance — interchangeable for grandmothers.' },
+    { type:'speak', prompt:'Describe someone.', target:'Es simpático', translation:'he is nice', explain:'«es seem-PA-tee-ko». Stress on PA. Add «muy» (very) for emphasis.' },
+  ],
+};
+
+const LESSON_27 = {
+  id: 'L27', title: 'Repaso 1',
+  vocabPreview: [['Mixed review','Units 1-4'],['Greetings','manners, alphabet'],['Ser / Estar','tener idioms'],['Numbers, time','days, months'],['Routines','-AR/-ER/-IR'],['Adjectives','agreement']],
+  vocabulary: [['Buenos días','good morning'],['Mucho gusto','nice to meet you'],['Tengo hambre','I\'m hungry'],['¿Cómo te llamas?','what\'s your name?'],['Son las tres','it\'s 3:00'],['Me ducho','I shower'],['Yo hablo','I speak'],['Estoy cansado','I\'m tired']],
+  exercises: [
+    { type:'intro', title:'Review: Units 1-4', body:'Mixed practice pulling from Lessons 1-15. No new content — this is integration. Watch for the patterns you\'ve been weakest on: accent marks, ser-vs-estar choices, tener idioms, and dropping subject pronouns. Drill mode.', vocab:[['Greetings','Hola, Buenos días, Mucho gusto'],['Ser/Estar','soy / estoy / es / está'],['Tener idioms','tengo hambre, tengo años'],['Numbers & time','uno-treinta, ¿qué hora es?'],['Routines','me ducho, desayuno'],['Conjugation','-AR / -ER / -IR present'],['Adjectives','agreement & position']] },
+    { type:'tap_select', prompt:'You meet someone for the first time. Say:', options:['Hasta luego','Mucho gusto','De nada','¡Salud!'], correct:1, explain:'«Mucho gusto» — first meeting. From Lesson 1.' },
+    { type:'fill_blank', prompt:'Ser vs estar — origin.', sentence:'Yo _____ de los Estados Unidos.', correct:['soy'], explain:'«Soy» (ser) for origin. «Soy de…» pattern. From Lesson 6.' },
+    { type:'translate', prompt:'Translate — tener idiom.', source:'I am 30 years old.', correct:['tengo treinta años','tengo 30 años'], explain:'«Tengo treinta años» — Spanish uses tener for age, never «soy 30 años». From Lesson 7.' },
+    { type:'listen', audio:'Son las tres y media', prompt:'Listen and choose.', options:['3:00','3:15','3:30','3:45'], correct:2, explain:'«Son las tres y media» = 3:30. From Lesson 10.' },
+    { type:'fill_blank', prompt:'Conjugate — -AR verb.', sentence:'Nosotros _____ español. (we speak)', correct:['hablamos'], explain:'«Hablamos» — nosotros form of -AR ends in -amos. From Lesson 13.' },
+    { type:'tap_select', prompt:'Ser vs estar — feeling right now:', options:['Soy cansado','Estoy cansado','Tengo cansado','Hay cansado'], correct:1, explain:'«Estoy cansado» — temporary state → estar. From Lesson 6.' },
+    { type:'arrange', prompt:'Arrange — «I shower in the morning.»', tokens:['ducho','en','Me','la','mañana'], correct:['Me','ducho','en','la','mañana'], explain:'«Me ducho en la mañana» — reflexive pronoun first. From Lesson 12.' },
+    { type:'translate', prompt:'Translate — adjective agreement.', source:'My sister is intelligent.', correct:['mi hermana es inteligente'], explain:'«Mi hermana es inteligente» — «inteligente» ends in -e, no gender change. Use ser. From Lesson 15 + 26.' },
+    { type:'tap_select', prompt:'Question word — «How old are you?»', options:['¿Cómo eres?','¿Cuántos años tienes?','¿Quién eres?','¿Dónde estás?'], correct:1, explain:'«¿Cuántos años tienes?» — combines question word + tener idiom. From Lessons 7 + 8.' },
+    { type:'speak', prompt:'Practice introduction.', target:'Me llamo Matthew', translation:'my name is Matthew', explain:'Adjust to your name. From Lesson 4.' },
+  ],
+};
+
+const LESSON_28 = {
+  id: 'L28', title: 'Repaso 2',
+  vocabPreview: [['Restaurant','food, drinks'],['Gustar','me gusta / me gustan'],['City','places, directions'],['Transport','how to get around'],['Family','members, possessives'],['Descriptions','people']],
+  vocabulary: [['La cuenta, por favor','the bill, please'],['Me gusta el café','I like coffee'],['¿Cuánto cuesta?','how much?'],['a la derecha','to the right'],['Voy en metro','I go by metro'],['Mi hermana','my sister'],['Es simpático','he is nice'],['nuestra casa','our house']],
+  exercises: [
+    { type:'intro', title:'Review: Units 5-7', body:'Mixed practice from Lessons 16-26. Restaurants, food, gustar, city, directions, transport, family, house, possessives, descriptions. Push your weaker areas: gustar inversion, possessive agreement, and «hay» vs «está».', vocab:[['Restaurant','quisiera, la cuenta, ¿qué desea?'],['Gustar','me gusta(n) — backwards from English'],['Places','el banco, el museo, hay un parque'],['Directions','derecha, izquierda, todo derecho'],['Transport','en + vehicle, tomar el metro'],['Family','padres, hermanos, abuelos'],['Possessives','mi(s), tu(s), su(s), nuestro/-a/-os/-as']] },
+    { type:'tap_select', prompt:'Restaurant — polite request:', options:['Dame un café','Quiero un café','Quisiera un café','Necesito un café'], correct:2, explain:'«Quisiera» — most polite. Use with waiters. From Lesson 16.' },
+    { type:'fill_blank', prompt:'Gustar agreement — what form?', sentence:'Me _____ los libros. (I like books)', correct:['gustan'], explain:'«Me gustan los libros» — plural subject «libros» → plural «gustan». From Lesson 19.' },
+    { type:'listen', audio:'¿Cuánto cuesta?', prompt:'Listen and choose.', options:['Where is it?','How much does it cost?','What is it?','When is it?'], correct:1, explain:'«¿Cuánto cuesta?» — singular price question. From Lesson 18.' },
+    { type:'translate', prompt:'Translate — directions.', source:'Turn right.', correct:['doble a la derecha','dobla a la derecha'], explain:'«Doble a la derecha» (formal) or «Dobla a la derecha» (informal tú command). From Lesson 21.' },
+    { type:'tap_select', prompt:'Transport — «I take the metro»:', options:['Voy el metro','Voy en metro','Tomo el metro','B and C'], correct:3, explain:'Both «Voy en metro» and «Tomo el metro» work. From Lesson 22.' },
+    { type:'fill_blank', prompt:'Possessive agreement.', sentence:'_____ casa es bonita. (our house)', correct:['nuestra'], explain:'«Nuestra casa» — feminine singular. From Lesson 25.' },
+    { type:'arrange', prompt:'Arrange — «My grandmother is very kind.»', tokens:['amable','es','abuela','muy','Mi'], correct:['Mi','abuela','es','muy','amable'], explain:'«Mi abuela es muy amable» — ser for personality, «amable» no gender change. From Lessons 25 + 26.' },
+    { type:'translate', prompt:'Translate — Venezuelan style.', source:'I feel like an arepa.', correct:['me provoca una arepa'], explain:'«Me provoca una arepa» — Caribbean construction. From Lesson 17.' },
+    { type:'tap_select', prompt:'«Hay» vs «está» — which is right?', options:['Hay el banco en la calle','Está el banco en la calle','Hay un banco en la calle','Está un banco en la calle'], correct:2, explain:'«Hay» for existence (with indefinite article «un»). «Está» for specific location (with definite article «el»). From Lesson 20.' },
+    { type:'speak', prompt:'Order food politely.', target:'La cuenta, por favor', translation:'the bill, please', explain:'Standard restaurant exit. From Lesson 16.' },
+  ],
+};
+
+const LESSON_29 = {
+  id: 'L29', title: 'Conversación A1',
+  vocabPreview: [['Real scenarios','full conversations'],['Greet someone','first meeting'],['Order food','at a café'],['Ask directions','in the city'],['Talk about you','origin, family'],['Say goodbye','for the night']],
+  vocabulary: [['Buenas tardes','good afternoon (greeting)'],['Soy de Texas','I\'m from Texas'],['Quisiera un café','I\'d like a coffee'],['¿Dónde está el museo?','where is the museum?'],['Tengo dos hermanos','I have two siblings'],['Hasta mañana','see you tomorrow'],['Mucho gusto','nice to meet you'],['Igualmente','likewise']],
+  exercises: [
+    { type:'intro', title:'You\'re in Caracas', body:'Imagine you\'ve landed in Caracas for the first time. The next 10 exercises put you in real situations: meeting someone, ordering at a café, asking directions, answering personal questions, saying goodbye. Pull from everything you\'ve learned. No hand-holding — apply it.', vocab:[['Greet by time of day','Buenos días / tardes / noches'],['Introduce yourself','Soy [name], soy de [place]'],['Order politely','Quisiera…, por favor'],['Ask where things are','¿Dónde está…?'],['Talk about you','Tengo, me gusta, mi familia'],['Say goodbye','Adiós, hasta luego, hasta mañana']] },
+    { type:'tap_select', prompt:'It\'s 8 PM. You walk into a restaurant. Greet the host:', options:['Buenos días','Buenas tardes','Buenas noches','Adiós'], correct:2, explain:'8 PM = «buenas noches». Switch from «tardes» around 7 PM in most regions.' },
+    { type:'translate', prompt:'Introduce yourself — name and origin.', source:'My name is Matthew, I\'m from the United States.', correct:['me llamo matthew, soy de los estados unidos','me llamo matthew soy de los estados unidos','me llamo matthew, soy de estados unidos','soy matthew, soy de los estados unidos'], explain:'«Me llamo… soy de…» — standard self-introduction. Substitute your name and origin.' },
+    { type:'listen', audio:'¿De dónde eres?', prompt:'Someone asks you this. What does it mean?', options:['What\'s your name?','Where are you from?','How are you?','How old are you?'], correct:1, explain:'«¿De dónde eres?» — where are you from? Use «ser» (origin). Reply: «Soy de [place]».' },
+    { type:'translate', prompt:'You walk into a café. Order a coffee politely.', source:'I would like a coffee, please.', correct:['quisiera un café, por favor','quisiera un café por favor','me gustaría un café, por favor'], explain:'«Quisiera un café, por favor» — softer than «quiero». Standard café order.' },
+    { type:'tap_select', prompt:'The waiter says «Aquí tiene». You respond:', options:['Hola','Adiós','Gracias','Perdón'], correct:2, explain:'«Aquí tiene» = «here you go». Reply with «gracias». They\'ll likely respond «de nada».' },
+    { type:'translate', prompt:'You\'re lost. Ask how to get to the museum.', source:'How do I get to the museum?', correct:['¿cómo llego al museo?','como llego al museo'], explain:'«¿Cómo llego al museo?» — «llegar a» + place. Note contraction «al» (a + el).' },
+    { type:'listen', audio:'¿Te gusta Caracas?', prompt:'Someone asks. What does it mean?', options:['Do you live in Caracas?','Are you from Caracas?','Do you like Caracas?','When did you arrive?'], correct:2, explain:'«¿Te gusta Caracas?» — do you like Caracas? Reply «Sí, me gusta mucho» or similar.' },
+    { type:'translate', prompt:'It\'s late. You\'re saying goodbye to a new friend you\'ll see tomorrow.', source:'Goodbye, see you tomorrow!', correct:['adiós, hasta mañana','adiós hasta mañana','chao, hasta mañana','hasta mañana'], explain:'«Adiós, hasta mañana» or just «Hasta mañana» if casual. «Chao» works in Venezuela for «bye».' },
+    { type:'arrange', prompt:'Arrange — «Nice to meet you, likewise.»', tokens:['gusto','Igualmente','mucho'], correct:['mucho','gusto','Igualmente'], explain:'«Mucho gusto. Igualmente.» — first-meeting exchange. One says «mucho gusto», the other replies «igualmente».' },
+    { type:'speak', prompt:'Close the night.', target:'Hasta mañana', translation:'see you tomorrow', explain:'«AHS-tah ma-NYAH-na». Soft, warm — the way you\'d leave a Venezuelan family\'s house after dinner.' },
+  ],
+};
+
+const LESSONS = { L1: LESSON_1, L2: LESSON_2, L3: LESSON_3, L4: LESSON_4, L5: LESSON_5, L6: LESSON_6, L7: LESSON_7, L8: LESSON_8, L9: LESSON_9, L10: LESSON_10, L11: LESSON_11, L12: LESSON_12, L13: LESSON_13, L14: LESSON_14, L15: LESSON_15, L16: LESSON_16, L17: LESSON_17, L18: LESSON_18, L19: LESSON_19, L20: LESSON_20, L21: LESSON_21, L22: LESSON_22, L23: LESSON_23, L24: LESSON_24, L25: LESSON_25, L26: LESSON_26, L27: LESSON_27, L28: LESSON_28, L29: LESSON_29 };
 
 // ─────────── STATE ───────────
 let user = null;
