@@ -832,6 +832,109 @@ input { font-size: 16px; } /* prevents iOS zoom */
 .option-tile.wrong .option-letter { background: var(--error); color: var(--cream); }
 .option-text { flex: 1; }
 
+/* CONVERSATION (scenarios) */
+.convo-context {
+  background: var(--cream-2);
+  border-left: 3px solid var(--gold);
+  padding: 14px 16px;
+  border-radius: 8px;
+  margin-bottom: 18px;
+}
+.convo-eyebrow {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--gold);
+  margin-bottom: 6px;
+}
+.convo-context-body {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--ink);
+}
+.convo-history {
+  background: var(--cream);
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 14px;
+  max-height: 220px;
+  overflow-y: auto;
+  display: flex; flex-direction: column; gap: 10px;
+}
+.convo-turn {
+  display: flex; flex-direction: column; gap: 4px;
+}
+.convo-turn.convo-you { align-items: flex-end; }
+.convo-turn.convo-them { align-items: flex-start; }
+.convo-speaker {
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+}
+.convo-bubble {
+  padding: 10px 14px;
+  border-radius: 14px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--ink);
+  max-width: 85%;
+  position: relative;
+}
+.convo-turn.convo-you .convo-bubble {
+  background: var(--terracotta);
+  color: var(--cream);
+  border-color: var(--terracotta);
+}
+.convo-current-npc {
+  margin-bottom: 16px;
+  display: flex; flex-direction: column; gap: 4px;
+  align-items: flex-start;
+}
+.convo-bubble-current {
+  background: var(--paper);
+  border: 1.5px solid var(--ink);
+  font-size: 17px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--serif);
+  font-variation-settings: 'opsz' 24;
+}
+.convo-tts {
+  background: var(--ink);
+  color: var(--cream);
+  border: none;
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  display: grid; place-items: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  font-size: 11px;
+}
+.convo-translation {
+  font-size: 13px;
+  color: var(--muted);
+  font-style: italic;
+  margin-top: 2px;
+  margin-left: 4px;
+}
+.convo-prompt {
+  font-size: 14px;
+  color: var(--muted);
+  margin-bottom: 12px;
+  font-weight: 500;
+}
+.convo-choices .option-tile {
+  font-family: var(--serif);
+  font-variation-settings: 'opsz' 18, 'SOFT' 60;
+}
+
 /* FILL-BLANK / TRANSLATE */
 .sentence-display {
   font-family: var(--serif);
@@ -1520,6 +1623,24 @@ input { font-size: 16px; } /* prevents iOS zoom */
   background: var(--terracotta-soft) !important;
 }
 
+.unit-scenarios { position: relative; }
+.unit-num-scenarios {
+  color: var(--gold);
+  font-weight: 700;
+}
+.lesson-scenario .lesson-circle {
+  background: linear-gradient(135deg, rgba(201,155,61,0.12), rgba(184,71,42,0.06));
+  border: 1.5px dashed var(--gold);
+  color: var(--gold);
+  font-weight: 700;
+}
+.lesson-scenario.complete .lesson-circle {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--cream);
+  border-style: solid;
+}
+
 /* Dialect toggle highlights when ON */
 body.dialect-on .dialect-note {
   border-color: var(--terracotta);
@@ -2126,6 +2247,16 @@ const UNITS = [
   { num: 6, title: 'Places & Directions', lessons: ['L20','L21','L22'] },
   { num: 7, title: 'Family & Home', lessons: ['L23','L24','L25','L26'] },
   { num: 8, title: 'A1 Capstone', lessons: ['L27','L28','L29','L30'] },
+  { num: 9, title: 'Past — Preterite Irregulars', lessons: ['L31','L32','L33','L34'], level:'A2' },
+  { num: 10, title: 'Past — Imperfect', lessons: ['L35','L36','L37'], level:'A2' },
+  { num: 11, title: 'Object Pronouns', lessons: ['L38','L39','L40'], level:'A2' },
+  { num: 12, title: 'Por/Para, Future, Conditional', lessons: ['L41','L42','L43'], level:'A2' },
+  { num: 13, title: 'Reflexives & Comparisons', lessons: ['L44','L45'], level:'A2' },
+  { num: 14, title: 'Commands & Present Perfect', lessons: ['L46','L47','L48'], level:'A2' },
+  { num: 15, title: 'Subjunctive Introduction', lessons: ['L49','L50','L51'], level:'A2' },
+  { num: 16, title: 'Practical Vocabulary', lessons: ['L52','L53','L54','L55'], level:'A2' },
+  { num: 17, title: 'Time, Conditions & Connectors', lessons: ['L56','L57'], level:'A2' },
+  { num: 18, title: 'A2 Capstone', lessons: ['L58','L59','L60'], level:'A2' },
 ];
 
 const LESSON_META = {
@@ -2159,16 +2290,58 @@ const LESSON_META = {
   L28: { unit:8, n:28, title:'Repaso 2', sub:'Review: Units 5-7', xp:40 },
   L29: { unit:8, n:29, title:'Conversación A1', sub:'Hold a real conversation', xp:50 },
   L30: { unit:8, n:30, title:'Evaluación A1', sub:'Final A1 assessment', xp:60 },
+  // ─── A2 ───
+  L31: { unit:9, n:31, level:'A2', title:'Pretérito — ser, ir, ver, dar', sub:'4 super-irregular preterites', xp:40 },
+  L32: { unit:9, n:32, level:'A2', title:'Pretérito en U', sub:'estar, tener, poder, poner, saber', xp:45 },
+  L33: { unit:9, n:33, level:'A2', title:'Pretérito en I', sub:'hacer, querer, venir, decir, traer', xp:45 },
+  L34: { unit:9, n:34, level:'A2', title:'Pretérito de cambio', sub:'-IR stem changers (dormir, pedir, sentir)', xp:40 },
+  L35: { unit:10, n:35, level:'A2', title:'El imperfecto', sub:'Used-to / was-doing past', xp:40 },
+  L36: { unit:10, n:36, level:'A2', title:'Imperfecto irregular', sub:'Only 3: ser, ir, ver', xp:30 },
+  L37: { unit:10, n:37, level:'A2', title:'Pretérito vs Imperfecto', sub:'When to use which', xp:50 },
+  L38: { unit:11, n:38, level:'A2', title:'Objeto directo', sub:'me, te, lo, la, nos, los, las', xp:40 },
+  L39: { unit:11, n:39, level:'A2', title:'Objeto indirecto', sub:'me, te, le, nos, les', xp:40 },
+  L40: { unit:11, n:40, level:'A2', title:'DO + IO juntos', sub:'se lo / se la (le → se rule)', xp:50 },
+  L41: { unit:12, n:41, level:'A2', title:'Por vs Para', sub:'The eternal A2 distinction', xp:50, dialect:"In Venezuela you'll hear «¡por fin!» (finally!) and «por si acaso» (just in case) constantly. «Para» also gets shortened in casual speech to «pa\'»: «pa\' la casa» = home." },
+  L42: { unit:12, n:42, level:'A2', title:'El futuro', sub:'Going-to + simple future', xp:40 },
+  L43: { unit:12, n:43, level:'A2', title:'El condicional', sub:'Would / polite forms', xp:40 },
+  L44: { unit:13, n:44, level:'A2', title:'Reflexivos avanzados', sub:'Emotions, becoming, idioms', xp:45 },
+  L45: { unit:13, n:45, level:'A2', title:'Comparativos y superlativos', sub:'más que, tan como, el más', xp:40 },
+  L46: { unit:14, n:46, level:'A2', title:'Imperativo informal', sub:'Tú commands (affirmative + negative)', xp:45 },
+  L47: { unit:14, n:47, level:'A2', title:'Imperativo formal', sub:'Usted / ustedes commands', xp:40 },
+  L48: { unit:14, n:48, level:'A2', title:'Pretérito perfecto', sub:'He hablado (have spoken)', xp:45 },
+  L49: { unit:15, n:49, level:'A2', title:'Subjuntivo — formación', sub:'Present subjunctive forms', xp:50 },
+  L50: { unit:15, n:50, level:'A2', title:'Subjuntivo — deseos', sub:'Quiero que, ojalá, recomiendo que', xp:50 },
+  L51: { unit:15, n:51, level:'A2', title:'Subjuntivo — duda y emoción', sub:'Dudar, no creer, es bueno que', xp:50 },
+  L52: { unit:16, n:52, level:'A2', title:'Salud y cuerpo', sub:'Body, illness, doctor visits', xp:40, dialect:"Venezuelans say «estoy malucho» = feeling sub-par. «Me cayó como una patada» = it really upset me. «Salud!» when someone sneezes." },
+  L53: { unit:16, n:53, level:'A2', title:'Viajar', sub:'Airports, hotels, immigration', xp:40 },
+  L54: { unit:16, n:54, level:'A2', title:'Trabajo y profesiones', sub:'Job vocab and workplace Spanish', xp:40 },
+  L55: { unit:16, n:55, level:'A2', title:'Tecnología', sub:'Phones, internet, devices', xp:35 },
+  L56: { unit:17, n:56, level:'A2', title:'Hace + tiempo', sub:'Hace 5 años / desde hace', xp:40 },
+  L57: { unit:17, n:57, level:'A2', title:'Si + presente', sub:'Real conditional (if I have time, I go)', xp:40 },
+  L58: { unit:18, n:58, level:'A2', title:'Repaso A2', sub:'Past tenses, pronouns, subjunctive review', xp:50 },
+  L59: { unit:18, n:59, level:'A2', title:'Conversación A2', sub:'Hold an A2-level conversation', xp:60 },
+  L60: { unit:18, n:60, level:'A2', title:'Evaluación A2', sub:'Final A2 assessment', xp:75 },
   // Venezuelan A1 deep dive — unlocks after A1 complete
   V1: { track:'venezuelan', level:'A1', n:1, title:'Caracas en la calle', sub:'Slang & street talk', xp:35, dialect:"This whole module is the Venezuelan dialect track. Drop these phrases into A2 conversation and locals will treat you like family." },
   V2: { track:'venezuelan', level:'A1', n:2, title:'La mesa venezolana', sub:'Food culture deep dive', xp:35 },
   V3: { track:'venezuelan', level:'A1', n:3, title:'Música y ritmo', sub:'Joropo, gaita, salsa', xp:30 },
   V4: { track:'venezuelan', level:'A1', n:4, title:'Cultura caraqueña', sub:'El Ávila, la cola, areperas', xp:35 },
+  // Venezuelan A2 deep dive — unlocks after A2 complete
+  V5: { track:'venezuelan', level:'A2', n:5, title:'La chamba caraqueña', sub:'Workplace Venezuelan Spanish', xp:40 },
+  V6: { track:'venezuelan', level:'A2', n:6, title:'Modismos esenciales', sub:'Idioms locals actually use', xp:40 },
+  V7: { track:'venezuelan', level:'A2', n:7, title:'Por la calle', sub:'Caracas neighborhoods & transit', xp:35 },
+  V8: { track:'venezuelan', level:'A2', n:8, title:'Cuentando historias', sub:'Storytelling Venezuelan-style', xp:45 },
+  // Scenarios — multi-turn conversation drills
+  S1: { scenario:true, n:1, title:'En la arepera', sub:'Order lunch at a Caracas arepera', xp:50 },
+  S2: { scenario:true, n:2, title:'Tomando un por puesto', sub:'Take a shared taxi across town', xp:50 },
+  S3: { scenario:true, n:3, title:'En el aeropuerto', sub:'Immigration & customs', xp:55 },
+  S4: { scenario:true, n:4, title:'Pidiendo direcciones', sub:'Find your way in Las Mercedes', xp:50 },
 };
 
 // Venezuelan track lessons grouped by level — unlock when matching level is complete
 const VE_TRACKS = {
   A1: ['V1','V2','V3','V4'],
+  A2: ['V5','V6','V7','V8'],
 };
 
 // ─────────── LESSON 1 CONTENT (the playable lesson) ───────────
@@ -2945,7 +3118,997 @@ const LESSON_V4 = {
   ],
 };
 
-const LESSONS = { L1: LESSON_1, L2: LESSON_2, L3: LESSON_3, L4: LESSON_4, L5: LESSON_5, L6: LESSON_6, L7: LESSON_7, L8: LESSON_8, L9: LESSON_9, L10: LESSON_10, L11: LESSON_11, L12: LESSON_12, L13: LESSON_13, L14: LESSON_14, L15: LESSON_15, L16: LESSON_16, L17: LESSON_17, L18: LESSON_18, L19: LESSON_19, L20: LESSON_20, L21: LESSON_21, L22: LESSON_22, L23: LESSON_23, L24: LESSON_24, L25: LESSON_25, L26: LESSON_26, L27: LESSON_27, L28: LESSON_28, L29: LESSON_29, L30: LESSON_30, V1: LESSON_V1, V2: LESSON_V2, V3: LESSON_V3, V4: LESSON_V4 };
+// ─────────── LESSONS L31-L45 (A2) ───────────
+const LESSON_31 = {
+  id: 'L31', title: 'Pretérito — ser, ir, ver, dar',
+  vocabPreview: [['fui','I was / I went'],['fue','he/she was / went'],['vi','I saw'],['vio','he/she saw'],['di','I gave'],['dio','he/she gave']],
+  vocabulary: [['fui','I was / I went (ser/ir share)'],['fuiste','you were / went'],['fue','he/she was / went'],['fuimos','we were / went'],['fueron','they were / went'],['vi','I saw'],['viste','you saw'],['vio','he/she saw'],['vimos','we saw'],['vieron','they saw'],['di','I gave'],['diste','you gave'],['dio','he/she gave'],['dimos','we gave'],['dieron','they gave']],
+  exercises: [
+    { type:'intro', title:'4 super-irregular preterites', body:'SER and IR share the SAME preterite forms — context tells you which: «fui a la tienda» = I went to the store; «fui estudiante» = I was a student. VER and DAR follow short stems with no accent marks. Memorize these as units — they\'re the most common irregular preterites you\'ll meet.', vocab:[['ser/ir: fui, fuiste, fue, fuimos, fueron','I went / was — same forms'],['ver: vi, viste, vio, vimos, vieron','I saw — no accents'],['dar: di, diste, dio, dimos, dieron','I gave — no accents']] },
+    { type:'tap_select', prompt:'«I went to the store»:', options:['fui a la tienda','iba a la tienda','voy a la tienda','vine a la tienda'], correct:0, explain:'«Fui a la tienda» — preterite of ir, completed past action. «Iba» (imperfect) = used to go.' },
+    { type:'fill_blank', prompt:'Conjugate ver — yo form.', sentence:'Yo _____ el partido anoche.', correct:['vi'], explain:'«Vi» — yo form of ver in preterite. No accent (compare to regular «-í»).' },
+    { type:'translate', prompt:'Translate.', source:'She gave me a gift.', correct:['ella me dio un regalo','me dio un regalo'], explain:'«Me dio un regalo» — «dio» is third person of dar. «Me» (IO pronoun) before the verb.' },
+    { type:'listen', audio:'fuimos al cine', prompt:'Listen and choose.', options:['I went to the movies','we went to the movies','we used to go to the movies','they went to the movies'], correct:1, explain:'«Fuimos al cine» — nosotros form. Could be ser («we were»), but with «al» (a + el) it\'s clearly ir + place = «we went to».' },
+    { type:'tap_select', prompt:'«I was a student in 2015» (completed past):', options:['era estudiante en 2015','soy estudiante en 2015','fui estudiante en 2015','iba estudiante en 2015'], correct:2, explain:'«Fui estudiante» — preterite for completed period. «Era estudiante» (imperfect) = was being a student / used to be (open-ended).' },
+    { type:'translate', prompt:'Translate — yes-or-no question.', source:'Did you see her?', correct:['¿la viste?','la viste'], explain:'«¿La viste?» — «la» (DO pronoun for her) + «viste» (you saw). Direct object pronouns covered in L38.' },
+    { type:'arrange', prompt:'Arrange — «Last night I went to the restaurant.»', tokens:['restaurante','al','Anoche','fui'], correct:['Anoche','fui','al','restaurante'], explain:'«Anoche fui al restaurante» — time first, then verb. «Al» = a + el contraction.' },
+    { type:'tap_select', prompt:'Preterite of dar — third person plural:', options:['daban','dieron','dan','darán'], correct:1, explain:'«Dieron» — they/ustedes gave. -ieron is the regular -ER ending applied to a short stem «d-».' },
+    { type:'translate', prompt:'Translate.', source:'We were friends.', correct:['fuimos amigos','éramos amigos'], explain:'«Fuimos amigos» (preterite) implies a closed period. «Éramos amigos» (imperfect) = were friends back then, ongoing.' },
+    { type:'speak', prompt:'Say it.', target:'Fui al cine ayer', translation:'I went to the movies yesterday', explain:'«fwee al SEE-nay ah-YER». Anchor of every past-tense conversation.' },
+  ],
+};
+
+const LESSON_32 = {
+  id: 'L32', title: 'Pretérito en U',
+  vocabPreview: [['estuve','I was'],['tuve','I had'],['pude','I could'],['puse','I put'],['supe','I knew (found out)']],
+  vocabulary: [['estuve / estuviste / estuvo','I/you/he was (estar)'],['estuvimos / estuvieron','we/they were'],['tuve / tuviste / tuvo','I/you/he had (tener)'],['tuvimos / tuvieron','we/they had'],['pude / pudiste / pudo','I/you/he could (poder)'],['pudimos / pudieron','we/they could'],['puse / pusiste / puso','I/you/he put (poner)'],['pusimos / pusieron','we/they put'],['supe / supiste / supo','I/you/he knew/found out (saber)'],['supimos / supieron','we/they found out'],['anduve','I walked / went around (andar)']],
+  exercises: [
+    { type:'intro', title:'U-stem irregulars — no accents!', body:'A whole family of preterites uses a U-vowel stem and shares the SAME endings: -e, -iste, -o, -imos, -ieron. Critical: NO ACCENTS on yo and él/ella forms (different from regular preterite). The U-family: estar→estuv-, tener→tuv-, poder→pud-, poner→pus-, saber→sup-, andar→anduv-.', vocab:[['estuv-','estar (to be)'],['tuv-','tener (to have)'],['pud-','poder (could)'],['pus-','poner (to put)'],['sup-','saber (to know / find out)'],['anduv-','andar (to walk)'],['Endings: -e, -iste, -o, -imos, -ieron','Same for ALL u-stem']] },
+    { type:'tap_select', prompt:'«I had» (preterite of tener):', options:['tenía','tuve','tengo','tuviste'], correct:1, explain:'«Tuve» — yo form. Note: NO accent on the «e» (different from regular «-í»).' },
+    { type:'fill_blank', prompt:'Preterite of estar — tú form.', sentence:'Tú _____ aquí ayer.', correct:['estuviste'], explain:'«Estuviste» — tú form. Stem «estuv-» + ending «-iste».' },
+    { type:'translate', prompt:'Translate.', source:'I could not (do it).', correct:['no pude','no pude hacerlo'], explain:'«No pude» — preterite of «poder». «Pude» often implies «I tried but failed» in this tense; «podía» (imperfect) = was able / used to be able.' },
+    { type:'listen', audio:'estuvimos en casa', prompt:'Listen and choose.', options:['I was home','we were home','we are home','they were home'], correct:1, explain:'«Estuvimos en casa» — nosotros form. Note the U stem.' },
+    { type:'tap_select', prompt:'«I found out / I knew» (the news):', options:['sabía','supe','conocí','sé'], correct:1, explain:'«Supe» — preterite of saber means «I found out» (a moment of learning). «Sabía» (imperfect) = I knew (ongoing knowledge).' },
+    { type:'translate', prompt:'Translate.', source:'She put the book on the table.', correct:['ella puso el libro en la mesa','puso el libro en la mesa','ella puso el libro sobre la mesa'], explain:'«Puso» — preterite of poner. Note the U stem and -o ending (no accent).' },
+    { type:'arrange', prompt:'Arrange — «I had a great idea.»', tokens:['idea','tuve','una','gran','Yo'], correct:['Yo','tuve','una','gran','idea'], explain:'«Yo tuve una gran idea» — «gran» before noun (shortened «grande»).' },
+    { type:'fill_blank', prompt:'Conjugate poder — nosotros form.', sentence:'Nosotros _____ ir al concierto. (we could)', correct:['pudimos'], explain:'«Pudimos» — nosotros form. Pattern: u-stem + -imos.' },
+    { type:'tap_select', prompt:'Which is wrong?', options:['estuve','estuvió','estuvimos','estuvieron'], correct:1, explain:'«Estuvió» is incorrect. The third person singular is «estuvo» (no accent on -o). «Estuvió» tries to apply regular -ió ending — wrong.' },
+    { type:'speak', prompt:'Say it.', target:'tuve un día difícil', translation:'I had a difficult day', explain:'«TOO-vay oon DEE-ah dee-FEE-seel». Useful when explaining why you\'re tired.' },
+  ],
+};
+
+const LESSON_33 = {
+  id: 'L33', title: 'Pretérito en I',
+  vocabPreview: [['hice','I did/made'],['hizo','he/she did'],['quise','I wanted'],['vine','I came'],['dije','I said'],['traje','I brought']],
+  vocabulary: [['hice / hiciste / hizo','I/you/he did or made (hacer) — note z!'],['hicimos / hicieron','we/they did'],['quise / quisiste / quiso','I/you/he wanted (querer)'],['quisimos / quisieron','we/they wanted'],['vine / viniste / vino','I/you/he came (venir)'],['vinimos / vinieron','we/they came'],['dije / dijiste / dijo','I/you/he said (decir)'],['dijimos / dijeron','we/they said (note: -jeron not -ieron)'],['traje / trajiste / trajo','I/you/he brought (traer)'],['trajimos / trajeron','we/they brought']],
+  exercises: [
+    { type:'intro', title:'I-stem irregulars + j-stem rule', body:'I-stem family: hacer→hic-, querer→quis-, venir→vin-. Same endings as U-stems: -e, -iste, -o, -imos, -ieron. TWO traps: (1) «hizo» — third person of hacer uses Z, not C, before O («hice» but «hizo»). (2) J-stem verbs (decir→dij-, traer→traj-, all -ducir verbs) DROP the i in -ieron → -jeron: «dijeron» (not «dijieron»), «trajeron» (not «trajieron»).', vocab:[['hic- / hiz-','hacer'],['quis-','querer'],['vin-','venir'],['dij- (drops i in -eron)','decir'],['traj- (drops i in -eron)','traer'],['hizo, NOT hico','3rd-person hacer keeps the «s» sound by switching c→z']] },
+    { type:'tap_select', prompt:'«I did/made»:', options:['hice','hizo','hago','hacía'], correct:0, explain:'«Hice» — yo form of hacer. Note: stem «hic-» + ending «-e». No accent.' },
+    { type:'fill_blank', prompt:'WATCH the spelling — third person.', sentence:'Ella _____ la tarea. (did)', correct:['hizo'], explain:'«Hizo» — Z, not C. The «c» before «o» would be hard «k» sound; we write «z» to keep the soft «s» sound. Same with «empezar» → «empecé».' },
+    { type:'translate', prompt:'Translate.', source:'He came to my house.', correct:['vino a mi casa','él vino a mi casa'], explain:'«Vino a mi casa» — «vino» is preterite of venir. Watch the homonym: «vino» also means «wine».' },
+    { type:'listen', audio:'dije la verdad', prompt:'Listen and choose.', options:['I told the truth','he told the truth','we told the truth','they tell the truth'], correct:0, explain:'«Dije la verdad» — yo form of decir. «Dij-» stem + «-e» ending.' },
+    { type:'tap_select', prompt:'«They brought» — choose correctly:', options:['traieron','trajieron','trajeron','trayeron'], correct:2, explain:'«Trajeron» — j-stem rule: drop the i in -ieron, becoming -eron. Same with «dijeron» (not «dijieron»).' },
+    { type:'translate', prompt:'Translate.', source:'I wanted to go.', correct:['quise ir','yo quise ir'], explain:'«Quise ir» — preterite of querer often implies tried-and-failed: «I wanted to go (but didn\'t)». «Quería ir» (imperfect) = wanted to go (open-ended).' },
+    { type:'arrange', prompt:'Arrange — «We came by car.»', tokens:['carro','en','Nosotros','vinimos'], correct:['Nosotros','vinimos','en','carro'], explain:'«Nosotros vinimos en carro» — «vinimos» is nosotros form. Note: «vinimos» is regular-looking but stem is «vin-» (i-stem).' },
+    { type:'fill_blank', prompt:'Decir, tú form.', sentence:'Tú me _____ una historia. (told)', correct:['dijiste'], explain:'«Dijiste» — j-stem «dij-» + tú ending «-iste». Standard pattern.' },
+    { type:'tap_select', prompt:'«We made dinner» — using hacer:', options:['hicemos la cena','hicimos la cena','hacíamos la cena (preterite)','hizimos la cena'], correct:1, explain:'«Hicimos la cena» — nosotros form: «hic-» + «-imos». Common confusion: it\'s «hicimos», not «hizimos».' },
+    { type:'speak', prompt:'Say it.', target:'hice mi tarea', translation:'I did my homework', explain:'«EE-say mee TA-ray-ah». Note the silent h.' },
+  ],
+};
+
+const LESSON_34 = {
+  id: 'L34', title: 'Pretérito de cambio',
+  vocabPreview: [['durmió','he/she slept'],['pidió','he/she asked for'],['sintió','he/she felt'],['murió','he/she died'],['prefirió','he/she preferred']],
+  vocabulary: [['dormí / dormiste / durmió','I/you/he slept (dormir, o→u in 3rd)'],['dormimos / durmieron','we slept / they slept'],['pedí / pediste / pidió','I/you/he asked for (pedir, e→i)'],['pedimos / pidieron','we / they asked for'],['sentí / sentiste / sintió','I/you/he felt (sentir, e→i)'],['sentimos / sintieron','we / they felt'],['preferí / prefirió','I / he preferred'],['murió','he/she died'],['servir → sirvió','served (he/she)']],
+  exercises: [
+    { type:'intro', title:'Stem-changers in 3rd person only', body:'A handful of -IR verbs change their stem ONLY in third person preterite: e→i (pedir→pidió, sentir→sintió, preferir→prefirió, servir→sirvió) and o→u (dormir→durmió, morir→murió). The yo and tú forms stay regular: «pedí, pediste» but «pidió, pidieron». -AR and -ER verbs do NOT have this change. Just -IR.', vocab:[['e→i in 3rd person','pidió, sintió, prefirió, sirvió, repitió'],['o→u in 3rd person','durmió, murió'],['1st & 2nd person stay regular','pedí, pediste, dormí, dormiste'],['Plural follows 3rd-person change','pidieron, durmieron']] },
+    { type:'tap_select', prompt:'«She slept»:', options:['durmí','dormió','durmió','dormieron'], correct:2, explain:'«Durmió» — third person, o→u stem change applies. «Dormí» (yo) and «dormimos» (nosotros) keep the regular «o».' },
+    { type:'fill_blank', prompt:'Stem-change in 3rd person plural.', sentence:'Ellos _____ comida. (they ordered)', correct:['pidieron'], explain:'«Pidieron» — e→i applies in third-person plural too. Stem «pid-» + «-ieron».' },
+    { type:'translate', prompt:'Translate.', source:'I felt it.', correct:['lo sentí','yo lo sentí'], explain:'«Lo sentí» — yo form of sentir = «sentí» (regular, no stem change in first person). «Lo» (DO pronoun) before verb.' },
+    { type:'listen', audio:'él prefirió té', prompt:'Listen and choose.', options:['he prefers tea','he preferred tea','I preferred tea','we prefer tea'], correct:1, explain:'«Prefirió» — third person, e→i change. From preferir.' },
+    { type:'tap_select', prompt:'Yo form of dormir in preterite:', options:['durmí','dormí','durmió','dormo'], correct:1, explain:'«Dormí» — first person doesn\'t have the stem change. Only third-person forms shift.' },
+    { type:'translate', prompt:'Translate.', source:'We slept well.', correct:['dormimos bien','nosotros dormimos bien'], explain:'«Dormimos bien» — nosotros form is regular (dorm-imos). Same form as present tense — context tells you.' },
+    { type:'arrange', prompt:'Arrange — «They ordered pizza.»', tokens:['pizza','pidieron','Ellos'], correct:['Ellos','pidieron','pizza'], explain:'«Ellos pidieron pizza» — plural third person, stem changes to «pid-».' },
+    { type:'fill_blank', prompt:'Sentir, yo form.', sentence:'Yo _____ cansado anoche. (felt)', correct:['sentí'], explain:'«Sentí» — yo form is regular «sent- + -í». Stem change only in 3rd person.' },
+    { type:'tap_select', prompt:'«He died»:', options:['mori','murió','morió','muerió'], correct:1, explain:'«Murió» — o→u stem change applies. From morir.' },
+    { type:'speak', prompt:'Say it.', target:'ella pidió la cuenta', translation:'she asked for the check', explain:'«EH-ya pee-dee-OH la KWEN-tah». Common restaurant context.' },
+  ],
+};
+
+const LESSON_35 = {
+  id: 'L35', title: 'El imperfecto',
+  vocabPreview: [['hablaba','I used to speak'],['comía','I used to eat'],['vivía','I used to live'],['hablábamos','we used to speak'],['comían','they used to eat']],
+  vocabulary: [['hablaba / hablabas / hablaba','-AR imperfect: I/you/he used to speak'],['hablábamos / hablaban','we / they used to speak'],['comía / comías / comía','-ER imperfect: I/you/he used to eat'],['comíamos / comían','we / they used to eat'],['vivía / vivías / vivía','-IR imperfect (same as -ER)'],['vivíamos / vivían','we/they used to live'],['cuando era niño','when I was a child'],['todos los días','every day'],['cada año','every year'],['mientras','while']],
+  exercises: [
+    { type:'intro', title:'Imperfect — used to / was doing', body:'Imperfect handles ongoing/repeated past — «I used to speak», «we were eating», «she always called». Two simple endings: -AR verbs use -aba family, -ER and -IR share -ía family. NO stem changes, almost no irregulars (only 3 — covered in L36). Uses: (1) repeated past actions, (2) descriptions, (3) ongoing actions interrupted by another (was-eating-when), (4) mental/emotional states.', vocab:[['-AR endings','-aba, -abas, -aba, -ábamos, -aban'],['-ER/-IR endings','-ía, -ías, -ía, -íamos, -ían'],['Used to do X','+ imperfect'],['Was doing X (when…)','+ imperfect'],['Description in past','+ imperfect']] },
+    { type:'tap_select', prompt:'«I used to speak»:', options:['hablé','hablaba','hablo','hablar'], correct:1, explain:'«Hablaba» — imperfect, -AR -aba ending. «Hablé» (preterite) = I spoke (one specific time).' },
+    { type:'fill_blank', prompt:'-ER imperfect, nosotros.', sentence:'Nosotros _____ todos los días. (we used to eat)', correct:['comíamos'], explain:'«Comíamos» — nosotros form, -ER imperfect. Note the accent on the «í». «Todos los días» = every day → habitual → imperfect.' },
+    { type:'translate', prompt:'Translate.', source:'She was sleeping.', correct:['ella dormía','dormía'], explain:'«Dormía» — imperfect captures «was doing» continuous past. Could also be «estaba durmiendo» but «dormía» is more concise.' },
+    { type:'listen', audio:'vivía en Caracas', prompt:'Listen and choose.', options:['I lived in Caracas','I live in Caracas','I will live in Caracas','I would live in Caracas'], correct:0, explain:'«Vivía en Caracas» — imperfect = I used to live / I was living in Caracas. Could be yo or él/ella — context decides.' },
+    { type:'tap_select', prompt:'-ER/-IR imperfect ending for tú:', options:['-aba','-abas','-ía','-ías'], correct:3, explain:'«-ías» — second person -ER/-IR. «Comías», «vivías». Same family of endings for both -ER and -IR.' },
+    { type:'translate', prompt:'Translate.', source:'We used to dance every weekend.', correct:['bailábamos cada fin de semana','bailábamos todos los fines de semana','nosotros bailábamos cada fin de semana'], explain:'«Bailábamos» — habitual past = imperfect. «Cada fin de semana» = every weekend.' },
+    { type:'arrange', prompt:'Arrange — «When I was a child, I played soccer.»', tokens:['fútbol','jugaba','niño,','Cuando','al','era'], correct:['Cuando','era','niño,','jugaba','al','fútbol'], explain:'«Cuando era niño, jugaba al fútbol» — both verbs imperfect: «era» (was, ongoing state) and «jugaba» (used to play, repeated).' },
+    { type:'fill_blank', prompt:'-AR imperfect, tú form.', sentence:'Tú _____ inglés cuando eras pequeño. (used to speak)', correct:['hablabas'], explain:'«Hablabas» — tú form, -AR -abas. Pattern: drop -ar, add -abas.' },
+    { type:'tap_select', prompt:'Which is the imperfect of -ER yo form?', options:['comí','como','comía','comeré'], correct:2, explain:'«Comía» — imperfect yo form. «Comí» = preterite (specific completed). «Como» = present.' },
+    { type:'speak', prompt:'Say it.', target:'yo comía mucho', translation:'I used to eat a lot', explain:'«yo ko-MEE-ah MOO-cho». Stress on MEE.' },
+  ],
+};
+
+const LESSON_36 = {
+  id: 'L36', title: 'Imperfecto irregular',
+  vocabPreview: [['era','I/he was'],['eras','you were'],['éramos','we were'],['iba','I/he went'],['íbamos','we went'],['veía','I/he saw']],
+  vocabulary: [['era / eras / era','I/you/he was (ser)'],['éramos / eran','we / they were'],['iba / ibas / iba','I/you/he went (ir)'],['íbamos / iban','we / they went'],['veía / veías / veía','I/you/he saw / used to see (ver)'],['veíamos / veían','we / they saw'],['cuando era niño','when I was a child'],['siempre','always']],
+  exercises: [
+    { type:'intro', title:'Only 3 imperfect irregulars', body:'A gift from Spanish: just THREE irregular verbs in the imperfect — ser, ir, and ver. SER: era, eras, era, éramos, eran. IR: iba, ibas, iba, íbamos, iban. VER: veía, veías, veía, veíamos, veían (looks regular but the «e-» from «ver» stays — the stem doesn\'t drop to «v-»).', vocab:[['ser → era, eras, era, éramos, eran','was/were'],['ir → iba, ibas, iba, íbamos, iban','went / used to go'],['ver → veía, veías, veía, veíamos, veían','saw / used to see (keep the e!)']] },
+    { type:'tap_select', prompt:'«I was (used to be) a student»:', options:['fui estudiante','soy estudiante','era estudiante','sería estudiante'], correct:2, explain:'«Era estudiante» — imperfect, ongoing identity in the past. «Fui estudiante» (preterite) = was a student during a defined period.' },
+    { type:'fill_blank', prompt:'Imperfect of ir — nosotros.', sentence:'Nosotros _____ a la playa cada verano. (we used to go)', correct:['íbamos'], explain:'«Íbamos» — nosotros form, with accent on the «í». Habitual = imperfect.' },
+    { type:'translate', prompt:'Translate.', source:'We were children.', correct:['éramos niños','éramos niñas','nosotros éramos niños'], explain:'«Éramos niños» (m or mixed). «Éramos niñas» if all girls. State of being = imperfect of ser.' },
+    { type:'listen', audio:'iba al colegio', prompt:'Listen and choose.', options:['I will go to school','I go to school','I used to go to school','I would go to school'], correct:2, explain:'«Iba al colegio» — imperfect of ir = I/he used to go to school.' },
+    { type:'tap_select', prompt:'«They used to see»:', options:['vieron','vían','veían','vivían'], correct:2, explain:'«Veían» — ver imperfect keeps the «e» from the infinitive: ver → veía, veías, veía, veíamos, veían.' },
+    { type:'translate', prompt:'Translate.', source:'I used to be a student.', correct:['yo era estudiante','era estudiante'], explain:'«Era estudiante» — habitual past identity = ser imperfect. «Estudiante» without «un» (profession/role rule).' },
+    { type:'arrange', prompt:'Arrange — «She used to go to the gym every day.»', tokens:['cada','iba','Ella','día','al','gimnasio'], correct:['Ella','iba','al','gimnasio','cada','día'], explain:'«Ella iba al gimnasio cada día» — imperfect for habitual action.' },
+    { type:'fill_blank', prompt:'Ser imperfect, tú form.', sentence:'Tú _____ feliz en aquella foto. (you were)', correct:['eras'], explain:'«Eras feliz» — ongoing emotional state in the past = imperfect.' },
+    { type:'tap_select', prompt:'Which IS regular in imperfect (not irregular)?', options:['ser','ir','ver','vivir'], correct:3, explain:'«Vivir» — perfectly regular (vivía, vivías…). The 3 irregulars are ser, ir, ver only.' },
+    { type:'speak', prompt:'Say it.', target:'era pequeño', translation:'I was little', explain:'«AY-ra pay-KAY-nyo». Foundational sentence opener for childhood stories.' },
+  ],
+};
+
+const LESSON_37 = {
+  id: 'L37', title: 'Pretérito vs Imperfecto',
+  vocabPreview: [['Pretérito','specific completed actions'],['Imperfecto','ongoing / habitual past'],['Cuando era niño','when I was a child'],['Ayer','yesterday'],['Mientras','while']],
+  vocabulary: [['Pretérito = completed','«fui», «comí», «hablé»'],['Imperfecto = ongoing','«era», «comía», «hablaba»'],['de repente','suddenly'],['una vez','once'],['mientras','while'],['cuando','when'],['todos los días','every day'],['siempre','always'],['ayer','yesterday']],
+  exercises: [
+    { type:'intro', title:'The big choice', body:'PRETERITE: completed actions, specific moments, beginnings/endings, defined periods — «I went, I ate, I lived there for 2 years». IMPERFECT: ongoing/repeated, descriptions, mental states, background — «I used to go, I was eating, I always lived there». Common combo: imperfect sets the SCENE, preterite drops the EVENT — «Estaba comiendo (imperfect, ongoing) cuando llegó (preterite, sudden) mi hermano».', vocab:[['Specific completed','→ preterite (fui, comí)'],['Repeated / habitual','→ imperfect (iba, comía)'],['Description / state','→ imperfect (era, tenía)'],['Was-doing-when','→ imperfect + preterite'],['For X period (defined)','→ preterite (viví por 5 años)'],['For X period (open-ended)','→ imperfect (vivía allí)']] },
+    { type:'tap_select', prompt:'«I went to school yesterday» (specific completed):', options:['iba a la escuela ayer','fui a la escuela ayer','voy a la escuela ayer','iría a la escuela ayer'], correct:1, explain:'«Fui» — specific time («ayer») and completed → preterite.' },
+    { type:'tap_select', prompt:'«When I was a child, I always wanted...» (ongoing childhood state):', options:['Cuando fui niño...','Cuando era niño...','Cuando soy niño...','Cuando seré niño...'], correct:1, explain:'«Era» — ongoing state of being. Imperfect for «when I was» as a backdrop.' },
+    { type:'fill_blank', prompt:'Both verbs imperfect (background).', sentence:'Cuando _____ niño, _____ al parque. (was, used to go)', correct:['era iba','era, iba'], explain:'«Era niño» (state) + «iba al parque» (habit) — both imperfect for childhood backdrop.' },
+    { type:'listen', audio:'estaba comiendo cuando llegó', prompt:'Listen and choose.', options:['I ate when he arrived','I was eating when he arrived','I will eat when he arrives','I used to eat when he arrived'], correct:1, explain:'«Estaba comiendo» (imperfect, ongoing background) + «llegó» (preterite, sudden event) — the classic was-doing-when pattern.' },
+    { type:'translate', prompt:'Translate — open-ended past.', source:'I used to live in New York.', correct:['vivía en nueva york','yo vivía en nueva york'], explain:'«Vivía» — habitual / open-ended → imperfect. No specific period stated.' },
+    { type:'translate', prompt:'Translate — DEFINED period.', source:'I lived in NY for 5 years.', correct:['viví en nueva york por cinco años','viví en nueva york por 5 años','viví en nueva york durante 5 años'], explain:'«Viví por 5 años» — defined and completed period → preterite. The «por X años» specifies a closed bracket.' },
+    { type:'arrange', prompt:'Arrange — «I was sleeping when she called.»', tokens:['llamó','dormía','cuando','Yo'], correct:['Yo','dormía','cuando','llamó'], explain:'«Yo dormía cuando llamó» — sleep is the ongoing background (imperfect), call interrupts (preterite).' },
+    { type:'tap_select', prompt:'«I always called my mother» — habitual past:', options:['siempre llamé a mi madre','siempre llamaba a mi madre','siempre llamo a mi madre','siempre llamaría a mi madre'], correct:1, explain:'«Siempre llamaba» — repeated/habitual past → imperfect. «Siempre» is a strong signal for imperfect.' },
+    { type:'tap_select', prompt:'«Yesterday I ate pizza» (one specific time):', options:['Ayer comía pizza','Ayer comí pizza','Ayer como pizza','Ayer comeré pizza'], correct:1, explain:'«Ayer comí» — single completed event → preterite. «Ayer» often signals preterite.' },
+    { type:'speak', prompt:'Say it.', target:'cuando era niño jugaba al fútbol', translation:'when I was a child I played soccer', explain:'A signature childhood-memory sentence using two imperfects: «era» (state) + «jugaba» (habit).' },
+  ],
+};
+
+const LESSON_38 = {
+  id: 'L38', title: 'Objeto directo',
+  vocabPreview: [['me','me'],['te','you'],['lo','him / it (m)'],['la','her / it (f)'],['nos','us'],['los','them (m)'],['las','them (f)']],
+  vocabulary: [['me','me'],['te','you (informal)'],['lo','him / it (m) / you (formal m)'],['la','her / it (f) / you (formal f)'],['nos','us'],['los','them (m or mixed) / you all (m)'],['las','them (f) / you all (f)'],['lo veo','I see him / it'],['la conozco','I know her'],['no los compré','I didn\'t buy them']],
+  exercises: [
+    { type:'intro', title:'Direct object pronouns', body:'Direct object = the WHAT or WHOM directly receiving the action. «I see HER», «I bought IT». Spanish replaces these with pronouns: me, te, lo, la, nos, los, las. Position: BEFORE the conjugated verb («la veo»), or attached to an infinitive («voy a verla» = «la voy a ver»), gerund («estoy viéndola»), or affirmative command («cómpralo»). «Lo» = it/him; «la» = it/her — match noun gender.', vocab:[['Yo veo a María → La veo','I see her'],['Yo compré el libro → Lo compré','I bought it'],['Voy a comer la pizza → Voy a comerla','I\'m going to eat it'],['Lo voy a comer','same — pronoun before conjugated verb'],['No la conozco','I don\'t know her']] },
+    { type:'tap_select', prompt:'«I see her»:', options:['yo veo','la veo','le veo','los veo'], correct:1, explain:'«La veo» — feminine direct object «her» = «la». «Le» is indirect (covered in L39).' },
+    { type:'fill_blank', prompt:'Replace «el pastel» with the pronoun.', sentence:'Yo comí el pastel → Yo _____ comí.', correct:['lo'], explain:'«Lo» — masculine «el pastel» becomes «lo». «Lo comí» = I ate it.' },
+    { type:'translate', prompt:'Translate.', source:'I bought them. (the books)', correct:['los compré','yo los compré'], explain:'«Los compré» — «libros» is masculine plural → «los». Pronoun before conjugated verb.' },
+    { type:'listen', audio:'te vi en el parque', prompt:'Listen and choose.', options:['I saw you in the park','I see you in the park','You saw me in the park','I saw him in the park'], correct:0, explain:'«Te vi» — «te» (you, informal) as direct object + «vi» (preterite of ver).' },
+    { type:'tap_select', prompt:'«I\'m going to buy it» — both forms work. Which?', options:['Lo voy a comprar','Voy a comprarlo','Both are correct','Neither'], correct:2, explain:'Both correct! Pronoun BEFORE conjugated «voy», OR attached to infinitive «comprar». Speakers use both interchangeably.' },
+    { type:'translate', prompt:'Translate.', source:'She loves me.', correct:['ella me ama','me ama','ella me quiere','me quiere'], explain:'«Me ama» — «me» as direct object «me». «Querer» also commonly used for «to love» in Spanish.' },
+    { type:'arrange', prompt:'Arrange — «I write it» (the letter).', tokens:['escribo','Yo','la'], correct:['Yo','la','escribo'], explain:'«Yo la escribo» — «la» (the letter, f) before the conjugated verb.' },
+    { type:'fill_blank', prompt:'Use a pronoun.', sentence:'¿Conoces a María? Sí, _____ conozco.', correct:['la'], explain:'«La conozco» — María is feminine → «la». Use «conocer» for knowing people; «saber» for facts.' },
+    { type:'tap_select', prompt:'In «Cómpralo», where\'s the pronoun?', options:['Before the verb','Attached to the affirmative command','It\'s missing','Wrong placement'], correct:1, explain:'«Cómpralo» — affirmative commands ATTACH the pronoun. Note the accent shifts to keep the original stress: «compra» → «cómpralo».' },
+    { type:'speak', prompt:'Say it.', target:'lo entiendo', translation:'I understand it', explain:'«lo en-tee-EN-do». Useful conversational reassurance.' },
+  ],
+};
+
+const LESSON_39 = {
+  id: 'L39', title: 'Objeto indirecto',
+  vocabPreview: [['me','to me'],['te','to you'],['le','to him/her/usted'],['nos','to us'],['les','to them / ustedes']],
+  vocabulary: [['me','to me / for me'],['te','to you / for you'],['le','to him / her / usted'],['nos','to us / for us'],['les','to them / to ustedes'],['le doy','I give to him/her'],['le digo a María','I say to María'],['nos contó','he told us'],['les escribo','I write to them']],
+  exercises: [
+    { type:'intro', title:'Indirect object pronouns', body:'Indirect object = TO WHOM or FOR WHOM the action happens. «I gave the book TO HIM», «I wrote a letter TO HER». Pronouns: me, te, le, nos, les. KEY: «le» and «les» are ambiguous (could be him/her/you-formal/them) — Spanish often clarifies with «a + noun»: «Le doy el libro a María» (I give the book to María). The «a» phrase is required for clarity but the pronoun «le» is also required.', vocab:[['Le doy el libro a Juan','I give the book to Juan'],['Le hablo a ella','I speak to her'],['Te compré un regalo','I bought you a gift'],['Nos dijo la verdad','He told us the truth'],['Les escribo a mis padres','I write to my parents']] },
+    { type:'tap_select', prompt:'«I gave him the book»:', options:['lo di el libro','le di el libro','la di el libro','les di el libro'], correct:1, explain:'«Le di el libro» — «le» = to him. The book is the direct object («el libro»), and «le» is the indirect object (the recipient).' },
+    { type:'fill_blank', prompt:'Indirect pronoun for «to Juan».', sentence:'Yo _____ doy un regalo a Juan.', correct:['le'], explain:'«Le doy un regalo a Juan» — «le» is required even when «a Juan» is also said. Spanish doubles the indirect object for clarity.' },
+    { type:'translate', prompt:'Translate.', source:'She told us a story.', correct:['ella nos contó una historia','nos contó una historia'], explain:'«Nos contó una historia» — «nos» (to us) before verb. «Contó» = preterite of contar (irregular).' },
+    { type:'listen', audio:'me dijo la verdad', prompt:'Listen and choose.', options:['I told the truth','he told me the truth','we told the truth','they told the truth'], correct:1, explain:'«Me dijo la verdad» — «me» = to me, «dijo» = he/she said.' },
+    { type:'tap_select', prompt:'«To them»:', options:['les','los','le','las'], correct:0, explain:'«Les» — indirect object «to them» (or «to you all»). «Los/las» are direct objects.' },
+    { type:'translate', prompt:'Translate — required pronoun.', source:'I write to my parents.', correct:['les escribo a mis padres','yo les escribo a mis padres'], explain:'«Les escribo a mis padres» — both «les» AND «a mis padres» needed. The «a + noun» clarifies who «les» refers to.' },
+    { type:'arrange', prompt:'Arrange — «I bought flowers for my mom.»', tokens:['mamá','flores','Le','a','mi','compré'], correct:['Le','compré','flores','a','mi','mamá'], explain:'«Le compré flores a mi mamá» — «le» (to her) + «a mi mamá» (clarifying who «le» is).' },
+    { type:'fill_blank', prompt:'IO pronoun — «to me».', sentence:'¿_____ trajiste el regalo?', correct:['me'], explain:'«¿Me trajiste el regalo?» — «me» = to me. «Trajiste» = preterite of traer.' },
+    { type:'tap_select', prompt:'«Le» can mean:', options:['only him','only her','only you (formal)','him, her, OR you (formal)'], correct:3, explain:'«Le» is ambiguous — that\'s why Spanish often adds «a él / a ella / a usted» to clarify when needed.' },
+    { type:'speak', prompt:'Say it.', target:'le di el libro', translation:'I gave him/her the book', explain:'«lay dee ell LEE-bro». Add «a María» / «a él» if you need to clarify.' },
+  ],
+};
+
+const LESSON_40 = {
+  id: 'L40', title: 'DO + IO juntos',
+  vocabPreview: [['se lo','it to him/her'],['se la','it (f) to him/her'],['me lo','it to me'],['te lo','it to you'],['nos lo','it to us']],
+  vocabulary: [['Te lo doy','I give it to you'],['Se lo dije','I told it to him/her'],['Me la mandó','He sent it (f) to me'],['Nos los regalaron','They gifted them to us'],['Se la traje a María','I brought it (f) to María']],
+  exercises: [
+    { type:'intro', title:'When pronouns combine', body:'When you have BOTH an indirect object («to her») AND a direct object («it») as pronouns, the order is: IO + DO + verb. «Me lo dijo» = he said it to me. KEY RULE: When IO is «le» or «les» AND DO starts with «l» (lo, la, los, las), «le/les» becomes «se» to avoid the ll-clash. So «le lo dije» (wrong) → «SE lo dije» (correct). «Se» here can mean him/her/usted/them — context or «a + noun» clarifies.', vocab:[['Te lo doy','I give it to you (te + lo)'],['Me lo dijo','He told it to me'],['Se lo dije a Juan','I told it to Juan (le → se)'],['Nos las trajeron','They brought them (f) to us'],['Order','IO + DO + verb']] },
+    { type:'tap_select', prompt:'«I gave it to him»:', options:['Le lo di','Se lo di','Lo le di','Se le di'], correct:1, explain:'«Se lo di» — «le» becomes «se» before «lo» to avoid the awkward «le lo». Order: IO (se) + DO (lo) + verb.' },
+    { type:'fill_blank', prompt:'Replace «el libro» (m) and «a María» (f) with pronouns.', sentence:'_____ _____ traje a María.', correct:['se lo','Se lo'], explain:'«Se lo traje a María» — IO «le» (to María) → «se» (because of «lo»). DO «lo» (the book). «A María» kept for clarity.' },
+    { type:'translate', prompt:'Translate.', source:'She told it to me.', correct:['me lo dijo','ella me lo dijo'], explain:'«Me lo dijo» — «me» (IO, doesn\'t change) + «lo» (DO, what was said).' },
+    { type:'listen', audio:'te lo doy', prompt:'Listen and choose.', options:['I give it to you','You give it to me','I give him to you','You give it to him'], correct:0, explain:'«Te lo doy» — «te» (to you) + «lo» (it) + «doy» (I give).' },
+    { type:'tap_select', prompt:'«Se» in «se lo di» can refer to:', options:['only him','only her','only them','him, her, usted, OR them'], correct:3, explain:'«Se» is ambiguous when replacing «le» or «les». Use «a + noun/pronoun» to clarify: «Se lo di a ella».' },
+    { type:'translate', prompt:'Translate.', source:'He sold them (the cars) to us.', correct:['nos los vendió','nos los vendió a nosotros'], explain:'«Nos los vendió» — «nos» (to us) + «los» (them, masculine). «Carros» is masculine plural.' },
+    { type:'arrange', prompt:'Arrange — «I sent it (the letter, f) to my sister.»', tokens:['mi','hermana','la','Se','mandé','a'], correct:['Se','la','mandé','a','mi','hermana'], explain:'«Se la mandé a mi hermana» — IO «le» (to my sister) → «se» before «la» (the letter, f).' },
+    { type:'fill_blank', prompt:'Letter (f) → it; «to him» → him.', sentence:'¿La carta? _____ _____ escribí.', correct:['se la','Se la'], explain:'«Se la escribí» — IO «le» → «se» before «la» (the letter). DO «la» (replacing «la carta»).' },
+    { type:'tap_select', prompt:'Order in «Me lo voy a comprar»:', options:['DO + IO + verb','IO + DO + verb','verb + IO + DO','random'], correct:1, explain:'«Me» (IO, for me) + «lo» (DO, it) + «voy a comprar» (verb). Always IO before DO.' },
+    { type:'speak', prompt:'Say it.', target:'se lo dije', translation:'I told it to him/her', explain:'«say lo DEE-hay». Practice the «se» — easy to drop, but required.' },
+  ],
+};
+
+const LESSON_41 = {
+  id: 'L41', title: 'Por vs Para',
+  vocabPreview: [['por','because of / through / by / in exchange for'],['para','for / in order to / destined for']],
+  vocabulary: [['por','because of / through / for (duration / exchange)'],['para','in order to / for (recipient / deadline / destination)'],['gracias por','thanks for'],['por la mañana','in the morning'],['por dos horas','for two hours (duration)'],['para mí','for me'],['para aprender','in order to learn'],['para el lunes','by Monday'],['¿para qué?','what for?'],['¿por qué?','why?']],
+  exercises: [
+    { type:'intro', title:'The eternal A2 question', body:'POR: cause/reason ("because of"), exchange ($), duration ("for X hours"), movement through ("through Europe"), means ("by phone"). PARA: purpose ("in order to"), recipient ("for you"), deadline ("by Monday"), destination ("for Madrid"), opinion ("in my view"). Mnemonic: PARA = forward-looking (destination, purpose, deadline). POR = looking around/back (cause, duration, exchange).', vocab:[['Cause/reason','POR: «por la lluvia» = because of the rain'],['Exchange','POR: «pagué $20 por el libro»'],['Duration','POR: «por dos horas»'],['Through/by','POR: «por la calle»'],['Purpose','PARA: «para aprender»'],['Recipient','PARA: «para ti»'],['Deadline','PARA: «para el lunes»'],['Destination','PARA: «un tren para Madrid»']] },
+    { type:'tap_select', prompt:'«I work in order to support my family»:', options:['por mantener a mi familia','para mantener a mi familia','por mi familia','para mi familia'], correct:1, explain:'«Para mantener» — purpose / goal → PARA + infinitive.' },
+    { type:'fill_blank', prompt:'Purpose — in order to.', sentence:'Estudio _____ aprender español.', correct:['para'], explain:'«Estudio para aprender» — purpose. PARA + infinitive = in order to.' },
+    { type:'translate', prompt:'Translate — «for» = «in exchange for / because of».', source:'Thanks for the gift.', correct:['gracias por el regalo'], explain:'«Gracias por…» — fixed expression. POR for cause/reason behind the gratitude.' },
+    { type:'listen', audio:'viajo por Europa', prompt:'Listen and choose.', options:['I travel for Europe','I travel through Europe','I travel because of Europe','I travel to Europe'], correct:1, explain:'«Viajo por Europa» — POR for movement THROUGH a place.' },
+    { type:'tap_select', prompt:'«For two hours» (duration):', options:['para dos horas','por dos horas','en dos horas','de dos horas'], correct:1, explain:'«Por dos horas» — duration → POR. «Estudié por dos horas» = I studied for two hours.' },
+    { type:'translate', prompt:'Translate — «for» = recipient.', source:'This gift is for you.', correct:['este regalo es para ti','este regalo es para usted'], explain:'«Para ti» — recipient → PARA. The gift is destined for you.' },
+    { type:'arrange', prompt:'Arrange — «I work for a big company.»', tokens:['una','para','grande','empresa','Trabajo'], correct:['Trabajo','para','una','empresa','grande'], explain:'«Trabajo para una empresa» — employment relationship → PARA. You work IN ORDER TO contribute to the company.' },
+    { type:'fill_blank', prompt:'In exchange for.', sentence:'Pagué $20 _____ el libro.', correct:['por'], explain:'«Pagué $20 por el libro» — exchange of money for goods → POR.' },
+    { type:'tap_select', prompt:'«By Monday» (deadline):', options:['por el lunes','para el lunes','en el lunes','desde el lunes'], correct:1, explain:'«Para el lunes» — deadline → PARA. «I need it by Monday» = «Lo necesito para el lunes».' },
+    { type:'speak', prompt:'Say it.', target:'es para ti', translation:'it\'s for you', explain:'«ess PA-ra tee». Use when handing someone a gift.' },
+  ],
+};
+
+const LESSON_42 = {
+  id: 'L42', title: 'El futuro',
+  vocabPreview: [['voy a comer','I\'m going to eat'],['hablaré','I will speak'],['vivirás','you will live'],['tendré','I will have'],['haré','I will do/make']],
+  vocabulary: [['ir + a + infinitive','going-to future (most common in speech)'],['voy a hablar','I\'m going to speak'],['vamos a comer','we\'re going to eat'],['hablaré / hablarás / hablará','simple future: I/you/he will speak'],['hablaremos / hablarán','we / they will speak'],['tendré','I will have (irregular)'],['haré','I will do/make (irregular)'],['diré','I will say'],['podré','I will be able to'],['saldré','I will leave'],['vendré','I will come']],
+  exercises: [
+    { type:'intro', title:'Two futures, mostly the same', body:'Two ways: (1) GOING-TO: «ir + a + infinitive» — «voy a comer» (most common in speech, casual). (2) SIMPLE FUTURE: add endings to the FULL infinitive: -é, -ás, -á, -emos, -án — «hablaré, comerás, vivirá». Common irregulars use a different stem but same endings: tener→tendré, hacer→haré, decir→diré, poder→podré, querer→querré, saber→sabré, salir→saldré, venir→vendré, poner→pondré.', vocab:[['Voy a comer (ir + a + inf)','I\'m going to eat'],['Comeré (-é ending)','I will eat'],['Tendré, haré, diré','irregular futures'],['Endings: -é, -ás, -á, -emos, -án','same for ALL futures'],['Stem = full infinitive (regulars)','hablaré, beberé, viviré']] },
+    { type:'tap_select', prompt:'«I\'m going to eat»:', options:['voy a comer','comeré','como','comía'], correct:0, explain:'«Voy a comer» — casual future, most common in everyday speech. «Comeré» (simple future) is also correct, slightly more formal.' },
+    { type:'fill_blank', prompt:'Simple future — yo form of viajar.', sentence:'Yo _____ a México mañana.', correct:['viajaré'], explain:'«Viajaré» — yo simple future = infinitive + é. Note the accent on the final é.' },
+    { type:'translate', prompt:'Translate.', source:'We will go to the beach.', correct:['iremos a la playa','vamos a ir a la playa'], explain:'«Iremos» (simple future of ir) or «Vamos a ir» (going-to). Both fully correct.' },
+    { type:'listen', audio:'tendré tiempo mañana', prompt:'Listen and choose.', options:['I have time tomorrow','I had time tomorrow','I will have time tomorrow','I would have time tomorrow'], correct:2, explain:'«Tendré tiempo mañana» — irregular future of tener: «tendr-» stem + «-é».' },
+    { type:'tap_select', prompt:'Future of «tener» — yo form:', options:['teneré','tendré','tengaré','teneré'], correct:1, explain:'«Tendré» — irregular stem «tendr-». Memorize: tener, salir, venir, poner all add «d»: tendré, saldré, vendré, pondré.' },
+    { type:'translate', prompt:'Translate.', source:'She will be a doctor.', correct:['será doctora','va a ser doctora','ella será doctora'], explain:'«Será doctora» (simple future of ser) or «Va a ser doctora» (going-to). Profession without article.' },
+    { type:'arrange', prompt:'Arrange — «We are going to eat at the restaurant.»', tokens:['restaurante','Vamos','en','el','a','comer'], correct:['Vamos','a','comer','en','el','restaurante'], explain:'«Vamos a comer en el restaurante» — going-to: «vamos a + infinitive».' },
+    { type:'fill_blank', prompt:'Simple future, tú of ser.', sentence:'Tú _____ feliz.', correct:['serás'], explain:'«Serás feliz» — ser is regular in simple future: ser- + -ás.' },
+    { type:'tap_select', prompt:'Future of «hacer» — yo form:', options:['haceré','haré','hizaré','haseré'], correct:1, explain:'«Haré» — irregular stem «har-». Note: «hacer» loses the «c» entirely in future and conditional.' },
+    { type:'speak', prompt:'Say it.', target:'voy a estudiar', translation:'I\'m going to study', explain:'«voy a es-too-dee-AR». Casual future — use this in conversation.' },
+  ],
+};
+
+const LESSON_43 = {
+  id: 'L43', title: 'El condicional',
+  vocabPreview: [['hablaría','I would speak'],['comería','I would eat'],['tendría','I would have'],['haría','I would do'],['¿podrías?','could you?']],
+  vocabulary: [['hablaría / hablarías / hablaría','I/you/he would speak'],['hablaríamos / hablarían','we / they would speak'],['comería','I would eat'],['viviría','I would live'],['tendría','I would have (irreg)'],['haría','I would do (irreg)'],['diría','I would say'],['podría','I could / would be able to'],['me gustaría','I would like'],['¿podrías?','could you? (polite request)']],
+  exercises: [
+    { type:'intro', title:'Conditional — would / polite forms', body:'Conditional expresses "would" — hypothetical actions, polite requests, what someone said they would do. Endings: -ía, -ías, -ía, -íamos, -ían (same as -ER/-IR imperfect, but added to the FULL infinitive). Same irregular stems as future: tendría, haría, diría, podría, sabría, saldría, vendría, pondría, querría. The ENDINGS are always regular — only stems vary.', vocab:[['Hablaría / Comería / Viviría','regular: infinitive + -ía'],['Endings: -ía, -ías, -ía, -íamos, -ían','same for all conditionals'],['Tendría, haría, diría, podría','irregular stems (same as future)'],['Me gustaría = I would like','politest way to express want'],['¿Podrías?','could you? (polite request)']] },
+    { type:'tap_select', prompt:'«I would eat»:', options:['comí','comería','como','comeré'], correct:1, explain:'«Comería» — yo conditional, regular: infinitive «comer» + «-ía».' },
+    { type:'fill_blank', prompt:'Polite — I would like.', sentence:'_____ ir a la playa.', correct:['me gustaría'], explain:'«Me gustaría ir» — softer than «quiero ir». Conditional of gustar with «me».' },
+    { type:'translate', prompt:'Translate.', source:'We would travel to Spain.', correct:['viajaríamos a españa','nosotros viajaríamos a españa'], explain:'«Viajaríamos» — nosotros conditional. Same -íamos pattern as imperfect, but on the full infinitive.' },
+    { type:'listen', audio:'yo lo haría', prompt:'Listen and choose.', options:['I do it','I did it','I would do it','I will do it'], correct:2, explain:'«Yo lo haría» — conditional of hacer: «har-» stem (same as future) + «-ía».' },
+    { type:'tap_select', prompt:'Conditional of tener — yo form:', options:['teneré','tendría','tenía','tendré'], correct:1, explain:'«Tendría» — irregular stem «tendr-» + «-ía». Same stem as future («tendré») with conditional ending.' },
+    { type:'translate', prompt:'Translate — reported speech.', source:'She said she would come.', correct:['dijo que vendría','ella dijo que vendría'], explain:'«Dijo que vendría» — preterite reporting verb («dijo») + conditional («vendría») for what she said about the future from her perspective.' },
+    { type:'arrange', prompt:'Arrange — «I would have a coffee.»', tokens:['café','un','tomaría','Yo'], correct:['Yo','tomaría','un','café'], explain:'«Yo tomaría un café» — polite/hypothetical. «Tomaría» = I would take/have.' },
+    { type:'fill_blank', prompt:'Could you (politely) — conditional of poder.', sentence:'¿_____ prestar el dinero?', correct:['podrías'], explain:'«¿Podrías prestar el dinero?» — polite request. Conditional «podrías» softens the ask.' },
+    { type:'tap_select', prompt:'Which is wrong?', options:['comerías','dirías','tendrías','tendrias'], correct:3, explain:'«Tendrias» without the accent is wrong. All -ía endings carry the accent: «tendrías», «dirías», «comerías».' },
+    { type:'speak', prompt:'Say it politely.', target:'me gustaría', translation:'I would like', explain:'«may goose-ta-REE-ah». The polite alternative to «quiero».' },
+  ],
+};
+
+const LESSON_44 = {
+  id: 'L44', title: 'Reflexivos avanzados',
+  vocabPreview: [['enojarse','to get angry'],['ponerse','to become / put on'],['darse cuenta','to realize'],['llevarse bien','to get along'],['irse','to leave']],
+  vocabulary: [['enojarse','to get angry'],['alegrarse','to get happy'],['preocuparse','to worry'],['aburrirse','to get bored'],['cansarse','to get tired'],['ponerse + adj','to become / get + adj (state)'],['volverse + adj','to become (deeper change)'],['darse cuenta','to realize'],['llevarse bien con','to get along with'],['irse','to leave / go away'],['quedarse','to stay'],['acordarse de','to remember'],['olvidarse de','to forget']],
+  exercises: [
+    { type:'intro', title:'Reflexives beyond routines', body:'Past Lesson 12 you saw reflexives for daily routines (me ducho). Now: emotional changes use reflexives — «me enojé» (I got angry), «se alegró» (she got happy). «Ponerse + adj» = to BECOME a state: «se puso triste» (she got sad). «Darse cuenta de» = to realize. «Irse» = to leave (different from just «ir»). «Llevarse bien con» = to get along with. These show up constantly in real conversation.', vocab:[['Me enojé','I got angry'],['Se puso triste','She got sad (changed states)'],['Me di cuenta','I realized'],['Se fue temprano','He left early'],['Me llevo bien con mi hermano','I get along with my brother'],['Me canso fácilmente','I get tired easily']] },
+    { type:'tap_select', prompt:'«I got angry»:', options:['me enojé','me enojo','enojé','enojaba'], correct:0, explain:'«Me enojé» — reflexive «me» + preterite «enojé». «Enojarse» needs the reflexive pronoun for the «get angry» meaning.' },
+    { type:'fill_blank', prompt:'Reflexive of alegrarse — yo preterite.', sentence:'_____ alegré por ti. (I got happy)', correct:['me'], explain:'«Me alegré por ti» — «me» reflexive + alegrarse «to get happy». «Por ti» = for you.' },
+    { type:'translate', prompt:'Translate — «get + adj» pattern.', source:'She gets sad easily.', correct:['se pone triste fácilmente','ella se pone triste fácilmente'], explain:'«Se pone triste» — «ponerse + adj» = to get/become a temporary state. Reflexive «se».' },
+    { type:'listen', audio:'me llevo bien con mis hermanos', prompt:'Listen and choose.', options:['I take my brothers well','I get along with my brothers','I drive well with my brothers','I bring my brothers'], correct:1, explain:'«Llevarse bien con» — to get along with. Reflexive idiom — «llevar» alone means to carry/take.' },
+    { type:'tap_select', prompt:'«I realized»:', options:['me di cuenta','di cuenta','sé','me caí'], correct:0, explain:'«Me di cuenta» — fixed reflexive expression. Means «I realized». Optional «de» before what you realized: «me di cuenta de que…».' },
+    { type:'translate', prompt:'Translate.', source:'He left without saying goodbye.', correct:['se fue sin decir adiós','se fue sin despedirse'], explain:'«Se fue» — irse (to leave/go away) is different from ir (to go). The reflexive emphasizes the leaving.' },
+    { type:'arrange', prompt:'Arrange — «I get tired easily.»', tokens:['fácilmente','canso','Me'], correct:['Me','canso','fácilmente'], explain:'«Me canso fácilmente» — «cansarse» (to get tired) is reflexive.' },
+    { type:'fill_blank', prompt:'Irse — they form preterite.', sentence:'Ellos _____ fueron temprano. (left early)', correct:['se'], explain:'«Se fueron temprano» — third person plural reflexive «se» + preterite «fueron» (from ir).' },
+    { type:'tap_select', prompt:'«I forgot the keys»:', options:['olvidé las llaves','me olvidé de las llaves','olvido las llaves','me olvido las llaves'], correct:1, explain:'Both «olvidé las llaves» and «me olvidé de las llaves» are correct. Reflexive form «olvidarse de» is more common in everyday Latin American speech.' },
+    { type:'speak', prompt:'Say it.', target:'me llevo bien', translation:'I get along (well)', explain:'«may YEH-vo bee-EN». Use to describe relationships.' },
+  ],
+};
+
+const LESSON_45 = {
+  id: 'L45', title: 'Comparativos y superlativos',
+  vocabPreview: [['más que','more than'],['menos que','less than'],['tan como','as as'],['el más','the most'],['mejor','better'],['peor','worse']],
+  vocabulary: [['más + adj + que','more X than'],['menos + adj + que','less X than'],['tan + adj + como','as X as'],['tanto/-a/-os/-as + noun + como','as much/many X as'],['el/la/los/las más','the most'],['el/la/los/las menos','the least'],['mejor','better'],['peor','worse'],['mayor','older / bigger'],['menor','younger / smaller'],['del / de la','of the (in superlatives)']],
+  exercises: [
+    { type:'intro', title:'Comparing things', body:'Comparisons of inequality: «más + adj + que» (more X than) / «menos + adj + que» (less X than). Equality: «tan + adj + como» (as X as). Superlatives: «el/la más + adj + de» (the most X in/of). Irregulars: bueno→mejor (better), malo→peor (worse), grande→mayor (bigger / older), pequeño→menor (smaller / younger). These don\'t change for gender, only for number: «mejores», «peores».', vocab:[['más alta que','taller than'],['menos cara que','less expensive than'],['tan rápido como','as fast as'],['el más inteligente','the smartest'],['mejor / peor','better / worse'],['mayor / menor','older/bigger / younger/smaller']] },
+    { type:'tap_select', prompt:'«She is taller than me»:', options:['ella es más alto que yo','ella es más alta que yo','ella es tan alta como yo','ella es la más alta yo'], correct:1, explain:'«Más alta que yo» — feminine «alta» agrees with «ella». «Que» (not «de») in regular comparisons.' },
+    { type:'fill_blank', prompt:'Less ... than.', sentence:'Mi casa es _____ grande _____ la tuya.', correct:['menos que'], explain:'«Menos grande que la tuya» — comparison of inequality: less X than. Pattern: menos + adj + que.' },
+    { type:'translate', prompt:'Translate — equality.', source:'He is as funny as his brother.', correct:['es tan divertido como su hermano','él es tan divertido como su hermano'], explain:'«Tan divertido como» — equality: tan + adj + como. «Como» (not «que») for «as ... as».' },
+    { type:'listen', audio:'es la más alta de la clase', prompt:'Listen and choose.', options:['she is taller than the class','she is the tallest in the class','she is shorter than the class','the class is the tallest'], correct:1, explain:'«Es la más alta de la clase» — superlative + «de» (in/of). «La más + adj» = the most X.' },
+    { type:'tap_select', prompt:'Irregular comparative for «good»:', options:['más bueno','mejor','el bueno','tan bueno'], correct:1, explain:'«Mejor» — irregular comparative of «bueno». «Más bueno» is occasionally used for moral qualities, but «mejor» is the default.' },
+    { type:'translate', prompt:'Translate.', source:'I am younger than my sister.', correct:['soy menor que mi hermana','yo soy menor que mi hermana'], explain:'«Soy menor que mi hermana» — «menor» = younger. «Más joven que» also works but «menor» is more standard for sibling age.' },
+    { type:'arrange', prompt:'Arrange — «He is the smartest in the group.»', tokens:['del','grupo','el','inteligente','más','Es'], correct:['Es','el','más','inteligente','del','grupo'], explain:'«Es el más inteligente del grupo» — superlative pattern: «el/la más + adj + de + group». «De + el» = «del».' },
+    { type:'fill_blank', prompt:'More than.', sentence:'Eres _____ amable que él.', correct:['más'], explain:'«Más amable que él» — comparison of inequality. Always «más» (no accent here) in comparisons.' },
+    { type:'tap_select', prompt:'«My grades are worse than yours»:', options:['mis notas son más malas que las tuyas','mis notas son peores que las tuyas','mis notas son tan malas como las tuyas','mis notas son las peores'], correct:1, explain:'«Peores que» — irregular comparative «peor» (worse). Plural «peores» agrees with «notas».' },
+    { type:'speak', prompt:'Say it.', target:'más que ayer', translation:'more than yesterday', explain:'«mas keh ah-YER». Useful for tracking progress: «hablo más que ayer» = I speak more than yesterday.' },
+  ],
+};
+
+const LESSON_46 = {
+  id: 'L46', title: 'Imperativo informal',
+  vocabPreview: [['¡habla!','speak!'],['¡come!','eat!'],['¡vive!','live!'],['¡no hables!','don\'t speak!'],['¡no comas!','don\'t eat!']],
+  vocabulary: [['Affirmative tú = 3rd-person present','habla, come, vive'],['Negative tú = subjunctive form','no hables, no comas, no vivas'],['Irregular affirmative','di, haz, pon, sal, sé, ten, ven, ve'],['¡ven aquí!','come here!'],['¡no te preocupes!','don\'t worry!'],['¡dímelo!','tell it to me!']],
+  exercises: [
+    { type:'intro', title:'Tú commands — telling someone what to do', body:'AFFIRMATIVE tú command = the 3rd-person singular present form: habla, come, vive. NEGATIVE tú = subjunctive form: no hables, no comas, no vivas. 8 IRREGULAR affirmative tú commands: di (say), haz (do), pon (put), sal (leave), sé (be), ten (have), ven (come), ve (go). Pronouns ATTACH to affirmative («dímelo») and go BEFORE negative («no me lo digas»).', vocab:[['Affirmative regular','habla, come, vive'],['Negative regular','no hables, no comas, no vivas'],['Irregular 8','di, haz, pon, sal, sé, ten, ven, ve'],['Attaching pronouns','dímelo, hazlo, ponte'],['Negative + pronoun','no me lo digas, no lo hagas']] },
+    { type:'tap_select', prompt:'«Speak slowly!» (informal):', options:['hablas despacio','habla despacio','hable despacio','no hables despacio'], correct:1, explain:'«¡Habla despacio!» — affirmative tú = 3rd-person present form.' },
+    { type:'fill_blank', prompt:'Negative tú command — don\'t eat.', sentence:'¡No _____ tanto! (eat — to a friend)', correct:['comas'], explain:'«No comas» — negative tú uses the subjunctive form (-as for -ER verbs).' },
+    { type:'translate', prompt:'Translate — irregular command.', source:'Come here!', correct:['¡ven aquí!','ven aquí'], explain:'«Ven» — irregular tú command of venir. One of the 8 to memorize.' },
+    { type:'listen', audio:'no te preocupes', prompt:'Listen and choose.', options:['don\'t worry','I worry','you worry','we don\'t worry'], correct:0, explain:'«No te preocupes» — negative tú of preocuparse (reflexive). Pronoun «te» BEFORE the verb in negative.' },
+    { type:'tap_select', prompt:'Irregular affirmative tú of «hacer»:', options:['hace','haces','haz','hagas'], correct:2, explain:'«Haz» — one of the 8 irregulars. «Hace» is 3rd person present, «haces» is tú present, but the command is «haz».' },
+    { type:'translate', prompt:'Translate with attached pronouns.', source:'Tell it to me!', correct:['¡dímelo!','dímelo'], explain:'«Dímelo» — affirmative «di» + IO «me» + DO «lo». Pronouns ATTACH; accent shifts to keep stress.' },
+    { type:'arrange', prompt:'Arrange — «Don\'t do it.»', tokens:['No','hagas','lo'], correct:['No','lo','hagas'], explain:'«No lo hagas» — negative command, pronoun BEFORE verb. Negative tú of hacer = «hagas».' },
+    { type:'fill_blank', prompt:'Affirmative regular — close (cerrar).', sentence:'¡_____ la puerta! (close)', correct:['cierra'], explain:'«¡Cierra la puerta!» — affirmative tú = 3rd-person present. Stem-change «cerrar→cierra» applies.' },
+    { type:'tap_select', prompt:'«Don\'t go!» (informal):', options:['¡no va!','¡no vas!','¡no vayas!','¡no ve!'], correct:2, explain:'«¡No vayas!» — negative tú uses subjunctive «vayas». Affirmative would be «¡ve!».' },
+    { type:'speak', prompt:'Tell a friend «come here».', target:'ven aquí', translation:'come here!', explain:'«ven ah-KEE». Friendly tone — not pushy.' },
+  ],
+};
+
+const LESSON_47 = {
+  id: 'L47', title: 'Imperativo formal',
+  vocabPreview: [['hable','speak (formal)'],['coman','eat (you all)'],['no hable','don\'t speak'],['siéntese','sit down'],['perdóneme','excuse me']],
+  vocabulary: [['Usted command = subjunctive form','hable, coma, viva'],['Ustedes commands','hablen, coman, vivan'],['Negative = same as affirmative','no hable, no hablen'],['Reflexive: attached affirmative','siéntese, levántese'],['Reflexive: before negative','no se siente'],['¡pase!','come in! (formal)'],['perdóneme','excuse me / forgive me']],
+  exercises: [
+    { type:'intro', title:'Usted/ustedes — formal & plural commands', body:'Usted command = subjunctive form: hable, coma, viva. Ustedes (you all) = same form + n: hablen, coman, vivan. Negative is the SAME form: no hable, no hablen. Reflexive pronouns ATTACH to affirmative («siéntese» = sit down) and go BEFORE negative («no se siente»). Six irregulars use special stems: dé, esté, sea, vaya, sepa, haya.', vocab:[['Hable / hablen','formal speak / you all'],['Coma / coman','formal eat / you all'],['Sea / sean','be (formal)'],['Siéntese','sit down (formal, attached)'],['No se siente','don\'t sit down (formal, before)'],['¡Pase!','come in!']] },
+    { type:'tap_select', prompt:'Formal «speak slowly»:', options:['hablas despacio','habla despacio','hable despacio','hablen despacio'], correct:2, explain:'«Hable despacio» — usted command. Note the -e ending (subjunctive form of -AR verb).' },
+    { type:'fill_blank', prompt:'Ustedes form — eat (you all).', sentence:'¡_____ todos! (eat, plural)', correct:['coman'], explain:'«¡Coman todos!» — ustedes command of comer = «coman».' },
+    { type:'translate', prompt:'Translate.', source:'Come in! (formal)', correct:['¡pase!','pase','pase usted'], explain:'«¡Pase!» — usted command of pasar. Universal welcome.' },
+    { type:'listen', audio:'siéntese por favor', prompt:'Listen and choose.', options:['sit down please','sit down (informal)','let\'s sit','don\'t sit'], correct:0, explain:'«Siéntese, por favor» — reflexive command + pronoun «se» attached. Accent maintains stress.' },
+    { type:'tap_select', prompt:'Negative usted command of «hacer»:', options:['no hace','no haces','no hagas','no haga'], correct:3, explain:'«No haga» — usted negative = subjunctive form. «No hagas» is tú; «no haga» is usted.' },
+    { type:'translate', prompt:'Translate.', source:'Excuse me. (formal apology)', correct:['perdóneme','¡perdóneme!','disculpe'], explain:'«Perdóneme» — usted command «perdone» + IO «me» attached. «Disculpe» also works in service contexts.' },
+    { type:'arrange', prompt:'Arrange — «Please don\'t worry» (formal).', tokens:['preocupe','No','se','por favor'], correct:['No','se','preocupe','por favor'], explain:'«No se preocupe, por favor» — negative usted, pronoun BEFORE verb.' },
+    { type:'fill_blank', prompt:'Ustedes affirmative — listen.', sentence:'¡_____ con atención!', correct:['escuchen'], explain:'«¡Escuchen con atención!» — ustedes command of escuchar.' },
+    { type:'tap_select', prompt:'«Tell me» (formal, with pronoun):', options:['díme','dígame','díganme','me dice'], correct:1, explain:'«Dígame» — usted command «diga» (irregular) + IO «me». Phone greeting in some regions.' },
+    { type:'speak', prompt:'Politely welcome someone.', target:'¡pase, por favor!', translation:'come in, please!', explain:'«PA-say por fa-VOR». Universal welcome at the door.' },
+  ],
+};
+
+const LESSON_48 = {
+  id: 'L48', title: 'Pretérito perfecto',
+  vocabPreview: [['he hablado','I have spoken'],['has comido','you have eaten'],['ha vivido','he has lived'],['hemos visto','we have seen'],['han hecho','they have done']],
+  vocabulary: [['he / has / ha','I / you / he have (auxiliary)'],['hemos / han','we / they have'],['hablado','spoken (-AR participle: -ado)'],['comido','eaten (-ER participle: -ido)'],['vivido','lived (-IR participle: -ido)'],['hecho','done / made (irreg)'],['dicho','said'],['visto','seen'],['escrito','written'],['vuelto','returned'],['puesto','put'],['abierto','opened']],
+  exercises: [
+    { type:'intro', title:'Have done — present perfect', body:'For completed actions WITH RELEVANCE TO NOW: «I have eaten» (and now I\'m full). Two parts: HABER conjugated (he, has, ha, hemos, han) + PAST PARTICIPLE. Regular: -AR → -ado (hablado), -ER/-IR → -ido (comido, vivido). 8 common IRREGULARS: hecho, dicho, visto, escrito, vuelto, puesto, abierto, roto. Used with «ya» (already), «nunca» (never), «todavía no» (not yet). In Latin America, often replaces preterite for very recent events.', vocab:[['he hablado','I have spoken'],['has comido','you have eaten'],['ha hecho (irreg)','he/she has done'],['hemos vivido','we have lived'],['han dicho (irreg)','they have said'],['Ya he visto','I have already seen'],['Nunca he ido','I\'ve never gone']] },
+    { type:'tap_select', prompt:'«I have spoken with him»:', options:['hablo con él','hablé con él','he hablado con él','hablaba con él'], correct:2, explain:'«He hablado con él» — present perfect: «he» (have) + «hablado» (spoken).' },
+    { type:'fill_blank', prompt:'Auxiliary haber, tú form.', sentence:'¿_____ comido ya?', correct:['has'], explain:'«¿Has comido ya?» — tú form of haber is «has». «Comido» is regular -ER participle.' },
+    { type:'translate', prompt:'Translate — irregular participle.', source:'I have done my homework.', correct:['he hecho mi tarea','he hecho la tarea'], explain:'«He hecho» — «hecho» is irregular participle of hacer. Don\'t say «hacido».' },
+    { type:'listen', audio:'nunca he ido a méxico', prompt:'Listen and choose.', options:['I never go to Mexico','I never went to Mexico','I have never gone to Mexico','I will never go to Mexico'], correct:2, explain:'«Nunca he ido» — life-experience-to-date. Present perfect with «nunca».' },
+    { type:'tap_select', prompt:'Irregular participle of «ver»:', options:['vido','visto','viendo','vivido'], correct:1, explain:'«Visto» — irregular participle of ver. «Vivido» is the participle of vivir (to live).' },
+    { type:'translate', prompt:'Translate.', source:'They have already arrived.', correct:['ya han llegado'], explain:'«Ya han llegado» — «ya» (already) + present perfect. «Llegado» is regular.' },
+    { type:'arrange', prompt:'Arrange — «We have lived in Caracas.»', tokens:['Caracas','en','Hemos','vivido'], correct:['Hemos','vivido','en','Caracas'], explain:'«Hemos vivido en Caracas» — nosotros «hemos» + participle.' },
+    { type:'fill_blank', prompt:'Irregular — say (decir).', sentence:'Yo te lo he _____. (have told)', correct:['dicho'], explain:'«Te lo he dicho» — irregular participle of decir. Common in disputes: «I told you so!»' },
+    { type:'tap_select', prompt:'Which is INCORRECT?', options:['he hablado','has comido','ha haciendo','hemos vivido'], correct:2, explain:'«Ha haciendo» mixes gerund («haciendo») with auxiliary «ha». Should be «ha hecho».' },
+    { type:'speak', prompt:'Say it.', target:'he comido mucho', translation:'I have eaten a lot', explain:'«ay ko-MEE-do MOO-cho». Use after a big meal.' },
+  ],
+};
+
+const LESSON_49 = {
+  id: 'L49', title: 'Subjuntivo — formación',
+  vocabPreview: [['hable','that I speak'],['coma','that he eat'],['vivamos','that we live'],['sea','that I be'],['vaya','that I go']],
+  vocabulary: [['hable / hables / hable','-AR subjunctive (flip vowel to -e)'],['comamos / coman','-ER subjunctive (-amos, -an)'],['viva / vivan','-IR subjunctive (same as -ER)'],['sea / seas','ser (irregular)'],['esté / estés','estar (irregular)'],['vaya / vayas','ir (irregular)'],['sepa / sepas','saber (irregular)'],['dé / des','dar (irregular)'],['haya','haber (irregular)']],
+  exercises: [
+    { type:'intro', title:'Subjunctive — the form first', body:'Subjunctive is a MOOD, not a tense. Used for: wishes, doubts, emotions, recommendations. Form first, uses next 2 lessons. RULE: take YO present indicative, drop -o, FLIP THE VOWEL: -AR uses «-e» endings (hable, hables, hable, hablemos, hablen). -ER/-IR use «-a» endings (coma, comas, coma, comamos, coman). 6 main IRREGULARS to memorize: ser→sea, estar→esté, ir→vaya, saber→sepa, dar→dé, haber→haya. Many others use the irregular yo stem: hacer→haga, decir→diga, tener→tenga.', vocab:[['-AR: -e endings','hable, hables, hable, hablemos, hablen'],['-ER/-IR: -a endings','coma, comas, coma, comamos, coman'],['ser → sea','irregular'],['estar → esté','irregular'],['ir → vaya','irregular'],['saber → sepa','irregular'],['dar → dé','irregular'],['haber → haya','irregular']] },
+    { type:'tap_select', prompt:'-AR subjunctive yo of «hablar»:', options:['hablo','hable','habla','hablé'], correct:1, explain:'«Hable» — flip vowel: -AR uses -e instead of -a.' },
+    { type:'fill_blank', prompt:'Subjunctive — nosotros of comer.', sentence:'Es importante que nosotros _____ bien.', correct:['comamos'], explain:'«Comamos» — -ER nosotros subjunctive. -amos with vowel-flipped stem.' },
+    { type:'translate', prompt:'Translate.', source:'I want him to be happy.', correct:['quiero que sea feliz','quiero que él sea feliz'], explain:'«Sea» — ser subjunctive, irregular.' },
+    { type:'listen', audio:'que tengas buen día', prompt:'Listen and choose.', options:['you have a good day','have a good day (wish)','you had a good day','you will have a good day'], correct:1, explain:'«Que tengas buen día» — wish/blessing. «Tengas» is tú subjunctive of tener.' },
+    { type:'tap_select', prompt:'Subjunctive of ir, yo form:', options:['voy','vaya','iba','vamos'], correct:1, explain:'«Vaya» — irregular. Also in fixed expressions: «¡vaya sorpresa!»' },
+    { type:'translate', prompt:'Translate.', source:'I hope they come.', correct:['espero que vengan','ojalá vengan'], explain:'«Espero que vengan» — «vengan» is ustedes/ellos subjunctive of venir («veng-» + -an).' },
+    { type:'arrange', prompt:'Arrange — «It\'s necessary that you study.»', tokens:['estudies','que','Es','necesario'], correct:['Es','necesario','que','estudies'], explain:'«Es necesario que estudies» — impersonal trigger + subjunctive.' },
+    { type:'fill_blank', prompt:'Subjunctive — yo of estar.', sentence:'Es bueno que yo _____ aquí.', correct:['esté'], explain:'«Esté» — irregular. Note the accent.' },
+    { type:'tap_select', prompt:'Which IS NOT a subjunctive form?', options:['hable','sea','vaya','iba'], correct:3, explain:'«Iba» is imperfect indicative of ir. Subjunctive is «vaya».' },
+    { type:'speak', prompt:'A common subjunctive blessing.', target:'que tengas buen día', translation:'have a good day', explain:'«keh TENG-gas bwen DEE-ah». Daily-life staple.' },
+  ],
+};
+
+const LESSON_50 = {
+  id: 'L50', title: 'Subjuntivo — deseos',
+  vocabPreview: [['quiero que','I want that'],['ojalá','hopefully / I hope'],['recomiendo que','I recommend that'],['necesito que','I need that'],['es importante que','it\'s important that']],
+  vocabulary: [['quiero que + subj','I want that'],['necesito que + subj','I need that'],['recomiendo que + subj','I recommend that'],['ojalá (que) + subj','hopefully'],['espero que + subj','I hope that'],['es importante que + subj','it\'s important that'],['es necesario que + subj','it\'s necessary that'],['te pido que','I ask you that'],['prefiero que','I prefer that']],
+  exercises: [
+    { type:'intro', title:'Subjunctive: wishes, asks, recommendations', body:'When you express a desire for someone ELSE to do something, subjunctive kicks in after «que». Triggers: «quiero que», «necesito que», «recomiendo que», «espero que», «ojalá (que)», «es importante que», «es necesario que», «prefiero que», «te pido que». Pattern: TRIGGER + que + subjunctive. Note: same subject = NO subjunctive, just infinitive. «Quiero comer» (I want to eat) vs «Quiero que comas» (I want you to eat).', vocab:[['Quiero que vengas','I want you to come'],['Espero que estés bien','I hope you\'re well'],['Ojalá llueva','I hope it rains'],['Es importante que descanses','It\'s important you rest'],['Same subject? No subjunctive','Quiero descansar (I want to rest)']] },
+    { type:'tap_select', prompt:'«I want you to study»:', options:['Quiero estudias','Quiero que estudias','Quiero que estudies','Quiero estudiar'], correct:2, explain:'«Quiero que estudies» — different subjects + «que» + subjunctive.' },
+    { type:'fill_blank', prompt:'Ojalá triggers subjunctive.', sentence:'Ojalá _____ buen tiempo mañana. (it makes — hacer)', correct:['haga'], explain:'«Ojalá haga buen tiempo» — «hacer» (for weather) + subjunctive «haga».' },
+    { type:'translate', prompt:'Translate.', source:'I hope you (informal) come early.', correct:['espero que vengas temprano','espero que tú vengas temprano'], explain:'«Espero que vengas» — esperar que + subjunctive.' },
+    { type:'listen', audio:'ojalá llueva', prompt:'Listen and choose.', options:['it\'s raining','I hope it rains','it will rain','it would rain'], correct:1, explain:'«Ojalá» (from Arabic «inshallah») = hopefully. Always triggers subjunctive.' },
+    { type:'tap_select', prompt:'Same subject — does NOT use subjunctive:', options:['Quiero que vaya yo','Quiero ir yo','Quiero que voy','Quiero ir que voy'], correct:1, explain:'«Quiero ir» — same subject → just infinitive.' },
+    { type:'translate', prompt:'Translate.', source:'It\'s necessary that we eat.', correct:['es necesario que comamos','es necesario que nosotros comamos'], explain:'«Es necesario que comamos» — impersonal trigger + nosotros subjunctive.' },
+    { type:'arrange', prompt:'Arrange — «I recommend that you (informal) sleep more.»', tokens:['más','duermas','Recomiendo','que'], correct:['Recomiendo','que','duermas','más'], explain:'«Recomiendo que duermas más» — recomendar que + subjunctive.' },
+    { type:'fill_blank', prompt:'I prefer that you... — verb venir.', sentence:'Prefiero que _____ a las ocho.', correct:['vengas'], explain:'«Prefiero que vengas» — preferir que + subjunctive.' },
+    { type:'tap_select', prompt:'Which DOES NOT trigger subjunctive?', options:['Quiero que','Pienso que','Es importante que','Espero que'], correct:1, explain:'«Pienso que» = belief → indicative. «No pienso que» (negation) → subjunctive.' },
+    { type:'speak', prompt:'A common wish.', target:'ojalá vengas pronto', translation:'I hope you come soon', explain:'«oh-ha-LAH VENG-gas PRON-to».' },
+  ],
+};
+
+const LESSON_51 = {
+  id: 'L51', title: 'Subjuntivo — duda y emoción',
+  vocabPreview: [['no creo que','I don\'t believe that'],['dudo que','I doubt that'],['me alegra que','it makes me happy that'],['es bueno que','it\'s good that'],['es triste que','it\'s sad that']],
+  vocabulary: [['Dudo que + subj','I doubt that'],['No creo que + subj','I don\'t believe that'],['No es cierto que','it\'s not true that'],['Me alegra que','it makes me happy that'],['Me sorprende que','it surprises me that'],['Es bueno / malo que','it\'s good / bad that'],['Es raro que','it\'s strange that'],['Tengo miedo de que','I\'m afraid that'],['Siento que','I\'m sorry that / I feel that']],
+  exercises: [
+    { type:'intro', title:'Subjunctive: doubt + emotion', body:'Two more trigger families. DOUBT/DENIAL: «dudo que», «no creo que», «no pienso que», «no es cierto que» — uncertainty triggers subjunctive. EMOTION: «me alegra que», «me sorprende que», «es bueno/malo/raro que», «tengo miedo de que». Affirmative belief NEEDS indicative: «creo que viene». Negate it and switch: «no creo que venga».', vocab:[['Doubt: dudo que','I doubt that'],['Denial: no creo que','I don\'t believe that'],['Emotion: me alegra que','it makes me happy that'],['Emotion: es bueno que','it\'s good that'],['Affirmative belief = NOT subjunctive','Creo que viene'],['Negative belief = subjunctive','No creo que venga']] },
+    { type:'tap_select', prompt:'«I doubt that he\'s here»:', options:['Dudo que está aquí','Dudo que esté aquí','Dudo está aquí','Dudo que es aquí'], correct:1, explain:'«Dudo que esté aquí» — dudo + que + subjunctive «esté».' },
+    { type:'fill_blank', prompt:'Emotion trigger — me alegra que.', sentence:'Me alegra que _____ aquí. (you are — informal)', correct:['estés'], explain:'«Me alegra que estés aquí» — emotion → subjunctive.' },
+    { type:'translate', prompt:'Translate.', source:'I don\'t believe that he speaks Spanish.', correct:['no creo que hable español','no creo que él hable español'], explain:'«No creo que hable» — denial of belief → subjunctive.' },
+    { type:'listen', audio:'me sorprende que vengas', prompt:'Listen and choose.', options:['I\'m surprised you come','I\'m surprised you\'re coming (now)','I\'m surprised you would come','it surprises me that you\'re coming'], correct:3, explain:'«Me sorprende que vengas» — emotion + subjunctive.' },
+    { type:'tap_select', prompt:'Affirmative belief — does NOT use subjunctive:', options:['Creo que vienes','Creo que vengas','No creo que vengas','Dudo que vengas'], correct:0, explain:'«Creo que vienes» — affirmative «creo que» = indicative.' },
+    { type:'translate', prompt:'Translate.', source:'It\'s good that you eat well.', correct:['es bueno que comas bien','es bueno que tú comas bien'], explain:'«Es bueno que comas bien» — value judgment + subjunctive.' },
+    { type:'arrange', prompt:'Arrange — «It\'s strange that he doesn\'t come.»', tokens:['venga','Es','no','que','raro'], correct:['Es','raro','que','no','venga'], explain:'«Es raro que no venga» — value judgment + subjunctive.' },
+    { type:'fill_blank', prompt:'I\'m afraid — verb llover.', sentence:'Tengo miedo de que _____. (it rain)', correct:['llueva'], explain:'«Tengo miedo de que llueva» — fear + subjunctive «llueva».' },
+    { type:'tap_select', prompt:'«I\'m sorry you\'re sick»:', options:['Siento que estás enfermo','Siento que estés enfermo','Siento estás enfermo','Sentí que estás enfermo'], correct:1, explain:'«Siento que estés enfermo» — sentir que (emotion) + subjunctive.' },
+    { type:'speak', prompt:'A common reaction.', target:'me alegra que estés aquí', translation:'I\'m glad you\'re here', explain:'«may al-EG-ra keh ess-TES ah-KEE». Conversational warmth.' },
+  ],
+};
+
+const LESSON_52 = {
+  id: 'L52', title: 'Salud y cuerpo',
+  vocabPreview: [['la cabeza','head'],['el estómago','stomach'],['me duele','it hurts'],['estoy enfermo','I\'m sick'],['la fiebre','fever']],
+  vocabulary: [['la cabeza','head'],['el estómago','stomach'],['la espalda','back'],['la pierna','leg'],['el brazo','arm'],['la mano','hand'],['el pie','foot'],['el ojo','eye'],['la garganta','throat'],['me duele(n)','it hurts me / they hurt'],['estoy enfermo/a','I\'m sick'],['tengo fiebre','I have a fever'],['tengo gripe','I have the flu'],['estoy resfriado/a','I have a cold'],['el médico / la médica','doctor'],['la farmacia','pharmacy'],['la receta','prescription'],['la pastilla','pill']],
+  exercises: [
+    { type:'intro', title:'Health & body — getting medical help', body:'Body parts use definite articles, NOT possessives: «me duele LA cabeza» (literally «the head hurts me»), not «mi cabeza». «Doler» works like «gustar» — «me duele» (singular) / «me duelen» (plural). Health states: «estoy enfermo/a», «tengo gripe», «tengo fiebre». At the pharmacy: «¿tiene algo para X?» = do you have something for X?', vocab:[['Me duele la cabeza','My head hurts'],['Me duelen los pies','My feet hurt'],['Estoy enfermo / enferma','I\'m sick'],['Tengo fiebre','I have a fever'],['Tengo dolor de garganta','I have a sore throat'],['¿Tiene algo para la tos?','Do you have something for cough?']] },
+    { type:'tap_select', prompt:'«My head hurts»:', options:['mi cabeza duele','me duele la cabeza','duelo la cabeza','tengo cabeza'], correct:1, explain:'«Me duele la cabeza» — Spanish uses «doler» like «gustar», with definite article.' },
+    { type:'fill_blank', prompt:'Plural body parts — feet hurt.', sentence:'Me _____ los pies.', correct:['duelen'], explain:'«Me duelen los pies» — plural subject → plural «duelen».' },
+    { type:'translate', prompt:'Translate.', source:'I have a fever.', correct:['tengo fiebre'], explain:'«Tengo fiebre» — illnesses use «tener»: tengo fiebre, tengo gripe, tengo dolor de cabeza.' },
+    { type:'listen', audio:'estoy enferma', prompt:'Listen and choose.', options:['I am sick (m)','I am sick (f)','I am tired','I am hungry'], correct:1, explain:'«Estoy enferma» — feminine. State, not identity → estar.' },
+    { type:'tap_select', prompt:'«Throat»:', options:['la cabeza','la garganta','la pierna','el estómago'], correct:1, explain:'«La garganta» — throat. «Tengo dolor de garganta» = sore throat.' },
+    { type:'translate', prompt:'Translate — at the pharmacy.', source:'Do you have something for cough?', correct:['¿tiene algo para la tos?','tiene algo para la tos','¿tienes algo para la tos?'], explain:'«¿Tiene algo para la tos?» — formal «tiene» common at pharmacies.' },
+    { type:'arrange', prompt:'Arrange — «I have stomach pain.»', tokens:['estómago','de','dolor','Tengo'], correct:['Tengo','dolor','de','estómago'], explain:'«Tengo dolor de estómago» — pattern: «tengo dolor de + body part».' },
+    { type:'fill_blank', prompt:'Cold (illness) state.', sentence:'Estoy _____. (I have a cold)', correct:['resfriado','resfriada'], explain:'«Estoy resfriado/a» — adjective agrees with speaker gender.' },
+    { type:'tap_select', prompt:'«The doctor told me» — choose:', options:['el médico me dijo','el médico me dije','el médica me dijo','la médica me dije'], correct:0, explain:'«El médico me dijo» — masculine doctor + 3rd person preterite of decir.' },
+    { type:'speak', prompt:'Tell a doctor what hurts.', target:'me duele mucho', translation:'it hurts a lot', explain:'«may DWAY-lay MOO-cho».' },
+  ],
+};
+
+const LESSON_53 = {
+  id: 'L53', title: 'Viajar',
+  vocabPreview: [['el aeropuerto','airport'],['el vuelo','flight'],['el equipaje','luggage'],['la maleta','suitcase'],['hacer cola','wait in line'],['el pasaporte','passport']],
+  vocabulary: [['el aeropuerto','airport'],['el vuelo','flight'],['el equipaje','luggage'],['la maleta','suitcase'],['el pasaporte','passport'],['la tarjeta de embarque','boarding pass'],['el asiento','seat'],['la ventanilla','window seat'],['el pasillo','aisle'],['hacer cola','wait in line'],['migración','immigration'],['aduana','customs'],['retraso','delay'],['cancelado','cancelled'],['el hotel','hotel'],['la habitación','room'],['la reserva','reservation']],
+  exercises: [
+    { type:'intro', title:'Travel Spanish — airports & hotels', body:'Essential vocabulary for travel. At the airport: «¿dónde está el mostrador de [airline]?», «mi vuelo está retrasado», «¿hay asiento en la ventanilla?». At immigration: «¿el motivo de su viaje?» — answer with «turismo» or «trabajo». At hotels: «tengo una reserva», «¿puedo ver la habitación?». Useful idiom: «hacer cola» = to wait in line. «Hacer escala» = to have a layover.', vocab:[['Mi vuelo sale a las...','My flight leaves at...'],['¿Dónde está la puerta?','Where\'s the gate?'],['Tengo equipaje de mano','I have a carry-on'],['Vengo por turismo','I\'m here for tourism'],['Tengo una reserva','I have a reservation'],['Habitación doble','double room']] },
+    { type:'tap_select', prompt:'«My flight is delayed»:', options:['Mi vuelo está retrasado','Mi vuelo está cancelado','Mi vuelo está aquí','Mi vuelo es a tiempo'], correct:0, explain:'«Está retrasado» — temporary state → estar.' },
+    { type:'fill_blank', prompt:'Wait in line.', sentence:'Tengo que _____ cola en migración.', correct:['hacer'], explain:'«Hacer cola» — fixed expression for «wait in line». Note «cola» also means traffic jam in Venezuela!' },
+    { type:'translate', prompt:'Translate — at immigration.', source:'I\'m here for tourism.', correct:['vengo por turismo','estoy por turismo','vengo de turismo'], explain:'«Vengo por turismo» — POR for cause/reason. Standard immigration response.' },
+    { type:'listen', audio:'tengo una reserva', prompt:'Listen and choose.', options:['I make a reservation','I have a reservation','I want a reservation','I cancelled the reservation'], correct:1, explain:'«Tengo una reserva» — at hotel check-in.' },
+    { type:'tap_select', prompt:'«Window seat»:', options:['el pasillo','la ventanilla','el asiento','la maleta'], correct:1, explain:'«La ventanilla» — diminutive of «ventana» (window). On planes specifically.' },
+    { type:'translate', prompt:'Translate.', source:'Where is the gate?', correct:['¿dónde está la puerta?','dónde está la puerta','¿dónde está la puerta de embarque?'], explain:'«La puerta» (gate). Sometimes «la puerta de embarque» (boarding gate) for clarity.' },
+    { type:'arrange', prompt:'Arrange — «I want a double room.»', tokens:['doble','una','Quiero','habitación'], correct:['Quiero','una','habitación','doble'], explain:'«Quiero una habitación doble» — adjective AFTER noun.' },
+    { type:'fill_blank', prompt:'Boarding pass.', sentence:'Aquí está mi tarjeta de _____.', correct:['embarque'], explain:'«Tarjeta de embarque» — boarding pass. «Embarcar» = to board.' },
+    { type:'tap_select', prompt:'«Layover»:', options:['hacer cola','hacer escala','hacer aduana','hacer maleta'], correct:1, explain:'«Hacer escala» — to have a layover/connection. «Hacer la maleta» = to pack.' },
+    { type:'speak', prompt:'A travel staple.', target:'tengo una reserva', translation:'I have a reservation', explain:'«TEN-go OO-na ray-SER-va».' },
+  ],
+};
+
+const LESSON_54 = {
+  id: 'L54', title: 'Trabajo y profesiones',
+  vocabPreview: [['el trabajo','work / job'],['la empresa','company'],['el jefe','boss'],['la reunión','meeting'],['estoy ocupado','I\'m busy']],
+  vocabulary: [['el trabajo','work / job'],['la empresa','company'],['la oficina','office'],['el jefe / la jefa','boss'],['el colega','colleague'],['la reunión','meeting'],['el cliente','client'],['el proyecto','project'],['el sueldo','salary'],['estoy ocupado/a','I\'m busy'],['trabajar de','to work as'],['ingeniero/a','engineer'],['abogado/a','lawyer'],['profesor/a','teacher'],['enfermero/a','nurse'],['empresario/a','entrepreneur'],['horario','schedule'],['vacaciones','vacation']],
+  exercises: [
+    { type:'intro', title:'Workplace Spanish', body:'«¿A qué te dedicas?» = What do you do (for work)? Common answer: «trabajo de + profession». Professions: ingeniero, abogado, profesor, enfermero, empresario — all gender-flex (-o m / -a f). Useful states: «estoy ocupado», «tengo una reunión», «en este momento no puedo». Schedule talk: «el horario es flexible», «las vacaciones». In Latin American business, formality is high — use usted with new contacts and clients.', vocab:[['¿A qué te dedicas?','What do you do?'],['Trabajo de ingeniero','I work as an engineer'],['Tengo una reunión','I have a meeting'],['Estoy ocupado','I\'m busy'],['Mi jefe es exigente','My boss is demanding'],['Las vacaciones','Vacation']] },
+    { type:'tap_select', prompt:'«What do you do?» — informal:', options:['¿Qué eres?','¿A qué te dedicas?','¿De qué trabajas?','Both B and C'], correct:3, explain:'Both «¿A qué te dedicas?» and «¿De qué trabajas?» are common. «¿Qué eres?» (what are you?) sounds odd for profession.' },
+    { type:'fill_blank', prompt:'I work as a teacher.', sentence:'Trabajo _____ profesor.', correct:['de'], explain:'«Trabajo de profesor» — «de + profession» (no article). «Soy profesor» also works.' },
+    { type:'translate', prompt:'Translate.', source:'I have a meeting at 3.', correct:['tengo una reunión a las tres','tengo una reunión a las 3'], explain:'«Tengo una reunión a las tres» — «a las» + hour for meetings.' },
+    { type:'listen', audio:'estoy ocupado ahora', prompt:'Listen and choose.', options:['I\'m here now','I\'m busy now','I\'m happy now','I\'m bored now'], correct:1, explain:'«Estoy ocupado» — temporary state → estar.' },
+    { type:'tap_select', prompt:'«Lawyer» (female):', options:['el abogado','la abogada','el abogada','la abogado'], correct:1, explain:'«La abogada» — feminine. Most professions ending in -o flip to -a.' },
+    { type:'translate', prompt:'Translate.', source:'My boss is demanding.', correct:['mi jefe es exigente','mi jefa es exigente'], explain:'«Es exigente» — inherent characteristic → ser. «Exigente» doesn\'t change for gender.' },
+    { type:'arrange', prompt:'Arrange — «I work in a big company.»', tokens:['una','empresa','en','grande','Trabajo'], correct:['Trabajo','en','una','empresa','grande'], explain:'«Trabajo en una empresa grande» — «en» for location of work.' },
+    { type:'fill_blank', prompt:'My salary is good.', sentence:'Mi _____ es bueno.', correct:['sueldo','salario'], explain:'«Mi sueldo es bueno» — «sueldo» = salary (most common). «Salario» also works.' },
+    { type:'tap_select', prompt:'«I\'m on vacation»:', options:['Estoy en vacaciones','Estoy de vacaciones','Soy de vacaciones','Tengo vacaciones'], correct:1, explain:'«Estoy de vacaciones» — fixed expression. «Tengo vacaciones» means «I have vacation (time)» (different).' },
+    { type:'speak', prompt:'Answer the work question.', target:'trabajo de ingeniero', translation:'I work as an engineer', explain:'Customize with your real profession.' },
+  ],
+};
+
+const LESSON_55 = {
+  id: 'L55', title: 'Tecnología',
+  vocabPreview: [['el celular','cell phone'],['el correo','email'],['la pantalla','screen'],['cargar','to charge'],['el wifi','wifi']],
+  vocabulary: [['el celular','cell phone (LatAm)'],['el móvil','cell phone (Spain)'],['el correo','email / mail'],['el correo electrónico','email'],['la pantalla','screen'],['el teclado','keyboard'],['el ratón','mouse'],['cargar','to charge / load'],['descargar','to download'],['subir','to upload'],['conectar','to connect'],['el wifi','wifi'],['la contraseña','password'],['la red','network'],['la app / aplicación','app'],['enviar un mensaje','send a message'],['llamar','to call'],['textear','to text']],
+  exercises: [
+    { type:'intro', title:'Tech & devices', body:'«El celular» (LatAm) vs «el móvil» (Spain) — same thing, different word. «El correo» can mean physical mail OR email — context decides; «el correo electrónico» is fully unambiguous. Verbs: «cargar» (charge a phone OR load data), «descargar» (download), «subir» (upload), «conectar» (connect). Verbs «mandar» and «enviar» both mean «send». In casual Caracas speech: «mándame un mensajito» = send me a quick message.', vocab:[['Mi celular no carga','My phone isn\'t charging'],['¿Cuál es la contraseña del wifi?','What\'s the wifi password?'],['Te mando un mensaje','I\'ll send you a message'],['No tengo señal','I don\'t have signal'],['Se cayó la conexión','The connection dropped'],['Voy a descargar la app','I\'m going to download the app']] },
+    { type:'tap_select', prompt:'«Cell phone» in Latin America:', options:['el móvil','el celular','el teléfono','el cargador'], correct:1, explain:'«El celular» — universal in Latin America. «Móvil» is Spain-specific.' },
+    { type:'fill_blank', prompt:'What\'s the wifi password?', sentence:'¿Cuál es la _____ del wifi?', correct:['contraseña','clave'], explain:'«La contraseña» (or «la clave») — password. «Clave» literally means «key».' },
+    { type:'translate', prompt:'Translate.', source:'I\'ll send you a message.', correct:['te mando un mensaje','te envío un mensaje'], explain:'«Te mando» or «te envío» — both work. «Mandar» more casual; «enviar» more formal.' },
+    { type:'listen', audio:'no tengo señal', prompt:'Listen and choose.', options:['I have no signal','I have a signal','I don\'t need a signal','I want a signal'], correct:0, explain:'«No tengo señal» — common phone complaint.' },
+    { type:'tap_select', prompt:'«Download»:', options:['cargar','subir','descargar','conectar'], correct:2, explain:'«Descargar» — to download. «Subir» = upload. «Cargar» = charge / load (overlaps with download in some contexts).' },
+    { type:'translate', prompt:'Translate.', source:'My phone isn\'t charging.', correct:['mi celular no carga','mi celular no se carga'], explain:'«No carga» — present, current state. «No se carga» also acceptable (reflexive use).' },
+    { type:'arrange', prompt:'Arrange — «I\'m going to download the app.»', tokens:['app','la','descargar','Voy','a'], correct:['Voy','a','descargar','la','app'], explain:'«Voy a descargar la app» — going-to future + descargar.' },
+    { type:'fill_blank', prompt:'Connection dropped (using «se cayó»).', sentence:'Se _____ la conexión.', correct:['cayó'], explain:'«Se cayó la conexión» — fixed expression. From «caerse» (to fall). Preterite «cayó» = it fell.' },
+    { type:'tap_select', prompt:'«To text someone» informal in LatAm:', options:['llamar','escribir','textear','enviar'], correct:2, explain:'«Textear» — anglicism, very common in LatAm. «Escribir un mensaje» also works for «to write a message».' },
+    { type:'speak', prompt:'A daily-life staple.', target:'no tengo señal', translation:'I don\'t have signal', explain:'«no TEN-go say-NYAL».' },
+  ],
+};
+
+const LESSON_56 = {
+  id: 'L56', title: 'Hace + tiempo',
+  vocabPreview: [['hace dos años','two years ago'],['desde hace','for (duration)'],['¿cuánto tiempo hace que...?','how long ago...?'],['hace mucho','a long time']],
+  vocabulary: [['hace + tiempo','X time ago'],['Hace dos años','two years ago'],['Hace mucho tiempo','a long time ago'],['Desde hace + tiempo','for X time (ongoing)'],['Vivo aquí desde hace 5 años','I\'ve lived here for 5 years'],['¿Cuánto tiempo hace que...?','how long has it been...?'],['¿Cuánto tiempo llevas...?','how long have you been...?']],
+  exercises: [
+    { type:'intro', title:'Hace + time — looking back & ongoing', body:'Two patterns. «HACE + time + que + preterite» = X time ago: «Hace dos años fui a Colombia» (Two years ago I went to Colombia). «DESDE HACE + time + present» = for X time (still happening): «Vivo aquí desde hace 5 años» (I\'ve lived here for 5 years — still living here). Question forms: «¿Cuánto tiempo hace que...?» (how long ago...?), «¿Cuánto tiempo llevas + gerund?» (how long have you been...?).', vocab:[['Hace 3 años fui...','3 years ago I went...'],['Desde hace 2 años','for 2 years (still)'],['¿Cuánto hace que...?','how long ago...?'],['¿Cuánto tiempo llevas estudiando?','how long have you been studying?'],['Hace mucho que no...','it\'s been a long time since...']] },
+    { type:'tap_select', prompt:'«Two years ago I went to Colombia»:', options:['Por dos años fui a Colombia','Hace dos años fui a Colombia','Desde dos años fui a Colombia','En dos años fui a Colombia'], correct:1, explain:'«Hace dos años» — looking back to a specific time. Pairs with preterite for completed action.' },
+    { type:'fill_blank', prompt:'Ongoing — for 5 years.', sentence:'Vivo aquí _____ hace cinco años.', correct:['desde'], explain:'«Desde hace cinco años» — ongoing duration. Pairs with PRESENT tense (still happening).' },
+    { type:'translate', prompt:'Translate.', source:'I haven\'t seen him in a long time.', correct:['hace mucho que no lo veo','hace mucho tiempo que no lo veo'], explain:'«Hace mucho que no lo veo» — fixed pattern: hace + time + que + present (negative). Literally «it\'s been a long time that I don\'t see him».' },
+    { type:'listen', audio:'hace tres años', prompt:'Listen and choose.', options:['three years ago','for three years','in three years','during three years'], correct:0, explain:'«Hace tres años» (alone) usually = «three years ago» when talking about past events.' },
+    { type:'tap_select', prompt:'«How long have you been studying Spanish?»:', options:['¿Cuánto estudiaste español?','¿Cuánto tiempo llevas estudiando español?','¿Cuándo estudias español?','¿Por cuánto estudias español?'], correct:1, explain:'«¿Cuánto tiempo llevas estudiando?» — «llevar + gerund» = to have been doing.' },
+    { type:'translate', prompt:'Translate.', source:'I\'ve worked here for 3 months.', correct:['trabajo aquí desde hace tres meses','llevo tres meses trabajando aquí'], explain:'Both work. «Trabajo desde hace 3 meses» (since 3 months ago) or «Llevo 3 meses trabajando» (been doing for 3 months).' },
+    { type:'arrange', prompt:'Arrange — «It\'s been a year since I saw her.»', tokens:['veo','no','que','la','un','año','Hace'], correct:['Hace','un','año','que','no','la','veo'], explain:'«Hace un año que no la veo» — same pattern as «hace mucho que no».' },
+    { type:'fill_blank', prompt:'Question — how long ago.', sentence:'¿_____ tiempo hace que llegaste?', correct:['cuánto','Cuánto'], explain:'«¿Cuánto tiempo hace que llegaste?» — how long ago did you arrive?' },
+    { type:'tap_select', prompt:'Choose the still-ongoing action:', options:['Hace 5 años fui a México','Vivo en Caracas desde hace 5 años','Hace 5 años que llegué','Hace 5 años pasaron muchas cosas'], correct:1, explain:'«Vivo desde hace» = still doing. The others are completed past actions.' },
+    { type:'speak', prompt:'Answer a duration question.', target:'desde hace dos años', translation:'for two years', explain:'«DES-day AH-say dos AHN-yos».' },
+  ],
+};
+
+const LESSON_57 = {
+  id: 'L57', title: 'Si + presente',
+  vocabPreview: [['si tengo tiempo','if I have time'],['si llueve','if it rains'],['si quieres','if you want'],['si puedo','if I can']],
+  vocabulary: [['Si + presente, presente','if X happens, Y happens'],['Si + presente, futuro','if X, then Y will'],['Si + presente, imperativo','if X, do Y'],['Si tengo tiempo, voy','if I have time, I go'],['Si llueve, no salimos','if it rains, we don\'t go out'],['Si quieres, llámame','if you want, call me'],['Si puedo, te ayudo','if I can, I\'ll help you']],
+  exercises: [
+    { type:'intro', title:'Real conditional — if X, then Y', body:'For LIKELY or REAL conditions, Spanish uses: SI + present indicative, present (or future, or imperative). «Si tengo tiempo, voy» = If I have time, I go. «Si llueve, no saldremos» = If it rains, we won\'t go out. «Si quieres, llámame» = If you want, call me. NEVER use subjunctive after «si» in real conditionals — «si tengas» is wrong. Subjunctive after «si» only for HYPOTHETICALS («si tuviera tiempo» = if I had time, but I don\'t — that\'s past subjunctive, B1+ territory).', vocab:[['Si llueve, no salgo','if it rains, I don\'t go out'],['Si tienes tiempo, llámame','if you have time, call me'],['Si vienes, te invito un café','if you come, I\'ll buy you a coffee'],['Si puedo, ayudo','if I can, I help'],['Never «si + subjunctive» for real ifs','«si tienes» NOT «si tengas»']] },
+    { type:'tap_select', prompt:'«If I have time, I\'ll go»:', options:['Si tengo tiempo, voy','Si tenga tiempo, voy','Si tendré tiempo, voy','Si tuviera tiempo, voy'], correct:0, explain:'«Si tengo tiempo, voy» — present after «si». Subjunctive «tenga» is wrong in real conditionals.' },
+    { type:'fill_blank', prompt:'Present after «si».', sentence:'Si _____ tiempo, te ayudo. (have)', correct:['tengo'], explain:'«Si tengo tiempo, te ayudo» — present indicative after «si».' },
+    { type:'translate', prompt:'Translate.', source:'If you (informal) come, I\'ll buy you a coffee.', correct:['si vienes, te invito un café','si vienes, te invito a un café'], explain:'«Si vienes, te invito un café» — present after si + present (or future) in main clause. «Invitar» = to treat someone.' },
+    { type:'listen', audio:'si quieres, llámame', prompt:'Listen and choose.', options:['if you want, call me','you want me to call you','if I want, you call me','do you want to call me?'], correct:0, explain:'«Si quieres, llámame» — si + present + imperative.' },
+    { type:'tap_select', prompt:'Which is WRONG?', options:['Si llueve, no salgo','Si tengas tiempo, llámame','Si vienes temprano, comemos juntos','Si puedo, te ayudo'], correct:1, explain:'«Si tengas» is wrong — should be «si tienes» (indicative).' },
+    { type:'translate', prompt:'Translate.', source:'If it rains tomorrow, we don\'t go.', correct:['si llueve mañana, no vamos','si llueve mañana no vamos'], explain:'«Si llueve mañana, no vamos» — present + present.' },
+    { type:'arrange', prompt:'Arrange — «If you study, you learn.»', tokens:['estudias,','aprendes','Si'], correct:['Si','estudias,','aprendes'], explain:'«Si estudias, aprendes» — both clauses in present.' },
+    { type:'fill_blank', prompt:'Future after «si» clause.', sentence:'Si llego temprano, te _____. (call — I will call)', correct:['llamaré','llamo'], explain:'Both work: «te llamaré» (simple future) or «te llamo» (present with future meaning, very common).' },
+    { type:'tap_select', prompt:'After «si» in real conditionals, use:', options:['Subjunctive','Present indicative','Conditional','Imperfect'], correct:1, explain:'Present indicative. Subjunctive after «si» is for hypotheticals (B1+).' },
+    { type:'speak', prompt:'A common conditional offer.', target:'si quieres, te ayudo', translation:'if you want, I\'ll help you', explain:'«see kee-AY-res, tay ah-YOO-do».' },
+  ],
+};
+
+const LESSON_58 = {
+  id: 'L58', title: 'Repaso A2',
+  vocabPreview: [['Repaso','Review'],['Pretérito vs Imperfecto','past tenses'],['Pronombres','pronouns'],['Subjuntivo','subjunctive']],
+  vocabulary: [['Repaso integral','full review'],['Pretérito vs imperfecto','past tense choice'],['DO + IO pronouns','direct + indirect objects'],['Por vs Para','prepositions'],['Subjuntivo básico','basic subjunctive']],
+  exercises: [
+    { type:'intro', title:'A2 review — the big concepts together', body:'This lesson mixes the major A2 topics in real-context exercises. No new content — just integrated practice across past tenses, pronouns, por/para, subjunctive triggers, commands, and present perfect. Take it as a self-check before the A2 evaluation in L60.', vocab:[['Past tense choice','preterite (specific) vs imperfect (ongoing)'],['Pronouns','me, te, lo/la, le, nos, los/las, les'],['Subjunctive triggers','quiero que, ojalá, dudo que, me alegra que'],['Por vs Para','cause/exchange vs purpose/recipient'],['Commands','tú affirmative + subjunctive form for negative/formal']] },
+    { type:'tap_select', prompt:'«When I was young, I always went to the beach» — both verbs:', options:['fui / iba','era / iba','fui / fui','era / fui'], correct:1, explain:'«Cuando era joven, siempre iba a la playa» — both imperfect: ongoing state («era») + habitual action («iba»).' },
+    { type:'fill_blank', prompt:'Pronoun review — the book to María.', sentence:'_____ _____ di a María. (the book → it; her → her)', correct:['se lo','Se lo'], explain:'«Se lo di a María» — IO «le» → «se» before «lo» (the book).' },
+    { type:'translate', prompt:'Translate — subjunctive + por/para.', source:'I work in order to live well.', correct:['trabajo para vivir bien'], explain:'«Trabajo para vivir bien» — purpose → PARA + infinitive.' },
+    { type:'listen', audio:'ya he comido', prompt:'Listen and choose.', options:['I eat now','I will eat','I have already eaten','I used to eat'], correct:2, explain:'«Ya he comido» — present perfect with «ya» (already).' },
+    { type:'tap_select', prompt:'Triggers subjunctive — pick the one:', options:['Pienso que','Sé que','Es bueno que','Veo que'], correct:2, explain:'«Es bueno que» — value judgment → subjunctive. The others are statements of fact/belief → indicative.' },
+    { type:'translate', prompt:'Translate — command + pronoun.', source:'Tell it to me!', correct:['¡dímelo!','dímelo'], explain:'«Dímelo» — affirmative tú command + IO «me» + DO «lo».' },
+    { type:'arrange', prompt:'Arrange — «If you have time, I want you to come.»', tokens:['tiempo,','que','vengas','quiero','tienes','Si'], correct:['Si','tienes','tiempo,','quiero','que','vengas'], explain:'Si + present («tienes») + main clause with subjunctive trigger «quiero que vengas».' },
+    { type:'fill_blank', prompt:'Hace + time pattern.', sentence:'_____ tres años que vivo aquí.', correct:['hace','Hace'], explain:'«Hace tres años que vivo aquí» — ongoing duration with «hace».' },
+    { type:'tap_select', prompt:'Pretérito or imperfecto? «Yesterday I ate too much»:', options:['Ayer comía demasiado','Ayer comí demasiado','Ayer he comido demasiado','Ayer como demasiado'], correct:1, explain:'«Ayer comí» — specific completed event → preterite.' },
+    { type:'translate', prompt:'Translate.', source:'How long have you been living here?', correct:['¿cuánto tiempo llevas viviendo aquí?','cuánto tiempo llevas viviendo aquí','¿cuánto tiempo hace que vives aquí?'], explain:'Both forms work. «Llevar + gerund» or «hace + time + que + present».' },
+    { type:'speak', prompt:'A capstone phrase.', target:'me alegra mucho verte', translation:'I\'m very happy to see you', explain:'Note: «verte» (infinitive) because subject of «alegra» and «verte» is the same. With different subjects: «me alegra que estés aquí».' },
+  ],
+};
+
+const LESSON_59 = {
+  id: 'L59', title: 'Conversación A2',
+  vocabPreview: [['¿Cómo te ha ido?','how\'s it been going?'],['Hace mucho que...','it\'s been a while since...'],['Te cuento que...','let me tell you...'],['¿Y tú?','and you?']],
+  vocabulary: [['¿Cómo te ha ido?','how\'s it been going? (present perfect)'],['Hace mucho que no nos vemos','it\'s been a while since we\'ve seen each other'],['Te cuento que...','let me tell you that...'],['Me imagino que...','I imagine that...'],['Lo que pasa es que...','the thing is...'],['Tienes razón','you\'re right'],['No estoy seguro','I\'m not sure']],
+  exercises: [
+    { type:'intro', title:'Holding an A2 conversation', body:'You\'ve seen most of these phrases scattered across A2. Here they\'re combined into a realistic adult conversation flow. Greetings: «¿cómo te ha ido?». Catching up: «hace mucho que no nos vemos». Sharing: «te cuento que...». Reacting: «¡no me digas!», «qué bueno», «qué pena». Closing: «cuídate», «que estés bien». Practice these as transition glue between heavier grammar.', vocab:[['¿Cómo te ha ido?','How\'s it been? (present perfect)'],['Hace mucho que no...','It\'s been a while since...'],['Te cuento que','Let me tell you that...'],['¡No me digas!','You don\'t say! / Really!'],['Qué bueno / qué pena','that\'s great / that\'s a shame'],['Cuídate','take care']] },
+    { type:'tap_select', prompt:'«How\'s it been going?» (greeting an old friend):', options:['¿Cómo estás?','¿Cómo te ha ido?','¿Quién eres?','¿Cuánto cuesta?'], correct:1, explain:'«¿Cómo te ha ido?» — uses present perfect, asks about the period since you last spoke.' },
+    { type:'fill_blank', prompt:'It\'s been a while.', sentence:'_____ mucho que no nos vemos.', correct:['Hace','hace'], explain:'«Hace mucho que no nos vemos» — common opener after time apart.' },
+    { type:'translate', prompt:'Translate — opener for sharing news.', source:'Let me tell you that I got married.', correct:['te cuento que me casé'], explain:'«Te cuento que + preterite» — common pattern for sharing recent news.' },
+    { type:'listen', audio:'qué bueno', prompt:'Listen — what\'s the reaction?', options:['that\'s a shame','that\'s good','that\'s strange','that\'s expected'], correct:1, explain:'«Qué bueno» — positive reaction. Pair: «qué pena» = that\'s a shame.' },
+    { type:'tap_select', prompt:'«You\'re right»:', options:['Tienes hambre','Tienes razón','Tienes calor','Tienes frío'], correct:1, explain:'«Tienes razón» — uses tener idiom: literally «you have reason».' },
+    { type:'translate', prompt:'Translate.', source:'I imagine that you\'re tired.', correct:['me imagino que estás cansado','me imagino que estás cansada','me imagino que están cansados'], explain:'«Me imagino que» + indicative (it\'s a guess, not a doubt). Adjective agrees with the addressed person.' },
+    { type:'arrange', prompt:'Arrange — «I\'m not sure if she\'s coming.»', tokens:['si','seguro','viene','No','estoy'], correct:['No','estoy','seguro','si','viene'], explain:'«No estoy seguro si viene» — common uncertainty phrase. Note: «si» here = «whether», not the conditional «if».' },
+    { type:'fill_blank', prompt:'Reaction — that\'s a shame.', sentence:'¡Qué _____! (a shame)', correct:['pena','lástima'], explain:'«¡Qué pena!» or «¡Qué lástima!» — both work for «that\'s a shame».' },
+    { type:'tap_select', prompt:'Casual goodbye after a chat:', options:['Adiós, hasta luego','Cuídate, nos vemos','Buenas noches','¿Cómo estás?'], correct:1, explain:'«Cuídate, nos vemos» — warm casual close. Universal among friends.' },
+    { type:'speak', prompt:'A capstone catch-up phrase.', target:'hace mucho que no nos vemos', translation:'it\'s been a while since we\'ve seen each other', explain:'«AH-say MOO-cho keh no nos VEH-mos». Standard reunion opener.' },
+  ],
+};
+
+const LESSON_60 = {
+  id: 'L60', title: 'Evaluación A2',
+  assessment: true,
+  passThreshold: 0.75,
+  vocabPreview: [['30 questions','no hints, no feedback'],['Mixed types','tap, fill, translate'],['75% to pass','complete A2 → B1'],['Per-unit report','at the end']],
+  vocabulary: [],
+  exercises: [
+    { type:'tap_select', prompt:'Pretérito of «ir», yo form:', options:['iba','fui','voy','iré'], correct:1, explain:'«Fui» — preterite of ir (and ser, same forms).', unitRef:9 },
+    { type:'translate', prompt:'Translate.', source:'I had a difficult day.', correct:['tuve un día difícil'], explain:'«Tuve» — U-stem irregular preterite of tener. No accent.', unitRef:9 },
+    { type:'fill_blank', prompt:'Pretérito of hacer — third person.', sentence:'Ella _____ la tarea ayer.', correct:['hizo'], explain:'«Hizo» — note the Z (not C) before O.', unitRef:9 },
+    { type:'tap_select', prompt:'«She slept» — pretérito:', options:['durmió','dormió','dormí','durmí'], correct:0, explain:'«Durmió» — -IR stem changer in 3rd person (o→u).', unitRef:9 },
+    { type:'fill_blank', prompt:'Imperfect — I used to live.', sentence:'Antes yo _____ en Madrid.', correct:['vivía'], explain:'«Vivía» — imperfect, ongoing/habitual past.', unitRef:10 },
+    { type:'tap_select', prompt:'Imperfect of ser — yo:', options:['fui','era','soy','sería'], correct:1, explain:'«Era» — irregular imperfect of ser.', unitRef:10 },
+    { type:'translate', prompt:'Translate — preterite vs imperfect.', source:'I was eating when she called.', correct:['estaba comiendo cuando llamó','comía cuando llamó'], explain:'Background (imperfect) + interrupting event (preterite).', unitRef:10 },
+    { type:'tap_select', prompt:'Replace «el libro» with a pronoun. «Yo lo compré»:', options:['I bought him','I bought it','I bought to him','I bought you'], correct:1, explain:'«Lo» = it (m). Direct object pronoun.', unitRef:11 },
+    { type:'translate', prompt:'Translate.', source:'I gave him the book.', correct:['le di el libro','yo le di el libro'], explain:'«Le di el libro» — IO «le» before verb.', unitRef:11 },
+    { type:'fill_blank', prompt:'IO + DO combined — to her, the book.', sentence:'_____ _____ di a María. (the book)', correct:['se lo','Se lo'], explain:'«Se lo di» — «le» becomes «se» before «lo».', unitRef:11 },
+    { type:'tap_select', prompt:'«For two hours» (duration):', options:['para dos horas','por dos horas','en dos horas','de dos horas'], correct:1, explain:'POR for duration.', unitRef:12 },
+    { type:'fill_blank', prompt:'Purpose — in order to.', sentence:'Estudio _____ aprender.', correct:['para'], explain:'PARA for purpose / goal.', unitRef:12 },
+    { type:'translate', prompt:'Translate — going-to future.', source:'I\'m going to eat.', correct:['voy a comer','yo voy a comer'], explain:'Ir + a + infinitive.', unitRef:12 },
+    { type:'tap_select', prompt:'Conditional of tener, yo:', options:['tendré','tendría','tenía','tuve'], correct:1, explain:'«Tendría» — irregular stem + -ía.', unitRef:12 },
+    { type:'translate', prompt:'Translate.', source:'I get along with my brother.', correct:['me llevo bien con mi hermano'], explain:'«Llevarse bien con» — reflexive idiom.', unitRef:13 },
+    { type:'fill_blank', prompt:'Comparative — more than.', sentence:'Es _____ alta _____ yo.', correct:['más que'], explain:'Más + adj + que.', unitRef:13 },
+    { type:'tap_select', prompt:'Affirmative tú command of «venir»:', options:['vienes','viene','ven','venga'], correct:2, explain:'«Ven» — irregular affirmative tú command.', unitRef:14 },
+    { type:'translate', prompt:'Translate — formal.', source:'Come in! (formal)', correct:['¡pase!','pase','pase usted'], explain:'Usted command of pasar.', unitRef:14 },
+    { type:'fill_blank', prompt:'Present perfect with auxiliary.', sentence:'Yo _____ comido demasiado. (have)', correct:['he'], explain:'«He comido» — yo form of haber + participle.', unitRef:14 },
+    { type:'tap_select', prompt:'Subjunctive of ser, yo:', options:['soy','sea','fui','era'], correct:1, explain:'«Sea» — irregular subjunctive.', unitRef:15 },
+    { type:'translate', prompt:'Translate.', source:'I want you to come.', correct:['quiero que vengas','quiero que vengas tú'], explain:'Different subjects + que + subjunctive.', unitRef:15 },
+    { type:'fill_blank', prompt:'Doubt triggers subjunctive.', sentence:'Dudo que _____ aquí. (he is — estar)', correct:['esté'], explain:'«Esté» — subjunctive after dudo que.', unitRef:15 },
+    { type:'tap_select', prompt:'«My head hurts»:', options:['mi cabeza duele','me duele la cabeza','tengo cabeza','mi cabeza es'], correct:1, explain:'«Me duele la cabeza» — gustar-style construction.', unitRef:16 },
+    { type:'translate', prompt:'Translate.', source:'I have a reservation.', correct:['tengo una reserva','tengo una reservación'], explain:'«Tengo una reserva» at hotel check-in.', unitRef:16 },
+    { type:'fill_blank', prompt:'I work as a teacher.', sentence:'Trabajo _____ profesor.', correct:['de'], explain:'«Trabajo de + profession».', unitRef:16 },
+    { type:'tap_select', prompt:'«Two years ago I went to Mexico»:', options:['Por dos años fui...','Hace dos años fui...','Desde dos años fui...','En dos años fui...'], correct:1, explain:'«Hace + time» = ago.', unitRef:17 },
+    { type:'translate', prompt:'Translate — real conditional.', source:'If you have time, call me.', correct:['si tienes tiempo, llámame','si tienes tiempo llámame'], explain:'Si + present + imperative.', unitRef:17 },
+    { type:'tap_select', prompt:'Greeting after long time:', options:['¡Hola!','¿Cómo te ha ido?','¿Cuánto cuesta?','¿Dónde estás?'], correct:1, explain:'«¿Cómo te ha ido?» — present perfect catch-up greeting.', unitRef:18 },
+    { type:'translate', prompt:'Translate.', source:'I\'m not sure if she\'s coming.', correct:['no estoy seguro si viene','no estoy segura si viene'], explain:'Uncertainty without subjunctive trigger.', unitRef:18 },
+    { type:'translate', prompt:'Translate — capstone.', source:'It\'s been a while since we\'ve seen each other.', correct:['hace mucho que no nos vemos','hace mucho tiempo que no nos vemos'], explain:'Hace + time + que + no + present.', unitRef:18 },
+  ],
+};
+
+const LESSON_V5 = {
+  id: 'V5', title: 'La chamba caraqueña', track: 'venezuelan', level: 'A2',
+  vocabPreview: [['la chamba','the job/work'],['chambear','to work'],['echar broma','to joke around'],['guayar','to study hard'],['estar fundido','exhausted']],
+  vocabulary: [['la chamba','informal: the job / work'],['chambear','to work'],['estar fundido / fundida','exhausted'],['echar broma','to joke around / mess around'],['guayar','to study hard / hustle'],['matarse','to work yourself to death'],['estar arrecho con','to be angry/frustrated with'],['caer en cuenta','to realize'],['¿cómo va la cosa?','how\'s it going?'],['estar full','to be very busy'],['cuadrar','to arrange / set up']],
+  exercises: [
+    { type:'intro', title:'🇻🇪 Workplace Venezuelan Spanish', body:'Caracas business culture: formal in title (sí, señor / sí, doctor) but warm in tone. After hours, the slang flows. «La chamba» = the job, casual. «¡Estoy fundido!» = I\'m exhausted. «¡Está arrecho!» — at work, this means «he\'s pissed off» (different from the «cool» meaning among friends — context!). Coordinating: «vamos a cuadrar la reunión» = let\'s set up the meeting.', vocab:[['La chamba','the job (casual)'],['Chambear','to work'],['¡Estoy full!','I\'m super busy'],['¡Estoy fundido!','I\'m exhausted'],['Cuadrar','to arrange (a meeting, a deal)'],['Caer en cuenta','to realize']] },
+    { type:'tap_select', prompt:'«I\'m super busy» (Venezuelan):', options:['Estoy aburrido','Estoy full','Estoy chévere','Estoy listo'], correct:1, explain:'«Estoy full» — anglicism, very Caracas.' },
+    { type:'fill_blank', prompt:'Caracas slang for «to work»:', sentence:'Mañana tengo que _____ todo el día.', correct:['chambear','trabajar'], explain:'«Chambear» — informal «to work». «Trabajar» also correct, more standard.' },
+    { type:'translate', prompt:'Translate — Caracas style.', source:'How\'s the job going?', correct:['¿cómo va la chamba?','cómo va la chamba'], explain:'«¿Cómo va la chamba?» — universal Caracas check-in among colleagues.' },
+    { type:'listen', audio:'estoy fundido', prompt:'Listen and choose.', options:['I\'m well','I\'m exhausted','I\'m busy','I\'m happy'], correct:1, explain:'«Estoy fundido» — drained. «Fundir» = to melt; metaphorically, melted from work.' },
+    { type:'tap_select', prompt:'«Está arrecho» AT WORK most likely means:', options:['He\'s great','He\'s angry/frustrated','He\'s funny','He\'s rich'], correct:1, explain:'In professional context, «arrecho» = angry. Among close friends it can mean «cool». Read the room!' },
+    { type:'translate', prompt:'Translate.', source:'Let\'s set up the meeting.', correct:['vamos a cuadrar la reunión','cuadremos la reunión'], explain:'«Cuadrar» — to coordinate / pin down. Very Venezuelan business verb.' },
+    { type:'arrange', prompt:'Arrange — «I just realized.»', tokens:['cuenta','en','cabo','de','Acabo','caer'], correct:['Acabo','de','caer','en','cuenta'], explain:'«Acabo de caer en cuenta» — I just realized. «Caer en cuenta» = realize.' },
+    { type:'fill_blank', prompt:'After-hours casual.', sentence:'Vamos a echar _____ esta noche. (joke around)', correct:['broma'], explain:'«Echar broma» — to mess around / joke around. Casual after-work plans.' },
+    { type:'tap_select', prompt:'«To hustle / study hard»:', options:['guayar','chambear','cuadrar','caer'], correct:0, explain:'«Guayar» — to grind / hustle. Originally «to grate» (cheese), figuratively to push hard.' },
+    { type:'speak', prompt:'After a long day.', target:'estoy fundido', translation:'I\'m exhausted', explain:'«es-TOY foon-DEE-do».' },
+  ],
+};
+
+const LESSON_V6 = {
+  id: 'V6', title: 'Modismos esenciales', track: 'venezuelan', level: 'A2',
+  vocabPreview: [['¡coño!','damn! (mild)'],['ladilla','annoying'],['echarse los palos','to drink'],['pelando bola','broke / unemployed'],['en la lucha','grinding']],
+  vocabulary: [['¡coño!','damn / wow (mild — context-dependent)'],['ladilla','annoying / a pain'],['echarse los palos','to drink (alcohol)'],['echar los corotos','to throw out'],['estar pelando bola','to be broke / unemployed'],['en la lucha','grinding / making it work'],['mosca','careful / on alert'],['agarrar pal coleo','to give a hard time / mock'],['chimbo','crappy / lame'],['fino','great'],['vaina','thing (re-emphasized)']],
+  exercises: [
+    { type:'intro', title:'🇻🇪 Idioms locals actually use', body:'These appear constantly in Caracas conversation. «¡Coño!» — most-used Venezuelan exclamation, ranges from mild «wow» to heavy frustration based on tone. «Ladilla» (literally «crab louse») = annoying. «Estar pelando bola» = broke / unemployed. «Estar mosca» = stay alert / careful. «¡Estoy en la lucha!» = I\'m grinding. «Estar arrecho» (cool / angry — context!). Use these to immediately distinguish yourself from textbook learners.', vocab:[['¡Coño!','damn / wow (multipurpose)'],['¡Qué ladilla!','what a pain!'],['Estoy pelando bola','I\'m broke'],['Estoy en la lucha','I\'m grinding'],['Mosca con eso','careful with that'],['Está chimbo','it\'s lame']] },
+    { type:'tap_select', prompt:'«That\'s annoying»:', options:['¡Qué chévere!','¡Qué ladilla!','¡Qué bueno!','¡Qué fino!'], correct:1, explain:'«¡Qué ladilla!» — annoying / what a pain. Universal among Venezuelans.' },
+    { type:'fill_blank', prompt:'Slang for being broke.', sentence:'Estoy _____ bola este mes. (broke)', correct:['pelando'], explain:'«Estar pelando bola» — broke / out of money. Casual.' },
+    { type:'translate', prompt:'Translate.', source:'Be careful with that.', correct:['mosca con eso','estate mosca con eso','ponte mosca con eso'], explain:'«Mosca» (literally fly) = careful / on alert. Conversational warning.' },
+    { type:'listen', audio:'estoy en la lucha', prompt:'Listen and choose.', options:['I\'m fighting','I\'m grinding','I\'m struggling','all of the above'], correct:3, explain:'«En la lucha» — making it work, grinding. All meanings overlap.' },
+    { type:'tap_select', prompt:'When NOT to use «¡coño!»:', options:['Among friends, mild surprise','In a casual reaction','In a formal business meeting','When stuck in traffic'], correct:2, explain:'Avoid in formal meetings or with elders you don\'t know — though Venezuelans use it freely otherwise. Tone determines intensity.' },
+    { type:'translate', prompt:'Translate — casual greeting.', source:'How\'s it going, dude?', correct:['¿cómo va la cosa, chamo?','cómo va la cosa chamo','¿qué más, chamo?'], explain:'Several work — Venezuelan greetings are flexible.' },
+    { type:'arrange', prompt:'Arrange — «That\'s really crappy.»', tokens:['de','chimbo','está','Eso','burda'], correct:['Eso','está','burda','de','chimbo'], explain:'«Eso está burda de chimbo» — «burda de» intensifier + «chimbo» (crappy).' },
+    { type:'fill_blank', prompt:'«Going for drinks»:', sentence:'Vamos a echarnos los _____.', correct:['palos'], explain:'«Echarse los palos» — to drink alcohol. Casual.' },
+    { type:'tap_select', prompt:'Most accurate translation of «¡coño!»:', options:['hello','goodbye','damn / wow','please'], correct:2, explain:'«¡Coño!» — multi-purpose exclamation. Tone makes it mild surprise or strong frustration.' },
+    { type:'speak', prompt:'A common reaction.', target:'¡qué ladilla!', translation:'what a pain!', explain:'«keh la-DEE-ya». Daily-life staple.' },
+  ],
+};
+
+const LESSON_V7 = {
+  id: 'V7', title: 'Por la calle', track: 'venezuelan', level: 'A2',
+  vocabPreview: [['Chacao','wealthy district'],['Las Mercedes','dining/nightlife area'],['Sabana Grande','old commercial center'],['el Centro','downtown'],['una camionetica','small bus'],['un por puesto','shared taxi']],
+  vocabulary: [['Chacao','upscale Caracas neighborhood'],['Las Mercedes','restaurant/nightlife district'],['Sabana Grande','traditional commercial center'],['El Centro','downtown / historic center'],['Altamira','upscale residential'],['Petare','large eastern barrio'],['una camionetica','small commuter bus'],['un por puesto','shared taxi (fixed route)'],['el metro','the subway'],['la cola','traffic jam'],['¿hacia dónde vas?','which way are you headed?'],['déjame por...','drop me off at...']],
+  exercises: [
+    { type:'intro', title:'🇻🇪 Caracas neighborhoods & getting around', body:'Caracas has distinctive neighborhood identities. CHACAO and ALTAMIRA = upscale, business district feel. LAS MERCEDES = dining and nightlife. SABANA GRANDE = traditional commercial / pedestrian zone. EL CENTRO = downtown / historic. PETARE = massive eastern hillside barrio (huge population). Transit: METRO (clean, organized), POR PUESTO (shared fixed-route taxis), CAMIONETICA (mini-bus on routes). Always check «la cola» (traffic) before committing to a route.', vocab:[['¿Hacia dónde vas?','Which way are you headed?'],['Estoy en cola','I\'m in traffic'],['Vamos por puesto','Let\'s take a shared taxi'],['Déjame por Chacaíto','Drop me at Chacaíto'],['Tomar el metro','Take the subway'],['Bajarse en...','Get off at...']] },
+    { type:'tap_select', prompt:'«Chacao» is:', options:['A national park','An upscale Caracas neighborhood','A type of food','A Venezuelan dance'], correct:1, explain:'Chacao — wealthy commercial district in Caracas, central business hub.' },
+    { type:'fill_blank', prompt:'Drop me at Chacaíto.', sentence:'_____ por Chacaíto, por favor.', correct:['déjame'], explain:'«Déjame por X» — universal taxi/Uber instruction.' },
+    { type:'translate', prompt:'Translate — checking transit.', source:'Which way are you headed?', correct:['¿hacia dónde vas?','hacia dónde vas','¿pa\' dónde vas?'], explain:'«¿Hacia dónde vas?» (standard) or «¿Pa\' dónde vas?» (very casual Caracas).' },
+    { type:'listen', audio:'estoy en cola', prompt:'Listen and choose.', options:['I\'m in line','I\'m in traffic','Either, depending on context','Both A and B'], correct:3, explain:'«Cola» = both line and traffic. Context tells you which.' },
+    { type:'tap_select', prompt:'«Por puesto» is:', options:['A bus','A shared fixed-route taxi','The subway','A bicycle'], correct:1, explain:'«Por puesto» — shared taxi running fixed routes, cheap and common.' },
+    { type:'translate', prompt:'Translate.', source:'Let\'s take the metro.', correct:['vamos a tomar el metro','tomemos el metro'], explain:'«Tomar el metro» — to take the subway.' },
+    { type:'arrange', prompt:'Arrange — «I\'m getting off at Plaza Venezuela.»', tokens:['en','Venezuela','Plaza','bajo','Me'], correct:['Me','bajo','en','Plaza','Venezuela'], explain:'«Me bajo en Plaza Venezuela» — «bajarse» (reflexive) for getting off transport.' },
+    { type:'fill_blank', prompt:'A small commuter bus.', sentence:'Tomé una _____ a Petare.', correct:['camionetica'], explain:'«Camionetica» — diminutive of «camioneta» (van). Mini-bus on fixed routes.' },
+    { type:'tap_select', prompt:'«Petare» is best described as:', options:['Wealthy district','Massive working-class barrio','Small village','Tourist area'], correct:1, explain:'Petare — sprawling eastern hillside neighborhood, one of LatAm\'s largest informal communities.' },
+    { type:'speak', prompt:'A taxi instruction.', target:'déjame en Chacao', translation:'drop me at Chacao', explain:'«DAY-ha-may en cha-COW».' },
+  ],
+};
+
+const LESSON_V8 = {
+  id: 'V8', title: 'Cuentando historias', track: 'venezuelan', level: 'A2',
+  vocabPreview: [['te cuento','let me tell you'],['pana, te juro','dude, I swear'],['imagínate','imagine'],['¡tremendo!','huge / awesome'],['de pana','for real']],
+  vocabulary: [['Te cuento que...','Let me tell you that...'],['Imagínate','imagine'],['Pana, te juro','dude, I swear'],['¡Tremendo!','huge / awesome / intense'],['De pana','for real / seriously'],['¡No me jodas!','no way! / you\'re kidding!'],['¡Qué locura!','what madness!'],['Y ahí fue cuando...','and that\'s when...'],['¡Ay no!','oh no!'],['Y bueno...','well... / so...']],
+  exercises: [
+    { type:'intro', title:'🇻🇪 Telling stories Venezuelan-style', body:'Venezuelans are dramatic, expressive storytellers. The grammar follows what you\'ve learned (preterite + imperfect for past, present for emphasis), but the GLUE is what makes it sound native. Openers: «Te cuento que...», «Imagínate que...». Confirming: «Pana, te juro», «de pana». Reactions: «¡Tremendo!», «¡Qué locura!», «¡No me jodas!». Pivots: «Y ahí fue cuando...», «Y bueno...». Use these as connective tissue when narrating any past event.', vocab:[['Te cuento que','Let me tell you that...'],['Imagínate','imagine (universal opener)'],['Pana, te juro','dude, I swear'],['¡Tremendo X!','huge / intense X'],['De pana','for real'],['Y ahí fue cuando','and that\'s when']] },
+    { type:'tap_select', prompt:'A natural Caracas story-opener:', options:['Hola','Te cuento que','Adiós','Buenas'], correct:1, explain:'«Te cuento que» — sets up that you\'re about to share something. Universal.' },
+    { type:'fill_blank', prompt:'Confirming truth — Venezuelan style.', sentence:'_____ te juro que pasó.', correct:['Pana','pana'], explain:'«Pana, te juro que pasó» — «I swear, dude, it really happened».' },
+    { type:'translate', prompt:'Translate.', source:'Imagine that, dude.', correct:['imagínate, pana','imagínate pana'], explain:'«Imagínate, pana» — emphasis softener that draws the listener in.' },
+    { type:'listen', audio:'no me jodas', prompt:'Listen — what\'s the reaction?', options:['shut up (rude)','no way! / you\'re kidding!','calm down','let me explain'], correct:1, explain:'«¡No me jodas!» — incredulous reaction. Mildly vulgar but used by everyone among friends.' },
+    { type:'tap_select', prompt:'«¡Tremendo problema!» means:', options:['a small issue','a huge problem','a fixed problem','a strange problem'], correct:1, explain:'«Tremendo» — Venezuelan amplifier. «¡Tremendo carro!» = what a sick car!' },
+    { type:'translate', prompt:'Translate — narrative pivot.', source:'And that\'s when she came in.', correct:['y ahí fue cuando entró','y ahí fue cuando entró ella','y entonces entró'], explain:'«Y ahí fue cuando + preterite» — narrative pivot to the dramatic moment.' },
+    { type:'arrange', prompt:'Arrange — «Imagine, dude, I had no idea.»', tokens:['idea','sabía','Imagínate','no','pana,'], correct:['Imagínate','pana,','no','sabía'], explain:'«Imagínate, pana, no sabía» — opener + emphasis + imperfect for «didn\'t know» (state).' },
+    { type:'fill_blank', prompt:'Closing reaction.', sentence:'¡Qué _____! (madness)', correct:['locura'], explain:'«¡Qué locura!» — what madness! Common reaction.' },
+    { type:'tap_select', prompt:'«De pana» means:', options:['from a friend','really / seriously','from a country','of a buddy'], correct:1, explain:'«De pana» — for real / seriously. Confirms truth.' },
+    { type:'speak', prompt:'A story opener.', target:'te cuento que', translation:'let me tell you that', explain:'«tay KWEN-to keh». Practice the cadence — this is conversational glue.' },
+  ],
+};
+
+// ─────────── SCENARIOS (Build 10 — conversation engine) ───────────
+
+const LESSON_S1 = {
+  id: 'S1', title: 'En la arepera',
+  scenario: true,
+  vocabPreview: [['arepa reina pepiada','chicken-avocado arepa'],['¿qué le sirvo?','what can I get you?'],['para llevar','to-go'],['la cuenta','the check']],
+  vocabulary: [['¿qué le sirvo?','what can I get you?'],['una reina pepiada','chicken-avocado arepa'],['¿algo de tomar?','something to drink?'],['un guayoyo','light black coffee'],['para llevar','to-go'],['la cuenta','the check'],['¿está bueno?','is it good?'],['¡buen provecho!','enjoy!']],
+  exercises: [
+    { type: 'conversation',
+      context: 'It\'s 2 PM. You walk into a busy arepera in Caracas. The cashier looks up.',
+      speakerLabel: 'CASHIER',
+      npcLine: '¡Buenas tardes! ¿Qué le sirvo?',
+      translation: 'Good afternoon! What can I get you?',
+      prompt: 'Order an arepa.',
+      choices: [
+        { text: 'Quiero una reina pepiada, por favor.', correct: true },
+        { text: 'Tengo hambre.', correct: false },
+        { text: '¿Cómo está?', correct: false },
+      ],
+      explain: '«Quiero una X, por favor» is the standard ordering pattern. The reina pepiada (chicken + avocado) is Caracas\'s signature arepa.',
+    },
+    { type: 'conversation',
+      speakerLabel: 'CASHIER',
+      npcLine: '¿Para comer aquí o para llevar?',
+      translation: 'To eat here or to-go?',
+      prompt: 'You\'re going to eat there.',
+      choices: [
+        { text: 'Para llevar, gracias.', correct: false },
+        { text: 'Para comer aquí.', correct: true },
+        { text: 'Sí, gracias.', correct: false },
+      ],
+      explain: '«Para comer aquí» = to dine in. «Para llevar» = to-go. Both common expressions.',
+    },
+    { type: 'conversation',
+      speakerLabel: 'CASHIER',
+      npcLine: '¿Algo de tomar?',
+      translation: 'Anything to drink?',
+      prompt: 'Order a Venezuelan coffee.',
+      choices: [
+        { text: 'Sí, un guayoyo, por favor.', correct: true },
+        { text: 'No tengo sed.', correct: false },
+        { text: '¿Cuánto cuesta?', correct: false },
+      ],
+      explain: '«Guayoyo» = the classic light Venezuelan black coffee. Universally available.',
+    },
+    { type: 'conversation',
+      speakerLabel: 'CASHIER',
+      npcLine: 'Listo. Son cinco dólares con cincuenta. ¿Cómo va a pagar?',
+      translation: 'Done. That\'s $5.50. How are you paying?',
+      prompt: 'You\'ll pay with cash.',
+      choices: [
+        { text: 'Con tarjeta.', correct: false },
+        { text: 'En efectivo.', correct: true },
+        { text: 'No quiero pagar.', correct: false },
+      ],
+      explain: '«En efectivo» = in cash. «Con tarjeta» = with card. Cash is increasingly common in Venezuela for small transactions.',
+    },
+    { type: 'conversation',
+      speakerLabel: 'WAITER',
+      npcLine: 'Aquí está su reina pepiada. ¡Buen provecho!',
+      translation: 'Here\'s your reina pepiada. Enjoy!',
+      prompt: 'Thank them.',
+      choices: [
+        { text: '¡Muchas gracias!', correct: true },
+        { text: '¿Cuánto es?', correct: false },
+        { text: '¡Hasta luego!', correct: false },
+      ],
+      explain: '«¡Muchas gracias!» — basic but always appropriate. «¡Buen provecho!» = enjoy your meal — like «bon appétit».',
+    },
+    { type: 'conversation',
+      speakerLabel: 'WAITER',
+      npcLine: 'Después de comer, ¿le pido la cuenta?',
+      translation: 'After eating, shall I bring you the check?',
+      prompt: 'Yes — close it out.',
+      choices: [
+        { text: 'No, gracias.', correct: false },
+        { text: 'Sí, por favor, la cuenta.', correct: true },
+        { text: '¿Tiene postre?', correct: false },
+      ],
+      explain: '«La cuenta, por favor» — closing-out phrase at any restaurant.',
+    },
+  ],
+};
+
+const LESSON_S2 = {
+  id: 'S2', title: 'Tomando un por puesto',
+  scenario: true,
+  vocabPreview: [['¿hacia dónde va?','which way are you headed?'],['déjame por...','drop me at...'],['¿cuánto le debo?','how much do I owe you?'],['gracias, ahí me bajo','thanks, I\'ll get off here']],
+  vocabulary: [['un por puesto','shared route taxi'],['¿hacia dónde va?','which way are you headed?'],['déjame por...','drop me at...'],['¿cuánto le debo?','how much do I owe you?'],['ahí me bajo','I\'m getting off there'],['está cerca / lejos','it\'s close / far'],['hay cola','there\'s traffic']],
+  exercises: [
+    { type: 'conversation',
+      context: 'You\'re on the street near Plaza Venezuela. A por puesto pulls up.',
+      speakerLabel: 'DRIVER',
+      npcLine: '¿Hacia dónde va, amigo?',
+      translation: 'Which way are you headed, friend?',
+      prompt: 'You\'re going to Chacao.',
+      choices: [
+        { text: 'Voy a Chacao.', correct: true },
+        { text: 'No sé.', correct: false },
+        { text: '¿Cómo está?', correct: false },
+      ],
+      explain: 'Por puestos run fixed routes — you call out your destination so the driver knows if it\'s on his way.',
+    },
+    { type: 'conversation',
+      speakerLabel: 'DRIVER',
+      npcLine: 'Sí, voy por ahí. Súbase. Son tres dólares.',
+      translation: 'Yeah, I\'m going that way. Get in. It\'s $3.',
+      prompt: 'Confirm and ask about traffic.',
+      choices: [
+        { text: 'Listo. ¿Hay mucha cola?', correct: true },
+        { text: '¿Es muy caro?', correct: false },
+        { text: 'No quiero ir.', correct: false },
+      ],
+      explain: '«¿Hay mucha cola?» — «Is there a lot of traffic?» Caracas traffic is brutal — always worth checking.',
+    },
+    { type: 'conversation',
+      speakerLabel: 'DRIVER',
+      npcLine: 'Hay algo, pero no es burda. Llegamos en veinte minutos.',
+      translation: 'Some, but not too much. We\'ll be there in 20 minutes.',
+      prompt: 'Acknowledge — Venezuelan style.',
+      choices: [
+        { text: 'Chévere, gracias.', correct: true },
+        { text: 'Adiós.', correct: false },
+        { text: 'No sé manejar.', correct: false },
+      ],
+      explain: '«Chévere» = cool / great. The casual Venezuelan acknowledgment. «Burda» = a lot — Venezuelan intensifier.',
+    },
+    { type: 'conversation',
+      speakerLabel: 'DRIVER',
+      npcLine: 'Estamos llegando a Chacao. ¿Dónde le dejo?',
+      translation: 'We\'re getting to Chacao. Where do I drop you?',
+      prompt: 'Tell him to drop you at the metro station.',
+      choices: [
+        { text: 'En el metro, por favor.', correct: true },
+        { text: 'En mi casa.', correct: false },
+        { text: 'Más rápido.', correct: false },
+      ],
+      explain: '«En el metro» = at the metro station. Common drop-off landmark.',
+    },
+    { type: 'conversation',
+      speakerLabel: 'DRIVER',
+      npcLine: 'Listo, aquí estamos. ¿Tiene billete pequeño?',
+      translation: 'Here we are. Do you have small bills?',
+      prompt: 'You have exact change.',
+      choices: [
+        { text: 'Sí, exacto. Aquí tiene.', correct: true },
+        { text: 'No tengo dinero.', correct: false },
+        { text: '¿Acepta tarjeta?', correct: false },
+      ],
+      explain: '«Exacto» = exact (change). Drivers prefer small bills since they don\'t carry big change.',
+    },
+    { type: 'conversation',
+      speakerLabel: 'DRIVER',
+      npcLine: 'Gracias, joven. Cuídese.',
+      translation: 'Thanks, kid. Take care.',
+      prompt: 'Thank him and go.',
+      choices: [
+        { text: 'Igualmente, ¡chao!', correct: true },
+        { text: '¿Cuánto le debo?', correct: false },
+        { text: 'No quiero.', correct: false },
+      ],
+      explain: '«Igualmente» = same to you. «¡Chao!» — casual goodbye, very common in Caracas.',
+    },
+  ],
+};
+
+const LESSON_S3 = {
+  id: 'S3', title: 'En el aeropuerto',
+  scenario: true,
+  vocabPreview: [['el motivo de su viaje','purpose of trip'],['turismo','tourism'],['¿algo que declarar?','anything to declare?'],['¿cuántos días?','how many days?']],
+  vocabulary: [['el pasaporte','passport'],['el motivo de su viaje','purpose of your trip'],['turismo','tourism'],['negocios','business'],['¿algo que declarar?','anything to declare?'],['¿cuántos días?','how many days?'],['¿dónde se va a quedar?','where will you stay?'],['un hotel','a hotel'],['una visa','a visa']],
+  exercises: [
+    { type: 'conversation',
+      context: 'You\'ve just landed in Maiquetía airport. You hand the immigration agent your passport.',
+      speakerLabel: 'AGENT',
+      npcLine: 'Buenos días. Su pasaporte, por favor. ¿El motivo de su viaje?',
+      translation: 'Good morning. Your passport please. Purpose of your trip?',
+      prompt: 'You\'re here for tourism.',
+      choices: [
+        { text: 'Vengo por turismo.', correct: true },
+        { text: 'Soy turista.', correct: false },
+        { text: 'No sé.', correct: false },
+      ],
+      explain: '«Vengo por turismo» — standard immigration response. «Por» for cause/reason.',
+    },
+    { type: 'conversation',
+      speakerLabel: 'AGENT',
+      npcLine: '¿Cuántos días se va a quedar?',
+      translation: 'How many days are you staying?',
+      prompt: 'Two weeks.',
+      choices: [
+        { text: 'Dos semanas.', correct: true },
+        { text: 'Mucho tiempo.', correct: false },
+        { text: 'No sé todavía.', correct: false },
+      ],
+      explain: '«Dos semanas» — direct, specific. Agents prefer concrete answers.',
+    },
+    { type: 'conversation',
+      speakerLabel: 'AGENT',
+      npcLine: '¿Dónde se va a quedar?',
+      translation: 'Where are you staying?',
+      prompt: 'At a hotel in Caracas.',
+      choices: [
+        { text: 'En un hotel en Caracas.', correct: true },
+        { text: 'Con mis amigos.', correct: false },
+        { text: 'En la playa.', correct: false },
+      ],
+      explain: '«En un hotel en Caracas» — specific and verifiable. Always have your hotel name handy if asked.',
+    },
+    { type: 'conversation',
+      speakerLabel: 'AGENT',
+      npcLine: 'Bien. Ya está. Bienvenido a Venezuela.',
+      translation: 'Good. You\'re all set. Welcome to Venezuela.',
+      prompt: 'Thank them.',
+      choices: [
+        { text: 'Muchas gracias.', correct: true },
+        { text: '¿Cuándo me voy?', correct: false },
+        { text: 'No me gusta.', correct: false },
+      ],
+      explain: '«Muchas gracias» — universal politeness. Continue to baggage claim.',
+    },
+    { type: 'conversation',
+      context: 'At customs.',
+      speakerLabel: 'CUSTOMS',
+      npcLine: '¿Tiene algo que declarar?',
+      translation: 'Anything to declare?',
+      prompt: 'You have nothing to declare.',
+      choices: [
+        { text: 'No, nada.', correct: true },
+        { text: 'Sí, mucho.', correct: false },
+        { text: 'No entiendo.', correct: false },
+      ],
+      explain: '«No, nada» — short and direct. Customs values clarity.',
+    },
+    { type: 'conversation',
+      speakerLabel: 'CUSTOMS',
+      npcLine: 'Por favor, abra su maleta.',
+      translation: 'Please open your suitcase.',
+      prompt: 'Comply politely.',
+      choices: [
+        { text: 'Claro, aquí está.', correct: true },
+        { text: 'No quiero.', correct: false },
+        { text: '¿Por qué?', correct: false },
+      ],
+      explain: '«Claro, aquí está» — sure, here you go. Cooperation is the fastest path through.',
+    },
+  ],
+};
+
+const LESSON_S4 = {
+  id: 'S4', title: 'Pidiendo direcciones',
+  scenario: true,
+  vocabPreview: [['¿cómo llego a...?','how do I get to...?'],['siga derecho','go straight'],['está cerca','it\'s nearby'],['a la izquierda','to the left'],['a la derecha','to the right']],
+  vocabulary: [['¿cómo llego a...?','how do I get to...?'],['siga derecho','go straight'],['doble a la izquierda','turn left'],['doble a la derecha','turn right'],['está cerca','it\'s close'],['está lejos','it\'s far'],['a dos cuadras','two blocks away'],['en la esquina','at the corner']],
+  exercises: [
+    { type: 'conversation',
+      context: 'You\'re lost in Las Mercedes. You stop a friendly-looking older woman.',
+      speakerLabel: 'YOU',
+      npcLine: 'Disculpe, señora, ¿me puede ayudar?',
+      translation: '(Setup — you opened with this.)',
+      prompt: 'Wait, who said this? You did. Pick the correct opener.',
+      choices: [
+        { text: 'Disculpe, señora, ¿me puede ayudar?', correct: true },
+        { text: '¡Eh! ¡Vieja!', correct: false },
+        { text: 'Cómo estás.', correct: false },
+      ],
+      explain: 'Always open with «disculpe» when stopping a stranger. Use «señora» (formal) for older women — never «vieja» (rude).',
+    },
+    { type: 'conversation',
+      speakerLabel: 'WOMAN',
+      npcLine: 'Claro, mijo. ¿Qué necesita?',
+      translation: 'Sure, son. What do you need?',
+      prompt: 'Ask how to get to the metro.',
+      choices: [
+        { text: '¿Cómo llego al metro?', correct: true },
+        { text: 'Quiero el metro.', correct: false },
+        { text: '¿Hay metro?', correct: false },
+      ],
+      explain: '«¿Cómo llego a + place?» — universal direction-asking pattern. «Mijo» (mi hijo) = affectionate term used by older folks.',
+    },
+    { type: 'conversation',
+      speakerLabel: 'WOMAN',
+      npcLine: 'Está cerca. Siga derecho dos cuadras.',
+      translation: 'It\'s close. Go straight two blocks.',
+      prompt: 'Confirm you understood — and ask what comes next.',
+      choices: [
+        { text: 'Dos cuadras derecho. ¿Y después?', correct: true },
+        { text: 'No entiendo nada.', correct: false },
+        { text: 'Adiós.', correct: false },
+      ],
+      explain: 'Repeating back («dos cuadras derecho») confirms you got it. «¿Y después?» = and then?',
+    },
+    { type: 'conversation',
+      speakerLabel: 'WOMAN',
+      npcLine: 'Después doble a la izquierda. La estación está en la esquina.',
+      translation: 'Then turn left. The station is on the corner.',
+      prompt: 'Thank her warmly.',
+      choices: [
+        { text: 'Muchísimas gracias, señora. Que esté bien.', correct: true },
+        { text: 'Gracias, vieja.', correct: false },
+        { text: 'Bueno.', correct: false },
+      ],
+      explain: '«Muchísimas gracias» = thank you so much. «Que esté bien» = stay well — warm closing for someone who helped you.',
+    },
+    { type: 'conversation',
+      speakerLabel: 'WOMAN',
+      npcLine: 'De nada, mijo. Cuídese mucho.',
+      translation: 'You\'re welcome, son. Take good care.',
+      prompt: 'Final response.',
+      choices: [
+        { text: 'Igualmente, ¡chao!', correct: true },
+        { text: 'No me llame mijo.', correct: false },
+        { text: '¿Cuántos años tiene?', correct: false },
+      ],
+      explain: '«Igualmente» = same to you. The warmth of «mijo» is a compliment in Venezuelan culture — accept it gracefully.',
+    },
+  ],
+};
+
+const SCENARIOS = { S1: LESSON_S1, S2: LESSON_S2, S3: LESSON_S3, S4: LESSON_S4 };
+
+const LESSONS = { L1: LESSON_1, L2: LESSON_2, L3: LESSON_3, L4: LESSON_4, L5: LESSON_5, L6: LESSON_6, L7: LESSON_7, L8: LESSON_8, L9: LESSON_9, L10: LESSON_10, L11: LESSON_11, L12: LESSON_12, L13: LESSON_13, L14: LESSON_14, L15: LESSON_15, L16: LESSON_16, L17: LESSON_17, L18: LESSON_18, L19: LESSON_19, L20: LESSON_20, L21: LESSON_21, L22: LESSON_22, L23: LESSON_23, L24: LESSON_24, L25: LESSON_25, L26: LESSON_26, L27: LESSON_27, L28: LESSON_28, L29: LESSON_29, L30: LESSON_30, L31: LESSON_31, L32: LESSON_32, L33: LESSON_33, L34: LESSON_34, L35: LESSON_35, L36: LESSON_36, L37: LESSON_37, L38: LESSON_38, L39: LESSON_39, L40: LESSON_40, L41: LESSON_41, L42: LESSON_42, L43: LESSON_43, L44: LESSON_44, L45: LESSON_45, L46: LESSON_46, L47: LESSON_47, L48: LESSON_48, L49: LESSON_49, L50: LESSON_50, L51: LESSON_51, L52: LESSON_52, L53: LESSON_53, L54: LESSON_54, L55: LESSON_55, L56: LESSON_56, L57: LESSON_57, L58: LESSON_58, L59: LESSON_59, L60: LESSON_60, V1: LESSON_V1, V2: LESSON_V2, V3: LESSON_V3, V4: LESSON_V4, V5: LESSON_V5, V6: LESSON_V6, V7: LESSON_V7, V8: LESSON_V8, S1: LESSON_S1, S2: LESSON_S2, S3: LESSON_S3, S4: LESSON_S4 };
 
 // ─────────── STATE ───────────
 let user = null;
@@ -3187,19 +4350,33 @@ function getNextLessonId() {
 }
 
 function renderDashboard() {
-  const totalDone = Object.keys(progress.completed).length;
-  $('#progress-done').textContent = totalDone;
-  $('#progress-fill').style.width = (totalDone/30*100) + '%';
+  // Determine current level for progress display
+  const a1Done = !!progress.completedLevels?.A1;
+  const currentLevel = a1Done ? 'A2' : 'A1';
+  const levelLessons = Object.keys(LESSON_META).filter(id => {
+    const m = LESSON_META[id];
+    if (m.track) return false; // skip Venezuelan track
+    if (currentLevel === 'A1') return !m.level || m.level === 'A1';
+    return m.level === 'A2';
+  });
+  const levelDone = levelLessons.filter(id => progress.completed[id]).length;
+  const levelTotal = levelLessons.length;
+  $('#progress-done').textContent = levelDone;
+  // Update label to show current level
+  const progressRow = document.querySelector('.hero-progress-row span:first-child');
+  if (progressRow) progressRow.textContent = currentLevel + ' PROGRESS';
+  const progressDenom = document.querySelector('.hero-progress-row span:last-child');
+  if (progressDenom) progressDenom.innerHTML = `<b id="progress-done">${levelDone}</b> / ${levelTotal} LESSONS`;
+  $('#progress-fill').style.width = (levelTotal > 0 ? (levelDone/levelTotal*100) : 0) + '%';
   $('#xp-count').textContent = progress.xp;
   $('#streak-count').textContent = progress.streak;
   $('#streak-stat').innerHTML = progress.streak + '<span class="stat-unit">d</span>';
 
   // A1 complete badge — replace Level stat value if A1 is fully complete
-  const a1Complete = !!progress.completedLevels?.A1;
   const levelStat = document.querySelector('.stat-row .stat:first-child .stat-value');
   if (levelStat) {
-    if (a1Complete) {
-      levelStat.innerHTML = 'A1<span class="level-badge">DONE</span>';
+    if (a1Done) {
+      levelStat.innerHTML = currentLevel + '<span class="level-badge">A1 ✓</span>';
     } else {
       levelStat.innerHTML = 'A1';
     }
@@ -3318,6 +4495,40 @@ function renderCurriculum() {
     });
     root.appendChild(unitEl);
   });
+
+  // Scenarios — multi-turn conversation drills
+  const scUnit = document.createElement('div');
+  scUnit.className = 'unit unit-scenarios';
+  scUnit.innerHTML = `
+    <div class="unit-head">
+      <span class="unit-num unit-num-scenarios">💬 SCENARIOS</span>
+      <span class="unit-title">Practice real conversations</span>
+      <span class="unit-line"></span>
+    </div>
+    <div class="lesson-list"></div>
+  `;
+  const scList = scUnit.querySelector('.lesson-list');
+  Object.keys(SCENARIOS).forEach(id => {
+    const m = LESSON_META[id];
+    if (!m) return;
+    const done = !!progress.completed[id];
+    const row = document.createElement('div');
+    row.className = 'lesson lesson-scenario' + (done ? ' complete' : '');
+    row.innerHTML = `
+      <div class="lesson-circle" data-lesson-id="${id}">${done ? '✓' : '<span class="num-text">S' + m.n + '</span>'}</div>
+      <div class="lesson-info" data-lesson-id="${id}">
+        <div class="lesson-title-row"><div class="lesson-title">${m.title}</div></div>
+        <div class="lesson-sub">${m.sub}</div>
+      </div>
+      <div class="lesson-arrow">→</div>
+    `;
+    row.querySelectorAll('[data-lesson-id]').forEach(el => {
+      el.addEventListener('click', () => openLessonModal(id));
+    });
+    row.querySelector('.lesson-arrow').addEventListener('click', () => openLessonModal(id));
+    scList.appendChild(row);
+  });
+  root.appendChild(scUnit);
 }
 
 async function toggleComplete(id) {
@@ -3360,9 +4571,10 @@ function openLessonModal(id) {
       ul.appendChild(li);
     });
     if (isAssessment) {
-      const prevAttempt = progress.assessments?.A1;
+      const lvl = lesson.level || m.level || 'A1';
+      const prevAttempt = progress.assessments?.[lvl];
       if (prevAttempt) {
-        $('#modal-start').textContent = `Retake (best: ${progress.assessments.A1_best?.percentage || prevAttempt.percentage}%)`;
+        $('#modal-start').textContent = `Retake (best: ${progress.assessments[lvl + '_best']?.percentage || prevAttempt.percentage}%)`;
       } else {
         $('#modal-start').textContent = 'Begin assessment';
       }
@@ -3409,6 +4621,12 @@ function startLesson(id) {
   currentAnswers = [];
   currentAnswered = false;
   currentResult = null;
+  // Reset conversation state
+  window.__convoHistory = [];
+  window.__convoIsCorrect = false;
+  window.__convoYourAnswer = '';
+  window.__convoSelectedChoice = null;
+  window.__convoCurrentTurn = null;
   // Toggle XP pill / question counter for assessment mode
   if (lesson.assessment) {
     $('#lesson-xp-running').textContent = '1/' + lesson.exercises.length;
@@ -3472,6 +4690,7 @@ function renderExercise() {
     case 'arrange': wrapper.appendChild(buildArrange(ex)); break;
     case 'translate': wrapper.appendChild(buildTranslate(ex)); break;
     case 'speak': wrapper.appendChild(buildSpeak(ex)); break;
+    case 'conversation': wrapper.appendChild(buildConversation(ex)); break;
     default: wrapper.textContent = 'Unknown exercise type.';
   }
   area.appendChild(wrapper);
@@ -3811,6 +5030,73 @@ function buildSpeak(ex) {
   return f;
 }
 
+function buildConversation(ex) {
+  const f = document.createElement('div');
+  // Setting / context
+  if (ex.context) {
+    const ctx = document.createElement('div');
+    ctx.className = 'convo-context';
+    ctx.innerHTML = `<div class="convo-eyebrow">SCENE</div><div class="convo-context-body">${ex.context}</div>`;
+    f.appendChild(ctx);
+  }
+  // Conversation history
+  if (window.__convoHistory && window.__convoHistory.length > 0) {
+    const hist = document.createElement('div');
+    hist.className = 'convo-history';
+    window.__convoHistory.forEach(turn => {
+      const t = document.createElement('div');
+      t.className = 'convo-turn ' + (turn.speaker === 'you' ? 'convo-you' : 'convo-them');
+      t.innerHTML = `<div class="convo-speaker">${turn.speakerLabel || (turn.speaker === 'you' ? 'YOU' : 'THEM')}</div><div class="convo-bubble">${turn.text}</div>`;
+      hist.appendChild(t);
+    });
+    f.appendChild(hist);
+  }
+  // Current NPC line
+  const npc = document.createElement('div');
+  npc.className = 'convo-current-npc';
+  npc.innerHTML = `
+    <div class="convo-speaker">${ex.speakerLabel || 'THEM'}</div>
+    <div class="convo-bubble convo-bubble-them convo-bubble-current">
+      <button class="convo-tts" aria-label="Replay">▶</button>
+      <span class="convo-line">${ex.npcLine}</span>
+    </div>
+    ${ex.translation ? `<div class="convo-translation">${ex.translation}</div>` : ''}
+  `;
+  npc.querySelector('.convo-tts').addEventListener('click', () => speakES(ex.npcLine));
+  f.appendChild(npc);
+  setTimeout(() => speakES(ex.npcLine), 300);
+  // Prompt
+  const prompt = document.createElement('div');
+  prompt.className = 'convo-prompt';
+  prompt.textContent = ex.prompt || 'How do you respond?';
+  f.appendChild(prompt);
+  // Choices using existing options-grid styling
+  const grid = document.createElement('div');
+  grid.className = 'options-grid convo-choices';
+  ex.choices.forEach((choice, i) => {
+    const tile = document.createElement('button');
+    tile.className = 'option-tile convo-choice';
+    tile.innerHTML = `<span class="option-text">${choice.text}</span><span class="option-letter">${String.fromCharCode(65+i)}</span>`;
+    tile.addEventListener('click', () => {
+      if (currentAnswered) return;
+      [...grid.querySelectorAll('.option-tile')].forEach(t => t.classList.remove('selected'));
+      tile.classList.add('selected');
+      window.__convoIsCorrect = !!choice.correct;
+      window.__convoYourAnswer = choice.text;
+      window.__convoSelectedChoice = choice;
+      $('#btn-check').className = 'btn btn-primary';
+    });
+    grid.appendChild(tile);
+  });
+  f.appendChild(grid);
+  // Reset state
+  window.__convoIsCorrect = false;
+  window.__convoYourAnswer = '';
+  window.__convoSelectedChoice = null;
+  window.__convoCurrentTurn = { speaker: 'them', speakerLabel: ex.speakerLabel || 'THEM', text: ex.npcLine };
+  return f;
+}
+
 // --- Check answers ---
 function checkAnswer() {
   const ex = currentLesson.exercises[currentExerciseIdx];
@@ -3886,6 +5172,12 @@ function checkAnswer() {
       window.__speakAlternatives = null;
       break;
     }
+    case 'conversation': {
+      // Conversation correctness is determined by user's choice in buildConversation
+      isCorrect = window.__convoIsCorrect === true;
+      yourAnswer = window.__convoYourAnswer || '(no choice)';
+      break;
+    }
   }
 
   currentAnswered = true;
@@ -3931,6 +5223,7 @@ function showFeedback(isCorrect, ex) {
     else if (ex.type === 'fill_blank' || ex.type === 'translate') correctText = ex.correct[0];
     else if (ex.type === 'arrange') correctText = ex.correct.join(' ');
     else if (ex.type === 'speak') correctText = ex.target;
+    else if (ex.type === 'conversation') correctText = ex.choices?.find(c => c.correct)?.text || '';
     if (correctText) answerHtml = `<div class="answer-reveal">${correctText}</div>`;
   }
   fb.innerHTML = `
@@ -3948,6 +5241,19 @@ function flashShake() {
 }
 
 function advance() {
+  // If finishing a conversation turn, push NPC line + user response into history
+  const justFinished = currentLesson.exercises[currentExerciseIdx];
+  if (justFinished && justFinished.type === 'conversation') {
+    if (!window.__convoHistory) window.__convoHistory = [];
+    if (window.__convoCurrentTurn) window.__convoHistory.push(window.__convoCurrentTurn);
+    if (window.__convoSelectedChoice) {
+      window.__convoHistory.push({
+        speaker: 'you',
+        speakerLabel: 'YOU',
+        text: window.__convoSelectedChoice.text
+      });
+    }
+  }
   if (currentExerciseIdx < currentLesson.exercises.length - 1) {
     currentExerciseIdx++;
     renderExercise();
@@ -3960,6 +5266,7 @@ async function finishAssessment() {
   speechSynthesis.cancel();
   const id = currentLesson.id;
   const meta = LESSON_META[id];
+  const level = currentLesson.level || meta.level || 'A1';
   const total = currentAnswers.length;
   const correct = currentAnswers.filter(a => a.isCorrect).length;
   const percentage = Math.round((correct / total) * 100);
@@ -3997,17 +5304,18 @@ async function finishAssessment() {
     })),
   };
 
-  // Always store latest. Track "best" too.
-  const prev = progress.assessments.A1;
-  progress.assessments.A1 = record;
-  if (!prev || percentage > prev.percentage) progress.assessments.A1_best = record;
+  // Always store latest. Track "best" too. Keys are dynamic by level.
+  const bestKey = level + '_best';
+  const prev = progress.assessments[level];
+  progress.assessments[level] = record;
+  if (!prev || percentage > prev.percentage) progress.assessments[bestKey] = record;
 
   // First-time pass = level complete
-  const firstTimeLevelUp = passed && !progress.completedLevels.A1;
+  const firstTimeLevelUp = passed && !progress.completedLevels[level];
   if (passed) {
     progress.completed[id] = new Date().toISOString();
     if (firstTimeLevelUp) {
-      progress.completedLevels.A1 = new Date().toISOString();
+      progress.completedLevels[level] = new Date().toISOString();
       progress.xp += 100; // level-completion bonus
     }
   }
@@ -4022,8 +5330,14 @@ async function finishAssessment() {
   $('#exercise-footer').style.display = 'none';
   const area = $('#exercise-area');
 
-  // Build per-unit grid
-  const unitTitles = { 1:'First Words', 2:'People & Pronouns', 3:'Numbers & Time', 4:'Daily Life', 5:'Food & Drink', 6:'Places & Directions', 7:'Family & Home', 8:'Capstone' };
+  // Build per-unit grid — covers A1 (1-8) and A2 (9-18); extensible
+  const unitTitles = {
+    1:'First Words', 2:'People & Pronouns', 3:'Numbers & Time', 4:'Daily Life',
+    5:'Food & Drink', 6:'Places & Directions', 7:'Family & Home', 8:'A1 Capstone',
+    9:'Past — Preterite Irreg.', 10:'Past — Imperfect', 11:'Object Pronouns',
+    12:'Por/Para, Future, Cond.', 13:'Reflexives & Comp.', 14:'Commands & Pres. Perf.',
+    15:'Subjunctive Intro', 16:'Practical Vocab', 17:'Time, Cond. & Connect.', 18:'A2 Capstone'
+  };
   const unitGridHtml = Object.entries(unitScores).sort((a,b)=>+a[0]-+b[0]).map(([u, s]) => {
     const pct = Math.round((s.correct/s.total)*100);
     const isWeak = u === weakestUnit;
@@ -4036,13 +5350,14 @@ async function finishAssessment() {
     `;
   }).join('');
 
-  // Headline depends on pass/fail and first-time
+  // Headline depends on pass/fail and first-time. Level-aware.
+  const nextLevelName = level === 'A1' ? 'A2' : (level === 'A2' ? 'B1' : 'next level');
   let headlineMark, headlineEyebrow, headlineTitle, headlineSub;
   if (firstTimeLevelUp) {
-    headlineMark = '¡A1!';
+    headlineMark = '¡' + level + '!';
     headlineEyebrow = 'LEVEL COMPLETE · +100 XP BONUS';
-    headlineTitle = 'A1 unlocked.';
-    headlineSub = `${percentage}% — you've passed the A1 evaluation. Foundation laid. Ready for A2 when it ships.`;
+    headlineTitle = level + ' unlocked.';
+    headlineSub = `${percentage}% — you've passed the ${level} evaluation. Ready for ${nextLevelName} when it ships.`;
   } else if (passed) {
     headlineMark = '✓';
     headlineEyebrow = 'PASSED';
