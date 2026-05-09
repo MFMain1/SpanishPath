@@ -2083,7 +2083,140 @@ const LESSON_8 = {
   ],
 };
 
-const LESSONS = { L1: LESSON_1, L2: LESSON_2, L3: LESSON_3, L4: LESSON_4, L5: LESSON_5, L6: LESSON_6, L7: LESSON_7, L8: LESSON_8 };
+const LESSON_9 = {
+  id: 'L9', title: 'Números 1-30',
+  vocabPreview: [['uno','one'],['cinco','five'],['diez','ten'],['quince','fifteen'],['veinte','twenty'],['treinta','thirty']],
+  vocabulary: [['uno','1'],['dos','2'],['tres','3'],['cuatro','4'],['cinco','5'],['seis','6'],['siete','7'],['ocho','8'],['nueve','9'],['diez','10'],['once','11'],['doce','12'],['trece','13'],['catorce','14'],['quince','15'],['dieciséis','16'],['diecisiete','17'],['dieciocho','18'],['diecinueve','19'],['veinte','20'],['veintiuno','21'],['veintidós','22'],['veinticinco','25'],['treinta','30']],
+  exercises: [
+    { type:'intro', title:'Numbers 1 to 30', body:'1-15 are unique words to memorize. 16-19 are written as one word: «dieciséis» = «diez y seis» fused. 20-29 also fuse: «veintiuno», «veintidós». From 31+, you write them as three words: «treinta y uno».', vocab:[['uno / dos / tres / cuatro / cinco','1 to 5'],['seis / siete / ocho / nueve / diez','6 to 10'],['once / doce / trece / catorce / quince','11 to 15'],['dieciséis → diecinueve','16 to 19 (one word)'],['veinte / veintiuno → veintinueve','20 to 29 (one word)'],['treinta','30']] },
+    { type:'tap_select', prompt:'Which number is «tres»?', options:['1','2','3','4'], correct:2, explain:'«Tres» = 3.' },
+    { type:'listen', audio:'siete', prompt:'Listen, then choose.', options:['6','7','8','9'], correct:1, explain:'«Siete» = 7. Note the soft initial «s».' },
+    { type:'fill_blank', prompt:'10 + 5 = ?', sentence:'Diez más cinco es _____.', correct:['quince'], explain:'«Quince» = 15. The last of the unique single-word numbers.' },
+    { type:'tap_select', prompt:'Which is «doce»?', options:['2','10','12','20'], correct:2, explain:'«Doce» = 12. Don\'t confuse with «dos» (2) or «veinte» (20).' },
+    { type:'translate', prompt:'Translate.', source:'nineteen', correct:['diecinueve'], explain:'«Diecinueve» — one word, no spaces. From 16-29, numbers are written fused.' },
+    { type:'listen', audio:'veintidós', prompt:'Listen and choose.', options:['12','20','22','32'], correct:2, explain:'«Veintidós» = 22. Note the accent on the «ó» — it\'s pronounced «vain-tee-DOS».' },
+    { type:'arrange', prompt:'Arrange — «thirty-one» (31).', tokens:['uno','y','treinta'], correct:['treinta','y','uno'], explain:'From 31+, separate words: «treinta y uno». Spanish doesn\'t fuse beyond 29.' },
+    { type:'tap_select', prompt:'«How old are you?» response — you\'re 25.', options:['Tengo veinticinco años','Tengo cinco años','Tengo veinticinco día','Soy veinticinco'], correct:0, explain:'«Tengo veinticinco años» — remember «tener» for age, not «ser».' },
+    { type:'speak', prompt:'Say «twenty-five».', target:'veinticinco', translation:'twenty-five (25)', explain:'One word: «vain-tee-SIN-ko».' },
+    { type:'translate', prompt:'Translate.', source:'I have eight friends.', correct:['tengo ocho amigos','tengo ocho amigas'], explain:'«Tengo ocho amigos» — remember «tener» + cardinal number + noun pattern.' },
+  ],
+};
+
+const LESSON_10 = {
+  id: 'L10', title: '¿Qué hora es?',
+  vocabPreview: [['¿Qué hora es?','what time is it?'],['Es la una','it\'s 1:00'],['Son las dos','it\'s 2:00'],['y media','30'],['y cuarto','15'],['menos cuarto',':45'],['de la mañana','AM'],['de la noche','PM']],
+  vocabulary: [['¿Qué hora es?','what time is it?'],['Es la una','it\'s 1:00'],['Son las dos','it\'s 2:00'],['y media','-30 (half past)'],['y cuarto','-15 (quarter past)'],['menos cuarto','-45 (quarter to)'],['en punto','o\'clock (sharp)'],['de la mañana','in the morning'],['de la tarde','in the afternoon'],['de la noche','at night'],['mediodía','noon'],['medianoche','midnight']],
+  exercises: [
+    { type:'intro', title:'Telling time', body:'For 1:00 only, use «Es la una». Everything else uses «Son las»: «Son las dos / tres / cuatro…». For minutes: «y media» = :30, «y cuarto» = :15, «menos cuarto» = :45 (think of it as the next hour minus 15). AM = «de la mañana», PM (until ~7) = «de la tarde», later evening = «de la noche».', vocab:[['Es la una','it\'s 1:00'],['Son las cinco','it\'s 5:00'],['Son las tres y media','it\'s 3:30'],['Son las nueve y cuarto','it\'s 9:15'],['Son las ocho menos cuarto','it\'s 7:45 (8 minus 15)'],['mediodía / medianoche','noon / midnight']] },
+    { type:'tap_select', prompt:'How do you ask «What time is it?»', options:['¿Cómo es?','¿Qué hora es?','¿Dónde es?','¿Cuándo es?'], correct:1, explain:'«¿Qué hora es?» — literally «what hour is it?»' },
+    { type:'listen', audio:'Son las tres', prompt:'Listen, then choose.', options:['1:00','2:00','3:00','4:00'], correct:2, explain:'«Son las tres» = 3:00. Plural «son» because it\'s any hour past one.' },
+    { type:'fill_blank', prompt:'Fill in — it\'s 1:00.', sentence:'_____ la una.', correct:['es'], explain:'«Es la una» — singular «es» for one o\'clock only.' },
+    { type:'tap_select', prompt:'It\'s 3:30. How do you say it?', options:['Son las tres y cuarto','Son las tres y media','Son las tres menos media','Es la tres y media'], correct:1, explain:'«Son las tres y media» — literally «it\'s three and half».' },
+    { type:'translate', prompt:'Translate — 5:15.', source:'It\'s five fifteen.', correct:['son las cinco y cuarto','son las cinco y quince'], explain:'«Son las cinco y cuarto» — «cuarto» is the standard. «y quince» is also accepted but less common.' },
+    { type:'listen', audio:'Son las nueve y media', prompt:'Listen and choose.', options:['9:00','9:15','9:30','9:45'], correct:2, explain:'«Son las nueve y media» = 9:30.' },
+    { type:'arrange', prompt:'Arrange — it\'s 7:45.', tokens:['cuarto','las','menos','ocho','Son'], correct:['Son','las','ocho','menos','cuarto'], explain:'«Son las ocho menos cuarto» — literally «it\'s eight minus quarter» = 7:45. Spanish frames the time relative to the next hour.' },
+    { type:'tap_select', prompt:'9:00 PM:', options:['Son las nueve de la mañana','Son las nueve de la tarde','Son las nueve de la noche','Son las nueve en punto'], correct:2, explain:'9 PM = «de la noche». «De la tarde» is afternoon (until ~7 PM); «de la noche» kicks in around 7-8 PM.' },
+    { type:'translate', prompt:'Translate — exactly 6:00 in the morning.', source:'It\'s 6:00 sharp in the morning.', correct:['son las seis en punto de la mañana','son las seis de la mañana en punto'], explain:'«En punto» = on the dot / sharp. Order is flexible.' },
+    { type:'speak', prompt:'Ask the time.', target:'¿Qué hora es?', translation:'what time is it?', explain:'Stress: «keh OH-rah ESS». Practice the question intonation.' },
+  ],
+};
+
+const LESSON_11 = {
+  id: 'L11', title: 'Días y meses',
+  vocabPreview: [['lunes','Monday'],['viernes','Friday'],['sábado','Saturday'],['enero','January'],['julio','July'],['hoy','today'],['mañana','tomorrow']],
+  vocabulary: [['lunes','Monday'],['martes','Tuesday'],['miércoles','Wednesday'],['jueves','Thursday'],['viernes','Friday'],['sábado','Saturday'],['domingo','Sunday'],['enero','January'],['febrero','February'],['marzo','March'],['abril','April'],['mayo','May'],['junio','June'],['julio','July'],['agosto','August'],['septiembre','September'],['octubre','October'],['noviembre','November'],['diciembre','December'],['hoy','today'],['ayer','yesterday'],['mañana','tomorrow'],['la semana','the week'],['el fin de semana','the weekend'],['el mes','the month'],['el año','the year']],
+  exercises: [
+    { type:'intro', title:'Calendar — days, months, dates', body:'Days and months are NOT capitalized in Spanish — «lunes», not «Lunes». «El lunes» (with article) = on Monday (specific). «Los lunes» = on Mondays (recurring). Date format: «el [day] de [month]» — el quince de marzo = March 15.', vocab:[['lunes a domingo','Monday to Sunday (always lowercase)'],['el lunes','on Monday (specific day)'],['los lunes','on Mondays (every Monday)'],['el primero de mayo','May 1st'],['el dos de mayo','May 2nd (use cardinal numbers, not ordinals, except for the 1st)']] },
+    { type:'tap_select', prompt:'«Monday» in Spanish:', options:['lunes','martes','jueves','viernes'], correct:0, explain:'«Lunes» = Monday. From «luna» (moon) — moon-day, like English «Monday».' },
+    { type:'listen', audio:'miércoles', prompt:'Listen and choose the day.', options:['Tuesday','Wednesday','Thursday','Friday'], correct:1, explain:'«Miércoles» = Wednesday. Note the accent on the «é».' },
+    { type:'fill_blank', prompt:'Fill in.', sentence:'_____ es lunes. (today is Monday)', correct:['hoy'], explain:'«Hoy» = today. «Hoy es lunes» = Today is Monday.' },
+    { type:'translate', prompt:'Translate.', source:'On Saturdays I rest.', correct:['los sábados descanso','los sábados yo descanso','los sábados me descanso'], explain:'«Los sábados» (plural with article) = on Saturdays / every Saturday. Recurring → use plural.' },
+    { type:'tap_select', prompt:'Which is a spring month (Northern Hemisphere)?', options:['enero','abril','agosto','noviembre'], correct:1, explain:'«Abril» = April. Spring months are marzo, abril, mayo.' },
+    { type:'listen', audio:'el dos de mayo', prompt:'Listen — what date?', options:['May 2nd','March 2nd','May 12th','February 5th'], correct:0, explain:'«El dos de mayo» = May 2nd. Format: «el [number] de [month]».' },
+    { type:'arrange', prompt:'Arrange — September 15th.', tokens:['de','quince','el','septiembre'], correct:['el','quince','de','septiembre'], explain:'«El quince de septiembre» — standard date format. Note: months stay lowercase.' },
+    { type:'tap_select', prompt:'«Yesterday»:', options:['hoy','ayer','mañana','luego'], correct:1, explain:'«Ayer» = yesterday. «Mañana» can mean both «tomorrow» and «morning» depending on context.' },
+    { type:'translate', prompt:'Translate.', source:'My birthday is in July.', correct:['mi cumpleaños es en julio'], explain:'«Mi cumpleaños es en julio» — events use «ser» («es»), not estar. Months take «en».' },
+    { type:'speak', prompt:'Say «Saturday».', target:'sábado', translation:'Saturday', explain:'Stress on the first syllable: «SAH-bah-do».' },
+  ],
+};
+
+const LESSON_12 = {
+  id: 'L12', title: 'Mi rutina',
+  vocabPreview: [['me despierto','I wake up'],['me levanto','I get up'],['me ducho','I shower'],['desayuno','I have breakfast'],['almuerzo','I have lunch'],['ceno','I have dinner'],['me acuesto','I go to bed']],
+  vocabulary: [['me despierto','I wake up'],['te despiertas','you wake up'],['se despierta','he/she wakes up'],['me levanto','I get up'],['me ducho','I shower'],['me visto','I get dressed'],['desayuno','I have breakfast'],['almuerzo','I have lunch'],['ceno','I have dinner'],['me acuesto','I go to bed'],['duermo','I sleep'],['en la mañana','in the morning'],['por la noche','at night']],
+  exercises: [
+    { type:'intro', title:'Reflexive routines', body:'Daily routine verbs are often REFLEXIVE — the action turns back on yourself. «Me ducho» = «I shower (myself)». The pronouns: «me» (myself), «te» (yourself), «se» (himself/herself/yourself-formal). Pattern: pronoun BEFORE conjugated verb. Not all routine verbs are reflexive — «desayuno» (I eat breakfast) is not, but «me despierto» (I wake up) is.', vocab:[['me despierto / te despiertas / se despierta','I/you/he-she wake(s) up'],['me levanto','I get up'],['me ducho','I shower'],['me visto','I get dressed'],['desayuno','I have breakfast (NOT reflexive)'],['almuerzo / ceno','I have lunch / dinner'],['me acuesto','I go to bed'],['duermo','I sleep']] },
+    { type:'tap_select', prompt:'«I wake up»:', options:['Me despierto','Te despiertas','Despierto','Soy despierto'], correct:0, explain:'«Me despierto» — reflexive: «me» (myself) + «despierto» (I wake). The «me» is required.' },
+    { type:'listen', audio:'me levanto', prompt:'Listen and choose.', options:['I wake up','I get up','I sleep','I eat'], correct:1, explain:'«Me levanto» = I get up (out of bed). Distinct from «me despierto» (I wake / open my eyes).' },
+    { type:'fill_blank', prompt:'Fill the reflexive pronoun.', sentence:'_____ ducho a las siete.', correct:['me'], explain:'«Me ducho» — first-person reflexive pronoun is «me». Always before the verb.' },
+    { type:'translate', prompt:'Translate.', source:'I have breakfast at 8.', correct:['desayuno a las ocho','yo desayuno a las ocho'], explain:'«Desayuno» — not reflexive. «Desayunar» works like a regular -AR verb. No «me» needed.' },
+    { type:'tap_select', prompt:'Pick the natural order — morning routine first action:', options:['Me acuesto','Me ducho','Me despierto','Ceno'], correct:2, explain:'«Me despierto» (wake up) usually comes before «me levanto» (get up) and «me ducho» (shower).' },
+    { type:'listen', audio:'me acuesto a las once', prompt:'Listen and choose.', options:['I shower at 11','I wake up at 11','I go to bed at 11','I eat at 11'], correct:2, explain:'«Me acuesto» = I go to bed. «Acostarse» is the reflexive infinitive.' },
+    { type:'arrange', prompt:'Arrange — «I shower in the morning.»', tokens:['en','ducho','la','Me','mañana'], correct:['Me','ducho','en','la','mañana'], explain:'Reflexive «me» first, then verb, then time phrase. «En la mañana» = «in the morning».' },
+    { type:'translate', prompt:'Translate — third person.', source:'She showers in the morning.', correct:['ella se ducha en la mañana','se ducha en la mañana'], explain:'Third person reflexive uses «se». Subject pronoun «ella» is optional since «se ducha» already implies third person.' },
+    { type:'fill_blank', prompt:'Fill the form.', sentence:'Tú _____ acuestas tarde. (you go to bed late)', correct:['te'], explain:'«Te acuestas» — second person reflexive pronoun is «te».' },
+    { type:'speak', prompt:'Say «I shower».', target:'Me ducho', translation:'I shower', explain:'«MEH DOO-cho». Reflexive «me» is unstressed; emphasis on the verb.' },
+  ],
+};
+
+const LESSON_13 = {
+  id: 'L13', title: 'Verbos -AR',
+  vocabPreview: [['hablo','I speak'],['hablas','you speak'],['habla','he/she speaks'],['hablamos','we speak'],['hablan','they speak']],
+  vocabulary: [['hablar','to speak'],['hablo','I speak'],['hablas','you speak'],['habla','he/she speaks'],['hablamos','we speak'],['hablan','they/you-all speak'],['trabajar','to work'],['estudiar','to study'],['bailar','to dance'],['cantar','to sing'],['cocinar','to cook'],['escuchar','to listen'],['mirar','to watch / look at'],['comprar','to buy'],['llegar','to arrive']],
+  exercises: [
+    { type:'intro', title:'Regular -AR verbs', body:'About 80% of Spanish verbs end in -AR and follow the same pattern. Drop the -ar, add the ending: -o (yo), -as (tú), -a (él/ella), -amos (nosotros), -an (ellos/ustedes). Memorize this set with «hablar» (to speak), then it works for hundreds of verbs.', vocab:[['hablo','I speak'],['hablas','you speak'],['habla','he/she/usted speaks'],['hablamos','we speak'],['hablan','they/ustedes speak'],['trabajar / estudiar / bailar','to work / study / dance'],['cantar / cocinar / escuchar','to sing / cook / listen']] },
+    { type:'tap_select', prompt:'«I speak»:', options:['habla','hablas','hablo','hablan'], correct:2, explain:'«Hablo» — yo form, ends in -o. The pattern: drop -ar, add -o.' },
+    { type:'fill_blank', prompt:'Conjugate hablar for tú.', sentence:'Tú _____ inglés.', correct:['hablas'], explain:'«Hablas» — tú form ends in -as.' },
+    { type:'listen', audio:'trabajamos', prompt:'Listen and choose.', options:['I work','you work','we work','they work'], correct:2, explain:'«Trabajamos» — nosotros form, ends in -amos. From «trabajar» (to work).' },
+    { type:'tap_select', prompt:'«ella canta» means:', options:['I sing','you sing','she sings','we sing'], correct:2, explain:'«Canta» = third person singular (he/she/usted). The -a ending.' },
+    { type:'translate', prompt:'Translate.', source:'They study Spanish.', correct:['ellos estudian español','ellas estudian español','estudian español'], explain:'«Estudian» — third person plural ends in -an. Subject pronoun optional.' },
+    { type:'arrange', prompt:'Arrange — «I cook arepas.»', tokens:['arepas','Yo','cocino'], correct:['Yo','cocino','arepas'], explain:'«Yo cocino arepas» — though «yo» is optional, it adds emphasis. «Cocino» = -o ending for yo.' },
+    { type:'fill_blank', prompt:'Conjugate bailar for nosotros.', sentence:'Nosotros _____ salsa.', correct:['bailamos'], explain:'«Bailamos» — nosotros form, -amos ending. «Bailar salsa» = to dance salsa.' },
+    { type:'listen', audio:'compran comida', prompt:'Listen and choose.', options:['I buy food','we buy food','they buy food','you buy food'], correct:2, explain:'«Compran» — ellos/ustedes form, -an ending. «Compran comida» = «they buy food».' },
+    { type:'translate', prompt:'Translate.', source:'I listen to music.', correct:['escucho música','yo escucho música'], explain:'«Escucho música». No preposition needed before «música» in Spanish — «escuchar» takes a direct object.' },
+    { type:'speak', prompt:'Say it.', target:'Yo hablo español', translation:'I speak Spanish', explain:'«YO AH-blo eh-spa-NYOL». Cleanly enunciate the -o ending.' },
+  ],
+};
+
+const LESSON_14 = {
+  id: 'L14', title: 'Verbos -ER / -IR',
+  vocabPreview: [['como','I eat'],['comes','you eat'],['come','he/she eats'],['vivimos','we live'],['escriben','they write']],
+  vocabulary: [['comer','to eat'],['como','I eat'],['comes','you eat'],['come','he/she eats'],['comemos','we eat'],['comen','they eat'],['beber','to drink'],['leer','to read'],['aprender','to learn'],['vivir','to live'],['vivimos','we live'],['escribir','to write'],['abrir','to open'],['recibir','to receive']],
+  exercises: [
+    { type:'intro', title:'Regular -ER and -IR verbs', body:'-ER and -IR verbs share the SAME endings except for nosotros. -ER endings: -o, -es, -e, -emos, -en. -IR endings: -o, -es, -e, -imos, -en. Only the «we» form differs (-emos vs -imos). Master one and you nearly have the other.', vocab:[['como / comes / come / comemos / comen','I/you/he/we/they eat (-ER pattern)'],['vivo / vives / vive / vivimos / viven','I/you/he/we/they live (-IR pattern)'],['leer / aprender / beber','to read / learn / drink (-ER)'],['escribir / abrir / recibir','to write / open / receive (-IR)']] },
+    { type:'tap_select', prompt:'«I eat»:', options:['come','comes','como','comemos'], correct:2, explain:'«Como» — yo form, -o ending. Same -o ending across -AR / -ER / -IR for first person.' },
+    { type:'fill_blank', prompt:'Conjugate beber for tú.', sentence:'Tú _____ agua.', correct:['bebes'], explain:'«Bebes» — tú form of -ER verbs ends in -es. «Bebes agua» = you drink water.' },
+    { type:'listen', audio:'vivimos en Caracas', prompt:'Listen and choose.', options:['I live in Caracas','you live in Caracas','we live in Caracas','they live in Caracas'], correct:2, explain:'«Vivimos» — nosotros form of -IR verbs ends in -imos. (Note: -ER would be -emos, e.g. «comemos».)' },
+    { type:'tap_select', prompt:'«We write» — nosotros form of escribir:', options:['escribemos','escribimos','escribamos','escriben'], correct:1, explain:'«Escribimos» — -IR verbs use -imos for nosotros (not -emos). This is the only difference between -ER and -IR.' },
+    { type:'translate', prompt:'Translate.', source:'She reads books.', correct:['ella lee libros','lee libros'], explain:'«Lee» — third person -ER ending is -e. «Leer» drops the -er and adds -e. Watch the double «e».' },
+    { type:'arrange', prompt:'Arrange — «I learn Spanish.»', tokens:['Yo','español','aprendo'], correct:['Yo','aprendo','español'], explain:'«Yo aprendo español». «Aprender» (-ER) → yo form: «aprendo».' },
+    { type:'fill_blank', prompt:'Fill in the subject.', sentence:'_____ comemos a las dos. (we eat at 2)', correct:['nosotros','nosotras'], explain:'«Comemos» is the nosotros form, so subject is «nosotros» (m / mixed) or «nosotras» (f).' },
+    { type:'translate', prompt:'Translate.', source:'They live in Mexico.', correct:['ellos viven en méxico','ellas viven en méxico','viven en méxico'], explain:'«Viven» — ellos/ellas/ustedes form of «vivir», ends in -en.' },
+    { type:'tap_select', prompt:'Match: «Ustedes _____ libros»:', options:['leemos','leen','lees','leo'], correct:1, explain:'«Ustedes leen» — ustedes uses third-person plural (-en for -ER). Same form as «ellos leen».' },
+    { type:'speak', prompt:'Say it.', target:'Yo aprendo español', translation:'I learn Spanish', explain:'«ah-PREN-do». Stress on the second syllable.' },
+  ],
+};
+
+const LESSON_15 = {
+  id: 'L15', title: 'Adjetivos',
+  vocabPreview: [['bueno/a','good'],['malo/a','bad'],['grande','big'],['pequeño/a','small'],['bonito/a','pretty'],['nuevo/a','new'],['viejo/a','old']],
+  vocabulary: [['bueno / buena','good (m / f)'],['malo / mala','bad'],['grande','big (no gender change)'],['pequeño / pequeña','small'],['alto / alta','tall'],['bajo / baja','short (height)'],['bonito / bonita','pretty'],['feo / fea','ugly'],['nuevo / nueva','new'],['viejo / vieja','old'],['joven','young (no gender change)'],['fácil','easy (no gender change)'],['difícil','difficult'],['interesante','interesting (no gender change)'],['burda de','really / very (Venezuelan intensifier)'],['fino','great / nice (Venezuelan)'],['arrecho','cool (Venezuelan, context-sensitive)']],
+  exercises: [
+    { type:'intro', title:'Adjective agreement & position', body:'Spanish adjectives AGREE with the noun in gender (m/f) and number (singular/plural). Most also go AFTER the noun, unlike English. Pattern: «-o» becomes «-a» for feminine; add «-s» for plural. Adjectives ending in -e or consonants usually stay the same for both genders. And a Venezuelan bonus: «burda de bueno» = really good. «Fino» = great. «Arrecho» = cool, but it can also be vulgar — use with care among friends only.', vocab:[['un libro bueno','a good book (m sing)'],['una casa buena','a good house (f sing)'],['libros buenos','good books (m pl)'],['casas buenas','good houses (f pl)'],['un libro grande','a big book (-e adj, no gender change)'],['burda de bueno','really good (Venezuelan slang intensifier)']] },
+    { type:'tap_select', prompt:'«Tall» (masculine):', options:['alta','alto','altos','altas'], correct:1, explain:'«Alto» — masculine singular form. «Alta» (f), «altos» (m pl), «altas» (f pl).' },
+    { type:'fill_blank', prompt:'Fill the adjective in correct form.', sentence:'Una casa _____. (a big house)', correct:['grande'], explain:'«Grande» doesn\'t change for gender. «Una casa grande» (f) and «un libro grande» (m) — same form.' },
+    { type:'listen', audio:'es muy bonita', prompt:'Listen and choose.', options:['it\'s very pretty','it\'s very ugly','it\'s really big','it\'s really new'], correct:0, explain:'«Es muy bonita» — feminine «-a» ending tells us the subject is feminine. «Bonito/a» = pretty.' },
+    { type:'tap_select', prompt:'Feminine plural of «nuevo»:', options:['nuevo','nueva','nuevos','nuevas'], correct:3, explain:'«Nuevas» — feminine plural. Pattern: -o → -a → -as.' },
+    { type:'translate', prompt:'Translate.', source:'The book is interesting.', correct:['el libro es interesante'], explain:'«Interesante» ends in -e: no gender change. Use «ser» for inherent qualities.' },
+    { type:'arrange', prompt:'Arrange — «a new and pretty house».', tokens:['casa','y','una','nueva','bonita'], correct:['una','casa','nueva','y','bonita'], explain:'Adjectives AFTER the noun in Spanish. Both must agree feminine: «nueva», «bonita».' },
+    { type:'tap_select', prompt:'Venezuelan «burda de» means:', options:['a little','really / very','sort of','not at all'], correct:1, explain:'«Burda de» = intensifier meaning «really» or «very». «Burda de bueno» = «really good». Pure Venezuelan slang — won\'t hear it elsewhere.' },
+    { type:'translate', prompt:'Translate.', source:'She is tall.', correct:['ella es alta','es alta'], explain:'«Ella es alta» — adjective agrees with feminine subject. Use «ser» for height (permanent trait).' },
+    { type:'fill_blank', prompt:'Fill in the correct adjective form.', sentence:'Los perros son _____. (the dogs are small)', correct:['pequeños'], explain:'«Pequeños» — masculine plural form. Adjective agrees with «los perros» (m pl).' },
+    { type:'speak', prompt:'Say «very good».', target:'muy bueno', translation:'very good', explain:'«MWEE BWEH-no». «Muy» = very. In Venezuela you\'d also hear «burda de bueno».' },
+  ],
+};
+
+const LESSONS = { L1: LESSON_1, L2: LESSON_2, L3: LESSON_3, L4: LESSON_4, L5: LESSON_5, L6: LESSON_6, L7: LESSON_7, L8: LESSON_8, L9: LESSON_9, L10: LESSON_10, L11: LESSON_11, L12: LESSON_12, L13: LESSON_13, L14: LESSON_14, L15: LESSON_15 };
 
 // ─────────── STATE ───────────
 let user = null;
