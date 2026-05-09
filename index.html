@@ -1491,6 +1491,212 @@ input { font-size: 16px; } /* prevents iOS zoom */
 }
 .review-banner-arrow { font-size: 20px; opacity: 0.7; }
 
+/* ─────────────────────── Assessment report ─────────────────────── */
+.complete-mark.gold {
+  background: linear-gradient(135deg, var(--terracotta), var(--gold));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.assessment-report {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px 22px 60px;
+  text-align: center;
+  background:
+    radial-gradient(ellipse 100% 50% at 50% 0%, rgba(184,71,42,0.1), transparent 60%),
+    radial-gradient(ellipse 80% 40% at 50% 100%, rgba(201,155,61,0.1), transparent 70%),
+    var(--cream);
+}
+.assessment-report .complete-mark {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 88px;
+  color: var(--terracotta);
+  line-height: 1;
+  margin-bottom: 14px;
+  font-variation-settings: 'opsz' 144, 'SOFT' 100, 'WONK' 1;
+  animation: popIn .5s cubic-bezier(.2,.8,.2,1);
+}
+.assessment-report .complete-eyebrow {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--terracotta);
+  margin-bottom: 8px;
+}
+.assessment-report .complete-title {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 44px;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+  font-variation-settings: 'opsz' 144, 'SOFT' 50;
+}
+.assessment-report .complete-sub {
+  color: var(--ink-soft);
+  font-size: 15px;
+  margin-bottom: 28px;
+  max-width: 360px;
+  line-height: 1.5;
+}
+.unit-score-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  width: 100%;
+  max-width: 380px;
+  margin-bottom: 24px;
+}
+.unit-score {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px 10px 10px;
+  text-align: left;
+}
+.unit-score.weak {
+  border-color: var(--terracotta);
+  background: linear-gradient(180deg, var(--paper), rgba(184,71,42,0.05));
+}
+.unit-score-num {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+.unit-score-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 6px;
+}
+.unit-score-title { font-size: 12px; color: var(--ink-soft); margin-top: 2px; }
+.unit-score.weak .unit-score-num { color: var(--terracotta); }
+
+.weak-area-callout {
+  width: 100%;
+  max-width: 380px;
+  padding: 14px 16px;
+  background: var(--terracotta-soft);
+  border: 1px solid rgba(184,71,42,0.25);
+  border-radius: 12px;
+  text-align: left;
+  margin-bottom: 24px;
+}
+.weak-eyebrow {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--terracotta);
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.weak-title {
+  font-family: var(--serif);
+  font-size: 17px;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+.weak-sub { font-size: 13px; color: var(--ink-soft); line-height: 1.45; }
+
+.missed-details {
+  width: 100%;
+  max-width: 380px;
+  margin-bottom: 24px;
+  text-align: left;
+}
+.missed-details summary {
+  cursor: pointer;
+  padding: 12px 16px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  list-style: none;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.missed-details summary::after { content: "›"; font-size: 18px; transition: transform .2s; }
+.missed-details[open] summary::after { transform: rotate(90deg); }
+.missed-details summary::-webkit-details-marker { display: none; }
+.missed-list {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.missed-item {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 12px 14px;
+}
+.missed-q {
+  font-family: var(--serif);
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: var(--ink);
+}
+.missed-row {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 10px;
+  margin-bottom: 4px;
+  font-size: 13px;
+}
+.missed-label {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+.missed-wrong { color: var(--error); font-style: italic; }
+.missed-right { color: var(--success); font-weight: 500; font-family: var(--serif); }
+.missed-explain {
+  margin-top: 6px;
+  padding-top: 6px;
+  border-top: 1px dashed var(--line);
+  font-size: 12px;
+  color: var(--ink-soft);
+  line-height: 1.45;
+}
+.assessment-report .complete-actions {
+  display: flex; flex-direction: column; gap: 10px;
+  width: 100%;
+  max-width: 380px;
+}
+
+/* A1 complete badge on dashboard */
+.level-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  background: linear-gradient(135deg, var(--terracotta), var(--gold));
+  color: var(--cream);
+  border-radius: 999px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-left: 8px;
+}
+
+
 
 #loading {
   position: fixed; inset: 0;
@@ -2482,7 +2688,47 @@ const LESSON_29 = {
   ],
 };
 
-const LESSONS = { L1: LESSON_1, L2: LESSON_2, L3: LESSON_3, L4: LESSON_4, L5: LESSON_5, L6: LESSON_6, L7: LESSON_7, L8: LESSON_8, L9: LESSON_9, L10: LESSON_10, L11: LESSON_11, L12: LESSON_12, L13: LESSON_13, L14: LESSON_14, L15: LESSON_15, L16: LESSON_16, L17: LESSON_17, L18: LESSON_18, L19: LESSON_19, L20: LESSON_20, L21: LESSON_21, L22: LESSON_22, L23: LESSON_23, L24: LESSON_24, L25: LESSON_25, L26: LESSON_26, L27: LESSON_27, L28: LESSON_28, L29: LESSON_29 };
+const LESSON_30 = {
+  id: 'L30', title: 'Evaluación A1',
+  assessment: true,
+  passThreshold: 0.75, // 75% to pass
+  vocabPreview: [['30 questions','no hints, no feedback'],['Mixed types','tap, fill, translate'],['75% to pass','advance to A2'],['Per-unit report','at the end']],
+  vocabulary: [], // assessment doesn't add to library
+  exercises: [
+    { type:'tap_select', prompt:'It\'s 8 PM. You greet someone with:', options:['Buenos días','Buenas tardes','Buenas noches','Hasta luego'], correct:2, explain:'«Buenas noches» — evening / night greeting (~7 PM onward).', unitRef:1 },
+    { type:'translate', prompt:'Translate.', source:'Thank you very much.', correct:['muchas gracias'], explain:'«Muchas gracias» — adjective before noun, agrees feminine plural.', unitRef:1 },
+    { type:'tap_select', prompt:'Which letter is silent in Spanish?', options:['j','h','ñ','rr'], correct:1, explain:'«h» is always silent. «hola» = «OH-la».', unitRef:1 },
+    { type:'translate', prompt:'Translate.', source:'My name is Matthew.', correct:['me llamo matthew','soy matthew'], explain:'Both work. «Me llamo» = literally «I call myself».', unitRef:1 },
+    { type:'tap_select', prompt:'«You all» (plural) in Latin America:', options:['Vosotros','Ustedes','Tú','Nosotros'], correct:1, explain:'Always «ustedes» in Latin America — never «vosotros».', unitRef:2 },
+    { type:'fill_blank', prompt:'Mood — temporary state.', sentence:'Yo _____ cansado hoy.', correct:['estoy'], explain:'Mood is temporary → estar → «estoy».', unitRef:2 },
+    { type:'translate', prompt:'Translate.', source:'I\'m thirsty.', correct:['tengo sed'], explain:'«Tengo sed» — Spanish uses tener for thirst, not ser/estar.', unitRef:2 },
+    { type:'fill_blank', prompt:'Question word — where.', sentence:'¿_____ vives?', correct:['dónde','donde'], explain:'«¿Dónde vives?» — location, no motion.', unitRef:2 },
+    { type:'tap_select', prompt:'«Veintidós» equals:', options:['12','20','22','32'], correct:2, explain:'«Veintidós» = 22. From 16-29, numbers fuse into one word.', unitRef:3 },
+    { type:'translate', prompt:'Translate.', source:'It\'s 3:30.', correct:['son las tres y media'], explain:'«Son las tres y media» — plural «son», «y media» for :30.', unitRef:3 },
+    { type:'tap_select', prompt:'May in Spanish:', options:['marzo','mayo','julio','octubre'], correct:1, explain:'«Mayo» = May. «Marzo» is March.', unitRef:3 },
+    { type:'fill_blank', prompt:'Reflexive routine — I shower.', sentence:'_____ ducho a las siete.', correct:['me'], explain:'«Me ducho» — reflexive pronoun «me» for first person.', unitRef:4 },
+    { type:'fill_blank', prompt:'Conjugate hablar for tú.', sentence:'Tú _____ inglés muy bien.', correct:['hablas'], explain:'«Hablas» — tú form of -AR ends in -as.', unitRef:4 },
+    { type:'tap_select', prompt:'Nosotros form of «vivir»:', options:['vivemos','vivimos','vivamos','viven'], correct:1, explain:'«Vivimos» — -IR verbs use -imos for nosotros (-ER would be -emos).', unitRef:4 },
+    { type:'translate', prompt:'Translate.', source:'She is tall.', correct:['ella es alta','es alta'], explain:'Use «ser» for height. «Alta» (f) agrees with subject.', unitRef:4 },
+    { type:'tap_select', prompt:'Polite restaurant request — «I would like»:', options:['Quiero','Tengo','Quisiera','Necesito'], correct:2, explain:'«Quisiera» — most polite. Use with waiters.', unitRef:5 },
+    { type:'tap_select', prompt:'An arepa is:', options:['A type of soup','A round corn cake','A grilled fish','A dessert'], correct:1, explain:'Round, thick corn cake — Venezuelan staple, eaten daily.', unitRef:5 },
+    { type:'fill_blank', prompt:'Ask the price.', sentence:'¿_____ cuesta el café?', correct:['cuánto','cuanto'], explain:'«¿Cuánto cuesta?» — singular price question.', unitRef:5 },
+    { type:'translate', prompt:'Translate.', source:'I like coffee.', correct:['me gusta el café'], explain:'«Me gusta el café» — singular subject «café» → «gusta». «El» before generic.', unitRef:5 },
+    { type:'tap_select', prompt:'«The bank»:', options:['el banco','el museo','el hotel','la calle'], correct:0, explain:'«El banco» — also means «bench», context disambiguates.', unitRef:6 },
+    { type:'translate', prompt:'Translate.', source:'To the right.', correct:['a la derecha'], explain:'«A la derecha» — feminine «derecha» for direction.', unitRef:6 },
+    { type:'fill_blank', prompt:'Transport — on foot.', sentence:'Voy _____ pie.', correct:['a'], explain:'«A pie» — exception to «en + vehicle». Walking takes «a».', unitRef:6 },
+    { type:'translate', prompt:'Translate.', source:'My parents are nice.', correct:['mis padres son simpáticos','mis padres son amables'], explain:'«Mis padres son simpáticos» — plural possessive «mis», masculine plural adjective.', unitRef:7 },
+    { type:'tap_select', prompt:'«The bathroom»:', options:['la cocina','el baño','la sala','el comedor'], correct:1, explain:'«El baño» — universally understood.', unitRef:7 },
+    { type:'fill_blank', prompt:'Possessive — our house.', sentence:'_____ casa es bonita.', correct:['nuestra'], explain:'«Nuestra casa» — feminine singular agrees with «casa».', unitRef:7 },
+    { type:'translate', prompt:'Translate.', source:'She is hard-working.', correct:['ella es trabajadora','es trabajadora'], explain:'«Trabajadora» — adds -a for feminine (irregular -dor adjectives).', unitRef:7 },
+    { type:'translate', prompt:'Translate — age idiom.', source:'I am 30 years old.', correct:['tengo treinta años','tengo 30 años'], explain:'«Tengo treinta años» — tener + number + años. Never «soy 30 años».', unitRef:8 },
+    { type:'fill_blank', prompt:'Gustar with plural subject.', sentence:'Me _____ los libros. (I like books)', correct:['gustan'], explain:'«Me gustan los libros» — plural subject → plural «gustan».', unitRef:8 },
+    { type:'translate', prompt:'Translate.', source:'Where is the museum?', correct:['¿dónde está el museo?','dónde está el museo','donde esta el museo'], explain:'«¿Dónde está el museo?» — specific location → estar.', unitRef:8 },
+    { type:'translate', prompt:'Translate — first meeting.', source:'Nice to meet you.', correct:['mucho gusto'], explain:'«Mucho gusto» — universal. They\'ll likely reply «igualmente».', unitRef:8 },
+  ],
+};
+
+const LESSONS = { L1: LESSON_1, L2: LESSON_2, L3: LESSON_3, L4: LESSON_4, L5: LESSON_5, L6: LESSON_6, L7: LESSON_7, L8: LESSON_8, L9: LESSON_9, L10: LESSON_10, L11: LESSON_11, L12: LESSON_12, L13: LESSON_13, L14: LESSON_14, L15: LESSON_15, L16: LESSON_16, L17: LESSON_17, L18: LESSON_18, L19: LESSON_19, L20: LESSON_20, L21: LESSON_21, L22: LESSON_22, L23: LESSON_23, L24: LESSON_24, L25: LESSON_25, L26: LESSON_26, L27: LESSON_27, L28: LESSON_28, L29: LESSON_29, L30: LESSON_30 };
 
 // ─────────── STATE ───────────
 let user = null;
@@ -2493,12 +2739,15 @@ let progress = {
   last_active: null,
   created_at: null,
   library: {},     // { 'normalized_es': { es, en, lessonIds, added, interval, ease, reviews, next_review, last_quality } }
+  assessments: {}, // { A1: { score, total, percentage, passed, date, perUnit, missed } }
+  completedLevels: {}, // { A1: ISO_date }
 };
 
 let currentLesson = null;     // active lesson during play
 let currentExerciseIdx = 0;
 let currentXpRunning = 0;
 let currentMistakes = [];
+let currentAnswers = [];      // assessment mode: tracks each answer { questionIdx, isCorrect, yourAnswer, unitRef }
 let currentAnswered = false;
 let currentResult = null;     // 'correct' | 'wrong' | null
 
@@ -2578,6 +2827,8 @@ async function loadProgress() {
     progress.last_active = data.last_active || null;
     progress.created_at = data.created_at || null;
     progress.library = data.library || {};
+    progress.assessments = data.assessments || {};
+    progress.completedLevels = data.completed_levels || {};
   } else {
     // first-time user: insert blank row
     const { data: ins } = await sb.from('progress').insert({
@@ -2620,15 +2871,20 @@ async function saveProgress(opts = {}) {
     streak: progress.streak,
     last_active: progress.last_active,
     library: progress.library,
+    assessments: progress.assessments,
+    completed_levels: progress.completedLevels,
   };
   const { error } = await sb.from('progress').update(payload).eq('user_id', user.id);
   if (error) {
-    // Fallback if `library` column doesn't exist yet — save without it
-    if (String(error.message||'').toLowerCase().includes('library')) {
+    // Fallback if newer columns don't exist yet — strip them and retry
+    const msg = String(error.message||'').toLowerCase();
+    if (msg.includes('library') || msg.includes('assessments') || msg.includes('completed_levels')) {
       delete payload.library;
+      delete payload.assessments;
+      delete payload.completed_levels;
       const { error: e2 } = await sb.from('progress').update(payload).eq('user_id', user.id);
       if (e2) console.warn('progress save error', e2);
-      console.warn('Library column missing — run the Build 3 SQL migration. Library will not persist until then.');
+      console.warn('Newer columns missing — run the Build 7 SQL migration. Some data will not persist until then.');
     } else {
       console.warn('progress save error', error);
     }
@@ -2718,6 +2974,17 @@ function renderDashboard() {
   $('#xp-count').textContent = progress.xp;
   $('#streak-count').textContent = progress.streak;
   $('#streak-stat').innerHTML = progress.streak + '<span class="stat-unit">d</span>';
+
+  // A1 complete badge — replace Level stat value if A1 is fully complete
+  const a1Complete = !!progress.completedLevels?.A1;
+  const levelStat = document.querySelector('.stat-row .stat:first-child .stat-value');
+  if (levelStat) {
+    if (a1Complete) {
+      levelStat.innerHTML = 'A1<span class="level-badge">DONE</span>';
+    } else {
+      levelStat.innerHTML = 'A1';
+    }
+  }
 
   // Review banner
   const stats = getLibraryStats();
@@ -2814,9 +3081,12 @@ async function toggleComplete(id) {
 function openLessonModal(id) {
   const m = LESSON_META[id];
   const lesson = LESSONS[id];
-  $('#modal-eyebrow').textContent = `UNIT ${m.unit} · LESSON ${m.n}`;
+  const isAssessment = lesson && lesson.assessment === true;
+  $('#modal-eyebrow').textContent = isAssessment ? 'A1 EVALUATION · 30 QUESTIONS' : `UNIT ${m.unit} · LESSON ${m.n}`;
   $('#modal-title').textContent = m.title;
-  $('#modal-sub').textContent = m.sub + ' · ' + m.xp + ' XP';
+  $('#modal-sub').textContent = isAssessment
+    ? 'No hints, no feedback during the test. Score 75%+ to pass.'
+    : m.sub + ' · ' + m.xp + ' XP';
 
   if (lesson) {
     $('#modal-vocab').style.display = 'block';
@@ -2827,7 +3097,16 @@ function openLessonModal(id) {
       li.innerHTML = `<b>${es}</b><span>${en}</span>`;
       ul.appendChild(li);
     });
-    $('#modal-start').textContent = progress.completed[id] ? 'Replay lesson' : 'Start lesson';
+    if (isAssessment) {
+      const prevAttempt = progress.assessments?.A1;
+      if (prevAttempt) {
+        $('#modal-start').textContent = `Retake (best: ${progress.assessments.A1_best?.percentage || prevAttempt.percentage}%)`;
+      } else {
+        $('#modal-start').textContent = 'Begin assessment';
+      }
+    } else {
+      $('#modal-start').textContent = progress.completed[id] ? 'Replay lesson' : 'Start lesson';
+    }
     $('#modal-start').style.display = 'inline-flex';
   } else {
     $('#modal-vocab').style.display = 'none';
@@ -2844,7 +3123,13 @@ function openLessonModal(id) {
     $('#modal-dialect').style.display = 'none';
   }
 
-  $('#modal-mark-complete').textContent = progress.completed[id] ? 'Mark incomplete' : 'Mark complete (skip)';
+  // Hide mark-complete-skip on assessment — must actually take it
+  if (isAssessment) {
+    $('#modal-mark-complete').style.display = 'none';
+  } else {
+    $('#modal-mark-complete').style.display = 'inline-flex';
+    $('#modal-mark-complete').textContent = progress.completed[id] ? 'Mark incomplete' : 'Mark complete (skip)';
+  }
   $('#modal-backdrop').classList.add('show');
   $('#modal-backdrop').dataset.lessonId = id;
 }
@@ -2859,9 +3144,19 @@ function startLesson(id) {
   currentExerciseIdx = 0;
   currentXpRunning = 0;
   currentMistakes = [];
+  currentAnswers = [];
   currentAnswered = false;
   currentResult = null;
-  $('#lesson-xp-running').textContent = '0';
+  // Toggle XP pill / question counter for assessment mode
+  if (lesson.assessment) {
+    $('#lesson-xp-running').textContent = '1/' + lesson.exercises.length;
+    $('#lesson-xp-running').nextElementSibling?.remove?.(); // remove " XP" text node sibling? handled below via parent
+    const pill = $('.lesson-xp-pill');
+    pill.innerHTML = '<span id="lesson-xp-running">1/' + lesson.exercises.length + '</span>';
+  } else {
+    const pill = $('.lesson-xp-pill');
+    pill.innerHTML = '<span id="lesson-xp-running">0</span> XP';
+  }
   showScreen('lesson');
   renderExercise();
 }
@@ -2869,6 +3164,7 @@ function startLesson(id) {
 function exitLesson(toScreen = 'home') {
   speechSynthesis.cancel();
   currentLesson = null;
+  $('#exercise-footer').style.display = '';
   showScreen(toScreen);
 }
 
@@ -2876,10 +3172,15 @@ function renderExercise() {
   const ex = currentLesson.exercises[currentExerciseIdx];
   const total = currentLesson.exercises.length;
   const pct = (currentExerciseIdx / total) * 100;
+  const isAssessment = currentLesson.assessment === true;
   $('#lesson-progress-fill').style.width = pct + '%';
   $('#feedback').classList.remove('show','correct','wrong');
   currentAnswered = false;
   currentResult = null;
+  // Update question counter for assessment
+  if (isAssessment) {
+    $('#lesson-xp-running').textContent = (currentExerciseIdx + 1) + '/' + total;
+  }
   // Clear any speak-exercise state from a prior exercise
   window.__speakHeard = '';
   window.__speakAlternatives = null;
@@ -2888,7 +3189,11 @@ function renderExercise() {
   // Cancel any TTS that might still be playing from previous exercise
   if ('speechSynthesis' in window) speechSynthesis.cancel();
   const checkBtn = $('#btn-check');
-  checkBtn.textContent = ex.type === 'intro' ? 'Continue' : 'Check';
+  if (isAssessment) {
+    checkBtn.textContent = ex.type === 'intro' ? 'Continue' : 'Submit';
+  } else {
+    checkBtn.textContent = ex.type === 'intro' ? 'Continue' : 'Check';
+  }
   checkBtn.disabled = false;
   checkBtn.className = 'btn btn-primary';
   // Build the exercise body
@@ -3247,6 +3552,7 @@ function buildSpeak(ex) {
 // --- Check answers ---
 function checkAnswer() {
   const ex = currentLesson.exercises[currentExerciseIdx];
+  const isAssessment = currentLesson.assessment === true;
 
   if (ex.type === 'intro') {
     advance();
@@ -3263,24 +3569,31 @@ function checkAnswer() {
       if (sel < 0) { flashShake(); return; }
       yourAnswer = ex.options[sel];
       isCorrect = sel === ex.correct;
-      $$('.option-tile').forEach((t, i) => {
-        t.classList.remove('selected');
-        if (i === ex.correct) t.classList.add('correct');
-        else if (i === sel && !isCorrect) t.classList.add('wrong');
-      });
+      if (!isAssessment) {
+        $$('.option-tile').forEach((t, i) => {
+          t.classList.remove('selected');
+          if (i === ex.correct) t.classList.add('correct');
+          else if (i === sel && !isCorrect) t.classList.add('wrong');
+        });
+      } else {
+        // Assessment: just disable further interaction
+        $$('.option-tile').forEach(t => t.disabled = true);
+      }
       break;
     }
     case 'fill_blank': {
       const v = $('#fill-input').value;
+      if (!v.trim()) { flashShake(); return; }
       yourAnswer = v;
       const norm = normalize(v);
       isCorrect = ex.correct.some(c => normalize(c) === norm);
-      $('#fill-input').classList.add(isCorrect ? 'correct' : 'wrong');
+      if (!isAssessment) $('#fill-input').classList.add(isCorrect ? 'correct' : 'wrong');
       $('#fill-input').disabled = true;
       break;
     }
     case 'arrange': {
       const placed = $$('#arrange-zone .token').map(t => t.textContent);
+      if (placed.length === 0) { flashShake(); return; }
       yourAnswer = placed.join(' ');
       const expected = ex.correct.join(' ');
       isCorrect = normalize(yourAnswer) === normalize(expected);
@@ -3288,10 +3601,11 @@ function checkAnswer() {
     }
     case 'translate': {
       const v = $('#translate-input').value;
+      if (!v.trim()) { flashShake(); return; }
       yourAnswer = v;
       const norm = normalize(v);
       isCorrect = ex.correct.some(c => normalize(c) === norm);
-      $('#translate-input').classList.add(isCorrect ? 'correct' : 'wrong');
+      if (!isAssessment) $('#translate-input').classList.add(isCorrect ? 'correct' : 'wrong');
       $('#translate-input').disabled = true;
       break;
     }
@@ -3312,9 +3626,26 @@ function checkAnswer() {
     }
   }
 
-  showFeedback(isCorrect, ex);
   currentAnswered = true;
   currentResult = isCorrect ? 'correct' : 'wrong';
+
+  if (isAssessment) {
+    // Record answer for the report; no feedback shown, no XP during assessment
+    currentAnswers.push({
+      questionIdx: currentExerciseIdx,
+      isCorrect,
+      yourAnswer,
+      unitRef: ex.unitRef || 0,
+      ex,
+    });
+    if (!isCorrect) currentMistakes.push({ ex, yourAnswer });
+    const checkBtn = $('#btn-check');
+    checkBtn.textContent = currentExerciseIdx === currentLesson.exercises.length - 1 ? 'See results' : 'Next question';
+    checkBtn.className = 'btn btn-primary';
+    return;
+  }
+
+  showFeedback(isCorrect, ex);
   if (isCorrect) {
     const xpEarned = ex.type === 'speak' ? 5 : 4;
     currentXpRunning += xpEarned;
@@ -3363,10 +3694,178 @@ function advance() {
   }
 }
 
+async function finishAssessment() {
+  speechSynthesis.cancel();
+  const id = currentLesson.id;
+  const meta = LESSON_META[id];
+  const total = currentAnswers.length;
+  const correct = currentAnswers.filter(a => a.isCorrect).length;
+  const percentage = Math.round((correct / total) * 100);
+  const passed = percentage >= Math.round((currentLesson.passThreshold || 0.75) * 100);
+
+  // Per-unit breakdown
+  const unitScores = {};
+  currentAnswers.forEach(a => {
+    const u = a.unitRef || 0;
+    if (!unitScores[u]) unitScores[u] = { correct: 0, total: 0 };
+    unitScores[u].total++;
+    if (a.isCorrect) unitScores[u].correct++;
+  });
+  // Find weakest unit (lowest percentage with at least 2 questions)
+  let weakestUnit = null;
+  let weakestPct = 1;
+  Object.entries(unitScores).forEach(([u, s]) => {
+    if (s.total >= 2) {
+      const p = s.correct / s.total;
+      if (p < weakestPct) { weakestPct = p; weakestUnit = u; }
+    }
+  });
+
+  // Save assessment record
+  const record = {
+    score: correct, total, percentage, passed,
+    date: new Date().toISOString(),
+    perUnit: unitScores,
+    missed: currentAnswers.filter(a => !a.isCorrect).map(a => ({
+      q: a.ex.prompt || a.ex.source || a.ex.sentence || '',
+      yourAnswer: a.yourAnswer,
+      correct: Array.isArray(a.ex.correct) ? a.ex.correct[0] : (a.ex.options ? a.ex.options[a.ex.correct] : a.ex.target),
+      explain: a.ex.explain || '',
+      unit: a.unitRef,
+    })),
+  };
+
+  // Always store latest. Track "best" too.
+  const prev = progress.assessments.A1;
+  progress.assessments.A1 = record;
+  if (!prev || percentage > prev.percentage) progress.assessments.A1_best = record;
+
+  // First-time pass = level complete
+  const firstTimeLevelUp = passed && !progress.completedLevels.A1;
+  if (passed) {
+    progress.completed[id] = new Date().toISOString();
+    if (firstTimeLevelUp) {
+      progress.completedLevels.A1 = new Date().toISOString();
+      progress.xp += 100; // level-completion bonus
+    }
+  }
+  await saveProgress({ activity: true });
+  renderDashboard();
+  renderCurriculum();
+  renderProfile();
+  renderLibrary();
+
+  // Render report screen
+  $('#lesson-progress-fill').style.width = '100%';
+  $('#exercise-footer').style.display = 'none';
+  const area = $('#exercise-area');
+
+  // Build per-unit grid
+  const unitTitles = { 1:'First Words', 2:'People & Pronouns', 3:'Numbers & Time', 4:'Daily Life', 5:'Food & Drink', 6:'Places & Directions', 7:'Family & Home', 8:'Capstone' };
+  const unitGridHtml = Object.entries(unitScores).sort((a,b)=>+a[0]-+b[0]).map(([u, s]) => {
+    const pct = Math.round((s.correct/s.total)*100);
+    const isWeak = u === weakestUnit;
+    return `
+      <div class="unit-score ${isWeak?'weak':''}">
+        <div class="unit-score-num">${s.correct}/${s.total}</div>
+        <div class="unit-score-label">UNIT ${u}</div>
+        <div class="unit-score-title">${unitTitles[u] || ''}</div>
+      </div>
+    `;
+  }).join('');
+
+  // Headline depends on pass/fail and first-time
+  let headlineMark, headlineEyebrow, headlineTitle, headlineSub;
+  if (firstTimeLevelUp) {
+    headlineMark = '¡A1!';
+    headlineEyebrow = 'LEVEL COMPLETE · +100 XP BONUS';
+    headlineTitle = 'A1 unlocked.';
+    headlineSub = `${percentage}% — you've passed the A1 evaluation. Foundation laid. Ready for A2 when it ships.`;
+  } else if (passed) {
+    headlineMark = '✓';
+    headlineEyebrow = 'PASSED';
+    headlineTitle = `${percentage}%`;
+    headlineSub = `${correct} out of ${total} correct. Threshold is 75% — you cleared it.`;
+  } else {
+    headlineMark = '↻';
+    headlineEyebrow = 'NOT YET';
+    headlineTitle = `${percentage}%`;
+    headlineSub = `${correct} out of ${total} correct. You need 75% to pass — try again, or review the weak areas first.`;
+  }
+
+  area.innerHTML = `
+    <div class="assessment-report fade-in">
+      <div class="complete-mark ${firstTimeLevelUp?'gold':''}">${headlineMark}</div>
+      <div class="complete-eyebrow">${headlineEyebrow}</div>
+      <div class="complete-title">${headlineTitle}</div>
+      <div class="complete-sub">${headlineSub}</div>
+
+      <div class="unit-score-grid">${unitGridHtml}</div>
+
+      ${weakestUnit && !firstTimeLevelUp ? `
+        <div class="weak-area-callout">
+          <div class="weak-eyebrow">WEAKEST AREA</div>
+          <div class="weak-title">Unit ${weakestUnit} — ${unitTitles[weakestUnit]}</div>
+          <div class="weak-sub">Replay the lessons in this unit, then run a Library review to lock in the vocab before retrying.</div>
+        </div>
+      ` : ''}
+
+      ${record.missed.length > 0 ? `
+        <details class="missed-details">
+          <summary>Show ${record.missed.length} missed question${record.missed.length===1?'':'s'}</summary>
+          <div class="missed-list">
+            ${record.missed.map(m => `
+              <div class="missed-item">
+                <div class="missed-q">${m.q}</div>
+                <div class="missed-row">
+                  <span class="missed-label">YOUR ANSWER</span>
+                  <span class="missed-wrong">${m.yourAnswer || '—'}</span>
+                </div>
+                <div class="missed-row">
+                  <span class="missed-label">CORRECT</span>
+                  <span class="missed-right">${m.correct}</span>
+                </div>
+                ${m.explain ? `<div class="missed-explain">${m.explain}</div>` : ''}
+              </div>
+            `).join('')}
+          </div>
+        </details>
+      ` : ''}
+
+      <div class="complete-actions">
+        ${passed
+          ? '<button class="btn btn-terracotta" id="assess-continue">Continue</button>'
+          : '<button class="btn btn-terracotta" id="assess-retry">Retry assessment</button><button class="btn btn-ghost" id="assess-review">Review weak vocabulary</button><button class="btn btn-ghost" id="assess-continue">Back to home</button>'
+        }
+      </div>
+    </div>
+  `;
+
+  $('#assess-continue')?.addEventListener('click', () => {
+    $('#exercise-footer').style.display = '';
+    exitLesson('home');
+  });
+  $('#assess-retry')?.addEventListener('click', () => {
+    $('#exercise-footer').style.display = '';
+    startLesson(id);
+  });
+  $('#assess-review')?.addEventListener('click', () => {
+    $('#exercise-footer').style.display = '';
+    exitLesson('library');
+  });
+}
+
+
 async function finishLesson() {
   speechSynthesis.cancel();
   const id = currentLesson.id;
   const meta = LESSON_META[id];
+
+  // Branch for assessment lessons
+  if (currentLesson.assessment) {
+    return finishAssessment();
+  }
+
   const wasComplete = !!progress.completed[id];
   // Bonus XP for first-time completion
   const lessonXp = wasComplete ? Math.round(meta.xp * 0.5) : meta.xp;
@@ -3737,7 +4236,7 @@ async function handleAuthSubmit() {
 async function handleSignOut() {
   await sb.auth.signOut();
   user = null;
-  progress = { completed:{}, xp:0, streak:0, last_active:null, created_at:null, library:{} };
+  progress = { completed:{}, xp:0, streak:0, last_active:null, created_at:null, library:{}, assessments:{}, completedLevels:{} };
   showScreen('auth');
   $('#auth-email').value = '';
   $('#auth-password').value = '';
@@ -3777,6 +4276,8 @@ async function resetAllProgress() {
   progress.streak = 0;
   progress.last_active = null;
   progress.library = {};
+  progress.assessments = {};
+  progress.completedLevels = {};
   await saveProgress();
   renderDashboard(); renderCurriculum(); renderLibrary(); renderProfile();
 }
