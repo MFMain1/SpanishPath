@@ -1,0 +1,1847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
+<meta name="description" content="SpanishPath — A serious Spanish learning companion built for fluency.">
+<meta name="theme-color" content="#FAF7F2">
+
+<!-- iOS PWA -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="SpanishPath">
+<meta name="mobile-web-app-capable" content="yes">
+
+<title>SpanishPath</title>
+
+<!-- Inline manifest via data URI -->
+<link rel="manifest" href='data:application/manifest+json,{"name":"SpanishPath","short_name":"SpanishPath","start_url":"./","display":"standalone","orientation":"portrait","background_color":"%23FAF7F2","theme_color":"%23FAF7F2","description":"A serious Spanish learning companion","icons":[{"src":"data:image/svg%2Bxml,%3Csvg xmlns%3D%22http%3A//www.w3.org/2000/svg%22 viewBox%3D%220 0 512 512%22%3E%3Crect width%3D%22512%22 height%3D%22512%22 rx%3D%22112%22 fill%3D%22%23B8472A%22/%3E%3Ctext x%3D%22256%22 y%3D%22340%22 font-family%3D%22Georgia,serif%22 font-size%3D%22280%22 font-weight%3D%22600%22 fill%3D%22%23FAF7F2%22 text-anchor%3D%22middle%22%3ESp%3C/text%3E%3C/svg%3E","sizes":"512x512","type":"image/svg+xml","purpose":"any"}]}'>
+
+<!-- Apple touch icon -->
+<link rel="apple-touch-icon" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" fill="%23B8472A"/><text x="256" y="340" font-family="Georgia,serif" font-size="280" font-weight="600" fill="%23FAF7F2" text-anchor="middle">Sp</text></svg>'>
+
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="%23B8472A"/><text x="50" y="68" font-family="Georgia,serif" font-size="56" font-weight="600" fill="%23FAF7F2" text-anchor="middle">Sp</text></svg>'>
+
+<!-- Fonts: Fraunces (display serif) + Plus Jakarta Sans (body) + JetBrains Mono (Spanish text emphasis) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,300..900,0..100,0..1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+/* ===== TOKENS ===== */
+:root {
+  --paper: #FAF7F2;
+  --paper-dim: #F2EDE3;
+  --surface: #FFFFFF;
+  --surface-warm: #FBF6EC;
+  --ink: #1A1612;
+  --ink-soft: #3D342A;
+  --ink-mute: #6B5D4F;
+  --ink-faint: #A89B8A;
+  --line: #E8E0D4;
+  --line-soft: #EFE8DB;
+  --terracotta: #B8472A;
+  --terracotta-deep: #8E3520;
+  --terracotta-soft: #F5E0D5;
+  --emerald: #1F4A3D;
+  --emerald-soft: #DCE8E2;
+  --gold: #C9962E;
+  --gold-soft: #F5E9C8;
+  --error: #A33024;
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+
+  --shadow-sm: 0 1px 2px rgba(26, 22, 18, 0.04), 0 1px 1px rgba(26, 22, 18, 0.03);
+  --shadow-md: 0 4px 12px rgba(26, 22, 18, 0.06), 0 2px 4px rgba(26, 22, 18, 0.04);
+  --shadow-lg: 0 12px 32px rgba(26, 22, 18, 0.08), 0 4px 8px rgba(26, 22, 18, 0.04);
+
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  --safe-top: env(safe-area-inset-top, 0);
+  --safe-bottom: env(safe-area-inset-bottom, 0);
+}
+
+/* ===== RESET ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; overscroll-behavior-y: none; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+body {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--ink);
+  background: var(--paper);
+  background-image:
+    radial-gradient(circle at 12% 18%, rgba(184, 71, 42, 0.04) 0%, transparent 38%),
+    radial-gradient(circle at 88% 84%, rgba(31, 74, 61, 0.04) 0%, transparent 42%);
+  min-height: 100dvh;
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
+}
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+input { font: inherit; color: inherit; }
+[hidden] { display: none !important; }
+
+/* ===== LOADING SCREEN ===== */
+#loading-screen {
+  position: fixed; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--paper);
+  z-index: 100;
+}
+.loader-mark {
+  font-family: var(--font-display);
+  font-size: 56px;
+  font-weight: 500;
+  color: var(--terracotta);
+  font-variation-settings: 'opsz' 144, 'SOFT' 50;
+  letter-spacing: -0.04em;
+  animation: breathe 2.4s ease-in-out infinite;
+}
+@keyframes breathe {
+  0%, 100% { opacity: 0.4; transform: scale(0.98); }
+  50% { opacity: 1; transform: scale(1); }
+}
+
+/* ===== AUTH SCREEN ===== */
+#auth-screen {
+  min-height: 100dvh;
+  display: flex; flex-direction: column;
+  padding: calc(var(--safe-top) + 40px) 24px calc(var(--safe-bottom) + 40px);
+  position: relative;
+}
+.auth-decoration {
+  position: absolute;
+  top: 0; right: 0;
+  width: 60%;
+  height: 50dvh;
+  background: radial-gradient(ellipse at top right, rgba(184, 71, 42, 0.08) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+.auth-decoration::before {
+  content: '';
+  position: absolute;
+  top: 12%; right: -10%;
+  width: 280px; height: 280px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(201, 150, 46, 0.12), transparent 70%);
+  filter: blur(20px);
+}
+.auth-content {
+  position: relative;
+  z-index: 1;
+  margin-top: auto;
+  margin-bottom: auto;
+  max-width: 440px;
+  width: 100%;
+  align-self: center;
+}
+.brand {
+  margin-bottom: 56px;
+  text-align: left;
+}
+.brand-mark {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--terracotta);
+  margin-bottom: 12px;
+  font-variation-settings: 'opsz' 14;
+}
+.brand-mark::before {
+  content: '';
+  display: inline-block;
+  width: 32px; height: 1px;
+  background: var(--terracotta);
+  vertical-align: middle;
+  margin-right: 12px;
+  margin-bottom: 3px;
+}
+.brand-name {
+  font-family: var(--font-display);
+  font-size: clamp(48px, 11vw, 64px);
+  font-weight: 400;
+  letter-spacing: -0.035em;
+  line-height: 0.95;
+  color: var(--ink);
+  font-variation-settings: 'opsz' 144, 'SOFT' 30;
+}
+.brand-name em {
+  font-style: italic;
+  font-weight: 300;
+  color: var(--terracotta);
+  font-variation-settings: 'opsz' 144, 'SOFT' 60, 'WONK' 1;
+}
+.brand-tagline {
+  margin-top: 18px;
+  font-size: 17px;
+  color: var(--ink-mute);
+  max-width: 320px;
+  line-height: 1.45;
+}
+
+.auth-tabs {
+  display: flex;
+  background: var(--paper-dim);
+  padding: 4px;
+  border-radius: 12px;
+  margin-bottom: 28px;
+  position: relative;
+}
+.auth-tab {
+  flex: 1;
+  padding: 11px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink-mute);
+  border-radius: 9px;
+  transition: color 0.2s ease;
+  position: relative;
+  z-index: 1;
+}
+.auth-tab.active { color: var(--ink); }
+.auth-tab-indicator {
+  position: absolute;
+  top: 4px; bottom: 4px;
+  width: calc(50% - 4px);
+  background: var(--surface);
+  border-radius: 9px;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.auth-tab-indicator.right { transform: translateX(100%); }
+
+.field {
+  margin-bottom: 16px;
+}
+.field-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-bottom: 8px;
+}
+.field-input {
+  width: 100%;
+  padding: 14px 16px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  font-size: 16px;
+  color: var(--ink);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+.field-input:focus {
+  border-color: var(--terracotta);
+  box-shadow: 0 0 0 3px rgba(184, 71, 42, 0.1);
+}
+.field-input::placeholder { color: var(--ink-faint); }
+
+.btn-primary {
+  width: 100%;
+  padding: 16px 20px;
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: var(--radius-md);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  margin-top: 12px;
+  transition: transform 0.15s ease, background 0.2s ease;
+  position: relative;
+}
+.btn-primary:hover { background: var(--ink-soft); }
+.btn-primary:active { transform: scale(0.98); }
+.btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.btn-text {
+  font-size: 14px;
+  color: var(--ink-mute);
+  padding: 12px;
+  width: 100%;
+  margin-top: 8px;
+}
+.btn-text strong { color: var(--terracotta); font-weight: 600; }
+
+.auth-error {
+  background: rgba(163, 48, 36, 0.08);
+  border: 1px solid rgba(163, 48, 36, 0.2);
+  color: var(--error);
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  margin-bottom: 16px;
+}
+.auth-success {
+  background: var(--emerald-soft);
+  border: 1px solid rgba(31, 74, 61, 0.2);
+  color: var(--emerald);
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  margin-bottom: 16px;
+}
+
+.auth-footer {
+  margin-top: 32px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--ink-faint);
+}
+
+/* ===== APP SHELL ===== */
+#app {
+  display: flex; flex-direction: column;
+  min-height: 100dvh;
+  padding-top: var(--safe-top);
+}
+.app-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 20px 12px;
+  border-bottom: 1px solid var(--line-soft);
+  background: var(--paper);
+  position: sticky; top: 0;
+  z-index: 10;
+}
+.header-mark {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  font-variation-settings: 'opsz' 36, 'SOFT' 30;
+}
+.header-mark em {
+  color: var(--terracotta);
+  font-style: italic;
+  font-weight: 400;
+  font-variation-settings: 'opsz' 36, 'SOFT' 60, 'WONK' 1;
+}
+.header-actions {
+  display: flex; align-items: center; gap: 10px;
+}
+.streak-badge {
+  display: flex; align-items: center; gap: 6px;
+  padding: 6px 11px;
+  background: var(--gold-soft);
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+.streak-icon { font-size: 13px; }
+.level-badge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  padding: 6px 10px;
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: 6px;
+}
+
+/* ===== MAIN CONTENT ===== */
+main {
+  flex: 1;
+  padding-bottom: calc(80px + var(--safe-bottom));
+}
+.tab-section { padding: 24px 20px 32px; }
+
+/* ===== HOME TAB ===== */
+.greeting {
+  margin-bottom: 28px;
+}
+.greeting-label {
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.greeting-title {
+  font-family: var(--font-display);
+  font-size: 36px;
+  line-height: 1.05;
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+  font-variation-settings: 'opsz' 72, 'SOFT' 40;
+}
+.greeting-title em {
+  font-style: italic;
+  color: var(--terracotta);
+  font-variation-settings: 'opsz' 72, 'SOFT' 60, 'WONK' 1;
+}
+
+.hero-card {
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: var(--radius-xl);
+  padding: 28px 24px 24px;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 32px;
+  box-shadow: var(--shadow-lg);
+}
+.hero-card::before {
+  content: '';
+  position: absolute;
+  top: -40px; right: -40px;
+  width: 200px; height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(184, 71, 42, 0.4), transparent 70%);
+  pointer-events: none;
+}
+.hero-card::after {
+  content: '';
+  position: absolute;
+  bottom: -60px; left: -30px;
+  width: 180px; height: 180px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(201, 150, 46, 0.18), transparent 65%);
+  pointer-events: none;
+}
+.hero-content { position: relative; z-index: 1; }
+.hero-eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(250, 247, 242, 0.6);
+  font-weight: 600;
+  margin-bottom: 10px;
+  font-family: var(--font-mono);
+}
+.hero-lesson-num {
+  font-family: var(--font-display);
+  font-size: 13px;
+  color: var(--gold);
+  margin-bottom: 4px;
+  font-style: italic;
+  font-variation-settings: 'opsz' 14, 'SOFT' 60;
+}
+.hero-title {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 1.1;
+  margin-bottom: 6px;
+  font-variation-settings: 'opsz' 72, 'SOFT' 30;
+}
+.hero-subtitle {
+  font-size: 15px;
+  color: rgba(250, 247, 242, 0.65);
+  margin-bottom: 24px;
+}
+.hero-btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: var(--paper);
+  color: var(--ink);
+  padding: 13px 20px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+  transition: transform 0.15s ease;
+}
+.hero-btn:active { transform: scale(0.96); }
+.hero-btn svg { width: 14px; height: 14px; }
+
+/* Progress strip */
+.progress-strip {
+  display: flex; align-items: center; gap: 14px;
+  margin-bottom: 28px;
+}
+.progress-meta {
+  display: flex; justify-content: space-between; align-items: baseline;
+  margin-bottom: 10px;
+}
+.progress-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+.progress-pct {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ink-mute);
+  font-weight: 500;
+}
+.progress-bar {
+  height: 6px;
+  background: var(--paper-dim);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--terracotta), var(--gold));
+  border-radius: 999px;
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Stats grid */
+.stats-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 32px;
+}
+.stat-card {
+  background: var(--surface-warm);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-lg);
+  padding: 18px 14px;
+  text-align: center;
+}
+.stat-value {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 500;
+  color: var(--ink);
+  line-height: 1;
+  font-variation-settings: 'opsz' 72, 'SOFT' 30;
+}
+.stat-label {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-top: 8px;
+  font-weight: 600;
+}
+
+/* Section heading */
+.section-heading {
+  display: flex; align-items: baseline; justify-content: space-between;
+  margin-bottom: 16px;
+}
+.section-title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  font-variation-settings: 'opsz' 36, 'SOFT' 30;
+}
+.section-link {
+  font-size: 13px;
+  color: var(--terracotta);
+  font-weight: 600;
+}
+
+/* Quick review card */
+.review-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  display: flex; align-items: center; gap: 14px;
+}
+.review-icon {
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  background: var(--emerald-soft);
+  color: var(--emerald);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+.review-text { flex: 1; }
+.review-title {
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--ink);
+}
+.review-subtitle {
+  font-size: 13px;
+  color: var(--ink-mute);
+  margin-top: 2px;
+}
+.review-arrow { color: var(--ink-faint); }
+
+/* ===== LEARN TAB (Curriculum Map) ===== */
+.curriculum-header {
+  margin-bottom: 28px;
+}
+.curriculum-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--terracotta);
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+.curriculum-title {
+  font-family: var(--font-display);
+  font-size: 38px;
+  font-weight: 400;
+  line-height: 1.0;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  margin-bottom: 12px;
+  font-variation-settings: 'opsz' 96, 'SOFT' 40;
+}
+.curriculum-title em {
+  font-style: italic;
+  color: var(--terracotta);
+  font-variation-settings: 'opsz' 96, 'SOFT' 60, 'WONK' 1;
+}
+.curriculum-meta {
+  display: flex; gap: 18px;
+  font-size: 13px;
+  color: var(--ink-mute);
+  align-items: center;
+}
+.curriculum-meta-item {
+  display: flex; align-items: center; gap: 6px;
+}
+.curriculum-meta-item strong { color: var(--ink); font-weight: 600; }
+.curriculum-meta-divider {
+  width: 3px; height: 3px;
+  border-radius: 50%;
+  background: var(--ink-faint);
+}
+
+.unit-block {
+  margin-bottom: 32px;
+}
+.unit-header {
+  display: flex; align-items: baseline; gap: 14px;
+  padding: 12px 0;
+  margin-bottom: 8px;
+  border-bottom: 1px solid var(--line);
+}
+.unit-num {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-style: italic;
+  color: var(--terracotta);
+  font-variation-settings: 'opsz' 14, 'SOFT' 60;
+  letter-spacing: 0.04em;
+}
+.unit-title {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 500;
+  color: var(--ink);
+  flex: 1;
+  font-variation-settings: 'opsz' 36, 'SOFT' 30;
+}
+.unit-progress {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-mute);
+  font-weight: 500;
+}
+
+.lesson-list {
+  display: flex; flex-direction: column;
+  gap: 6px;
+}
+.lesson-card {
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px 16px;
+  background: var(--surface);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-md);
+  transition: transform 0.15s ease, border-color 0.2s ease, background 0.2s ease;
+  text-align: left;
+  width: 100%;
+  position: relative;
+}
+.lesson-card:active { transform: scale(0.99); }
+.lesson-card.completed {
+  background: var(--surface-warm);
+  border-color: var(--line-soft);
+}
+.lesson-card.current {
+  border-color: var(--terracotta);
+  background: var(--surface);
+  box-shadow: 0 0 0 1px var(--terracotta), 0 4px 12px rgba(184, 71, 42, 0.08);
+}
+.lesson-card.locked {
+  opacity: 0.55;
+}
+.lesson-checkbox {
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  border: 1.5px solid var(--line);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+  background: var(--paper);
+  cursor: pointer;
+}
+.lesson-checkbox:hover { border-color: var(--ink-mute); }
+.lesson-card.completed .lesson-checkbox {
+  background: var(--emerald);
+  border-color: var(--emerald);
+}
+.lesson-card.completed .lesson-checkbox::after {
+  content: '';
+  width: 10px; height: 6px;
+  border-left: 1.5px solid var(--paper);
+  border-bottom: 1.5px solid var(--paper);
+  transform: rotate(-45deg) translate(1px, -1px);
+}
+.lesson-card.current .lesson-checkbox {
+  border-color: var(--terracotta);
+  position: relative;
+}
+.lesson-card.current .lesson-checkbox::after {
+  content: '';
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--terracotta);
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { transform: scale(0.7); opacity: 0.6; }
+  50% { transform: scale(1); opacity: 1; }
+}
+
+.lesson-content { flex: 1; min-width: 0; }
+.lesson-num {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--ink-faint);
+  letter-spacing: 0.08em;
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+.lesson-title {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+  font-variation-settings: 'opsz' 24, 'SOFT' 30;
+}
+.lesson-card.completed .lesson-title { color: var(--ink-mute); }
+.lesson-subtitle {
+  font-size: 12px;
+  color: var(--ink-mute);
+  margin-top: 2px;
+}
+.lesson-arrow {
+  color: var(--ink-faint);
+  flex-shrink: 0;
+  font-size: 16px;
+}
+
+/* Empty/placeholder tabs */
+.placeholder {
+  text-align: center;
+  padding: 80px 32px;
+}
+.placeholder-icon {
+  font-size: 36px;
+  margin-bottom: 16px;
+  opacity: 0.5;
+}
+.placeholder-title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  margin-bottom: 8px;
+  color: var(--ink);
+  font-variation-settings: 'opsz' 36, 'SOFT' 30;
+}
+.placeholder-text {
+  font-size: 14px;
+  color: var(--ink-mute);
+  max-width: 280px;
+  margin: 0 auto;
+  line-height: 1.5;
+}
+
+/* ===== PROFILE TAB ===== */
+.profile-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  margin-bottom: 16px;
+}
+.profile-avatar {
+  width: 64px; height: 64px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--terracotta), var(--terracotta-deep));
+  color: var(--paper);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 500;
+  margin-bottom: 14px;
+  font-variation-settings: 'opsz' 36, 'SOFT' 30;
+}
+.profile-email {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 4px;
+  word-break: break-all;
+}
+.profile-meta {
+  font-size: 13px;
+  color: var(--ink-mute);
+}
+.profile-actions {
+  display: flex; flex-direction: column; gap: 8px;
+}
+.profile-btn {
+  text-align: left;
+  padding: 16px 18px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  font-size: 15px;
+  color: var(--ink);
+  font-weight: 500;
+  display: flex; align-items: center; justify-content: space-between;
+  transition: background 0.15s ease;
+}
+.profile-btn:hover { background: var(--surface-warm); }
+.profile-btn.danger { color: var(--error); }
+
+/* ===== BOTTOM NAV ===== */
+nav#bottom-nav {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: rgba(250, 247, 242, 0.92);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border-top: 1px solid var(--line);
+  padding: 8px 8px calc(8px + var(--safe-bottom));
+  display: flex; justify-content: space-around;
+  z-index: 20;
+}
+.nav-btn {
+  flex: 1;
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+  padding: 8px 4px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--ink-faint);
+  transition: color 0.2s ease;
+  border-radius: 8px;
+}
+.nav-btn.active { color: var(--terracotta); }
+.nav-btn svg {
+  width: 22px; height: 22px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.6;
+}
+.nav-btn.active svg { stroke-width: 2; }
+
+/* ===== LESSON MODAL ===== */
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(26, 22, 18, 0.5);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 50;
+  display: flex; align-items: flex-end; justify-content: center;
+  animation: overlay-in 0.2s ease;
+}
+@keyframes overlay-in {
+  from { background: rgba(26, 22, 18, 0); }
+  to { background: rgba(26, 22, 18, 0.5); }
+}
+.modal {
+  background: var(--paper);
+  width: 100%;
+  max-width: 520px;
+  border-radius: 28px 28px 0 0;
+  padding: 24px 24px calc(24px + var(--safe-bottom));
+  max-height: 85dvh;
+  overflow-y: auto;
+  position: relative;
+  animation: modal-in 0.32s cubic-bezier(0.34, 1.3, 0.64, 1);
+}
+@keyframes modal-in {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+.modal-handle {
+  width: 40px; height: 4px;
+  background: var(--line);
+  border-radius: 999px;
+  margin: 0 auto 20px;
+}
+.modal-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--terracotta);
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+.modal-title {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: var(--ink);
+  margin-bottom: 8px;
+  font-variation-settings: 'opsz' 72, 'SOFT' 30;
+}
+.modal-subtitle {
+  font-size: 15px;
+  color: var(--ink-mute);
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+.modal-section {
+  background: var(--surface-warm);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  margin-bottom: 12px;
+}
+.modal-section-label {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.modal-section-text {
+  font-size: 14px;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+.modal-vz-tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--terracotta);
+  color: var(--paper);
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+.modal-actions {
+  display: flex; flex-direction: column; gap: 10px;
+  margin-top: 24px;
+}
+.btn-disabled {
+  width: 100%;
+  padding: 16px 20px;
+  background: var(--paper-dim);
+  color: var(--ink-mute);
+  border-radius: var(--radius-md);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: not-allowed;
+  text-align: center;
+  position: relative;
+}
+.btn-disabled::after {
+  content: 'soon';
+  position: absolute; right: 18px; top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.btn-secondary {
+  width: 100%;
+  padding: 14px 20px;
+  background: transparent;
+  color: var(--ink-soft);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  font-weight: 600;
+  transition: background 0.15s ease;
+}
+.btn-secondary:hover { background: var(--surface-warm); }
+.btn-secondary.completed {
+  background: var(--emerald-soft);
+  border-color: rgba(31, 74, 61, 0.2);
+  color: var(--emerald);
+}
+
+/* ===== TOAST ===== */
+#toast-container {
+  position: fixed;
+  top: calc(var(--safe-top) + 16px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  pointer-events: none;
+  display: flex; flex-direction: column; gap: 8px;
+}
+.toast {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 12px 18px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: var(--shadow-lg);
+  animation: toast-in 0.3s cubic-bezier(0.34, 1.3, 0.64, 1);
+  pointer-events: auto;
+  max-width: calc(100vw - 32px);
+}
+.toast.success { background: var(--emerald); }
+.toast.error { background: var(--error); }
+@keyframes toast-in {
+  from { opacity: 0; transform: translateY(-20px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.toast.out {
+  animation: toast-out 0.25s ease forwards;
+}
+@keyframes toast-out {
+  to { opacity: 0; transform: translateY(-12px) scale(0.96); }
+}
+
+/* ===== UTILITY ===== */
+.fade-in { animation: fade-in 0.4s ease; }
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.stagger > * { animation: fade-in 0.4s ease backwards; }
+.stagger > *:nth-child(1) { animation-delay: 0.05s; }
+.stagger > *:nth-child(2) { animation-delay: 0.10s; }
+.stagger > *:nth-child(3) { animation-delay: 0.15s; }
+.stagger > *:nth-child(4) { animation-delay: 0.20s; }
+.stagger > *:nth-child(5) { animation-delay: 0.25s; }
+.stagger > *:nth-child(6) { animation-delay: 0.30s; }
+.stagger > *:nth-child(7) { animation-delay: 0.35s; }
+.stagger > *:nth-child(8) { animation-delay: 0.40s; }
+
+/* Responsive padding for larger screens */
+@media (min-width: 640px) {
+  main, .app-header { max-width: 600px; margin-left: auto; margin-right: auto; }
+  nav#bottom-nav { max-width: 600px; left: 50%; transform: translateX(-50%); border-radius: 16px 16px 0 0; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- ===== LOADING SCREEN ===== -->
+<div id="loading-screen">
+  <div class="loader-mark">SpanishPath</div>
+</div>
+
+<!-- ===== AUTH SCREEN ===== -->
+<div id="auth-screen" hidden>
+  <div class="auth-decoration"></div>
+  <div class="auth-content">
+    <div class="brand">
+      <div class="brand-mark">A1 → C2 · Latin American</div>
+      <h1 class="brand-name">Spanish<em>Path</em></h1>
+      <p class="brand-tagline">A serious companion for fluency. Built for drilling, retention, and real conversation.</p>
+    </div>
+
+    <div class="auth-tabs" role="tablist">
+      <button class="auth-tab active" data-tab="signin" role="tab">Sign In</button>
+      <button class="auth-tab" data-tab="signup" role="tab">Create Account</button>
+      <div class="auth-tab-indicator"></div>
+    </div>
+
+    <form id="auth-form" autocomplete="on">
+      <div id="auth-message-slot"></div>
+
+      <div class="field">
+        <label class="field-label" for="auth-email">Email</label>
+        <input type="email" id="auth-email" class="field-input" placeholder="you@example.com" required autocomplete="email" autocapitalize="off" inputmode="email">
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="auth-password">Password</label>
+        <input type="password" id="auth-password" class="field-input" placeholder="Minimum 6 characters" required autocomplete="current-password" minlength="6">
+      </div>
+
+      <button type="submit" class="btn-primary" id="auth-submit">Sign In</button>
+    </form>
+
+    <p class="auth-footer">Your progress syncs securely. No tracking. No ads.</p>
+  </div>
+</div>
+
+<!-- ===== MAIN APP ===== -->
+<div id="app" hidden>
+  <header class="app-header">
+    <div class="header-mark">Spanish<em>Path</em></div>
+    <div class="header-actions">
+      <div class="streak-badge" id="streak-badge">
+        <span class="streak-icon">🔥</span>
+        <span id="streak-num">0</span>
+      </div>
+      <div class="level-badge" id="level-badge">A1</div>
+    </div>
+  </header>
+
+  <main>
+    <!-- HOME TAB -->
+    <section id="home-tab" class="tab-section">
+      <div class="greeting stagger">
+        <div class="greeting-label">Today's session</div>
+        <h1 class="greeting-title">Pick up <em>where you left off</em></h1>
+      </div>
+
+      <div class="hero-card fade-in">
+        <div class="hero-content">
+          <div class="hero-eyebrow">Current lesson</div>
+          <div class="hero-lesson-num" id="hero-num">Lesson 1 of 30</div>
+          <h2 class="hero-title" id="hero-title">Hola y Adiós</h2>
+          <p class="hero-subtitle" id="hero-subtitle">Greetings, goodbyes, and basic courtesy</p>
+          <button class="hero-btn" data-action="open-current-lesson">
+            Continue learning
+            <svg viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="fade-in" style="margin-bottom: 32px;">
+        <div class="progress-meta">
+          <div class="progress-label">A1 progress</div>
+          <div class="progress-pct"><span id="progress-pct-num">0</span>%</div>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress-fill" style="width: 0%;"></div>
+        </div>
+      </div>
+
+      <div class="stats-grid stagger">
+        <div class="stat-card">
+          <div class="stat-value" id="stat-completed">0</div>
+          <div class="stat-label">Lessons</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="stat-xp">0</div>
+          <div class="stat-label">XP</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="stat-streak">0</div>
+          <div class="stat-label">Day streak</div>
+        </div>
+      </div>
+
+      <div class="section-heading">
+        <h2 class="section-title">Daily Review</h2>
+      </div>
+      <div class="review-card fade-in">
+        <div class="review-icon">↻</div>
+        <div class="review-text">
+          <div class="review-title">Spaced repetition queue</div>
+          <div class="review-subtitle">Unlocks after your first lesson</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LEARN TAB -->
+    <section id="learn-tab" class="tab-section" hidden>
+      <div class="curriculum-header">
+        <div class="curriculum-eyebrow">CEFR Level — A1 Foundations</div>
+        <h1 class="curriculum-title"><em>Beginner</em> path</h1>
+        <div class="curriculum-meta">
+          <div class="curriculum-meta-item"><strong id="curr-completed">0</strong> / 30 complete</div>
+          <div class="curriculum-meta-divider"></div>
+          <div class="curriculum-meta-item">~80 hours</div>
+          <div class="curriculum-meta-divider"></div>
+          <div class="curriculum-meta-item">8 units</div>
+        </div>
+      </div>
+
+      <div id="curriculum-list"></div>
+    </section>
+
+    <!-- LIBRARY TAB -->
+    <section id="library-tab" class="tab-section" hidden>
+      <div class="curriculum-header">
+        <div class="curriculum-eyebrow">Reference</div>
+        <h1 class="curriculum-title"><em>Library</em></h1>
+        <p style="color: var(--ink-mute); margin-top: 12px; font-size: 14px;">Vocabulary, conjugations, and grammar notes you've learned.</p>
+      </div>
+      <div class="placeholder">
+        <div class="placeholder-icon">◫</div>
+        <div class="placeholder-title">Library is empty</div>
+        <div class="placeholder-text">As you complete lessons, words and concepts you learn will be saved here for reference.</div>
+      </div>
+    </section>
+
+    <!-- PROFILE TAB -->
+    <section id="profile-tab" class="tab-section" hidden>
+      <div class="curriculum-header">
+        <div class="curriculum-eyebrow">Account</div>
+        <h1 class="curriculum-title"><em>Profile</em></h1>
+      </div>
+
+      <div class="profile-card">
+        <div class="profile-avatar" id="profile-avatar">M</div>
+        <div class="profile-email" id="profile-email">—</div>
+        <div class="profile-meta" id="profile-meta">Member since today</div>
+      </div>
+
+      <div class="profile-actions">
+        <button class="profile-btn" data-action="export-progress">
+          <span>Export progress</span>
+          <span style="color: var(--ink-faint);">→</span>
+        </button>
+        <button class="profile-btn" data-action="reset-progress">
+          <span>Reset all progress</span>
+          <span style="color: var(--ink-faint);">→</span>
+        </button>
+        <button class="profile-btn danger" data-action="sign-out">
+          <span>Sign out</span>
+          <span style="color: currentColor;">→</span>
+        </button>
+      </div>
+
+      <p style="text-align: center; color: var(--ink-faint); font-size: 12px; margin-top: 32px; font-family: var(--font-mono);">SpanishPath · v0.1</p>
+    </section>
+  </main>
+
+  <nav id="bottom-nav">
+    <button class="nav-btn active" data-tab="home">
+      <svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8M5 9v12h14V9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>Home</span>
+    </button>
+    <button class="nav-btn" data-tab="learn">
+      <svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 012-2h11a2 2 0 012 2v14H6a2 2 0 01-2-2V5z" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 7h6M9 11h6M9 15h4" stroke-linecap="round"/></svg>
+      <span>Learn</span>
+    </button>
+    <button class="nav-btn" data-tab="library">
+      <svg viewBox="0 0 24 24"><path d="M4 19h16M5 5h4v14M11 5h3v14M16 8h4v11" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>Library</span>
+    </button>
+    <button class="nav-btn" data-tab="profile">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>Profile</span>
+    </button>
+  </nav>
+</div>
+
+<!-- TOAST CONTAINER -->
+<div id="toast-container"></div>
+
+<!-- LESSON MODAL TEMPLATE (rendered dynamically) -->
+
+<script type="module">
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.7/+esm';
+
+// ============================================================
+// CONFIG
+// ============================================================
+const SUPABASE_URL = 'https://mipooqmstsbsoyypbvgd.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1pcG9vcW1zdHNic295eXBidmdkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgyODM0OTUsImV4cCI6MjA5Mzg1OTQ5NX0.fAzCkeiaaKFggElQOxfU8H4H1i1IB1yEajkMmki1lXk';
+
+const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+  auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: false }
+});
+
+// ============================================================
+// CURRICULUM — A1 (30 lessons across 8 units)
+// ============================================================
+const CURRICULUM = {
+  level: 'A1',
+  title: 'Beginner Foundations',
+  units: [
+    {
+      num: 1, title: 'First Steps',
+      lessons: [
+        { id: 1, title: 'Hola y Adiós', subtitle: 'Greetings, goodbyes, and courtesy', focus: 'Greetings & politeness phrases', vz: 'In Venezuela, "épale" and "chamo/chama" are common informal greetings between friends.' },
+        { id: 2, title: '¿Cómo te llamas?', subtitle: 'Introductions and basic exchange', focus: 'Asking and giving names, where you\'re from', vz: '"¿Cómo te va?" is the casual Venezuelan equivalent of "how\'s it going."' },
+        { id: 3, title: 'El Alfabeto', subtitle: 'The Spanish alphabet & sounds', focus: 'Letter names, ñ, double letters, vowel sounds', vz: 'In the Caribbean (incl. Venezuela), final "s" is often aspirated or dropped — "los amigos" sounds like "loh amigoh."' },
+        { id: 4, title: 'Números 0–30', subtitle: 'Counting and basic numbers', focus: 'Cardinal numbers 0 through 30', vz: null },
+        { id: 5, title: 'Pronombres', subtitle: 'Subject pronouns', focus: 'yo, tú, él/ella, nosotros, ustedes, ellos', vz: 'Latin America uses "ustedes" exclusively — never "vosotros." This applies fully in Venezuela.' }
+      ]
+    },
+    {
+      num: 2, title: 'To Be or To Be',
+      lessons: [
+        { id: 6, title: 'Ser — Identity', subtitle: 'The first "to be" verb', focus: 'soy, eres, es, somos, son — for permanent traits', vz: null },
+        { id: 7, title: 'Estar — State & Place', subtitle: 'The second "to be" verb', focus: 'estoy, estás, está, estamos, están — for location & state', vz: null },
+        { id: 8, title: 'Ser vs. Estar', subtitle: 'When to use which', focus: 'Permanent vs. temporary; identity vs. condition', vz: null },
+        { id: 9, title: 'Hay', subtitle: 'There is, there are', focus: 'Using "hay" for existence', vz: null }
+      ]
+    },
+    {
+      num: 3, title: 'People & Things',
+      lessons: [
+        { id: 10, title: 'Artículos', subtitle: 'el, la, un, una', focus: 'Definite and indefinite articles', vz: null },
+        { id: 11, title: 'Género', subtitle: 'Noun gender rules', focus: 'Masculine and feminine nouns; common patterns and exceptions', vz: null },
+        { id: 12, title: 'Plurales', subtitle: 'Making things plural', focus: 'Plural rules: -s, -es, irregular forms', vz: null },
+        { id: 13, title: 'Adjetivos', subtitle: 'Describing things', focus: 'Adjective agreement in gender and number', vz: '"Chévere" (cool, great) is one of the most-used Venezuelan adjectives.' }
+      ]
+    },
+    {
+      num: 4, title: 'My World',
+      lessons: [
+        { id: 14, title: 'Tener', subtitle: 'To have', focus: 'tengo, tienes, tiene, tenemos, tienen + tener idioms', vz: null },
+        { id: 15, title: 'La Familia', subtitle: 'Family vocabulary', focus: 'padre, madre, hermano, primo, abuelos, etc.', vz: null },
+        { id: 16, title: 'Posesivos', subtitle: 'My, your, our', focus: 'mi, tu, su, nuestro/a + agreement', vz: null },
+        { id: 17, title: 'Demostrativos', subtitle: 'This, that, those', focus: 'este, ese, aquel and their forms', vz: null }
+      ]
+    },
+    {
+      num: 5, title: 'Time & Numbers',
+      lessons: [
+        { id: 18, title: 'Números 30–100', subtitle: 'Bigger numbers', focus: 'Tens, units, and patterns', vz: null },
+        { id: 19, title: 'Los Días', subtitle: 'Days of the week', focus: 'lunes through domingo + "el" usage', vz: null },
+        { id: 20, title: 'Los Meses', subtitle: 'Months and dates', focus: 'enero through diciembre + how to say dates', vz: null },
+        { id: 21, title: 'La Hora', subtitle: 'Telling time', focus: 'es / son las... + a.m./p.m. + "y media", "menos cuarto"', vz: null }
+      ]
+    },
+    {
+      num: 6, title: 'Action Time',
+      lessons: [
+        { id: 22, title: 'Verbos -AR', subtitle: 'Regular AR verbs', focus: 'Conjugation: hablar, trabajar, estudiar, caminar', vz: null },
+        { id: 23, title: 'Verbos -ER', subtitle: 'Regular ER verbs', focus: 'Conjugation: comer, beber, leer, aprender', vz: null },
+        { id: 24, title: 'Verbos -IR', subtitle: 'Regular IR verbs', focus: 'Conjugation: vivir, escribir, recibir, abrir', vz: null },
+        { id: 25, title: 'Verbos Irregulares', subtitle: 'Common irregulars', focus: 'ir, hacer, ver, dar, saber', vz: null }
+      ]
+    },
+    {
+      num: 7, title: 'Daily Life',
+      lessons: [
+        { id: 26, title: 'Comida y Bebida', subtitle: 'Food and drink', focus: 'Common foods, meals, ordering', vz: 'In Venezuela: "arepa" (cornmeal patty) is a staple. "Cachapa", "pabellón", "cambur" (banana, not "plátano") are key.' },
+        { id: 27, title: 'Querer y Gustar', subtitle: 'Wanting and liking', focus: 'quiero/quieres + me gusta / te gusta + indirect objects', vz: null },
+        { id: 28, title: 'Ropa y Colores', subtitle: 'Clothes and colors', focus: 'Clothing items + color agreement', vz: null },
+        { id: 29, title: 'El Tiempo', subtitle: 'Weather and seasons', focus: 'hace + weather expressions; estaciones', vz: null }
+      ]
+    },
+    {
+      num: 8, title: 'Capstone',
+      lessons: [
+        { id: 30, title: 'Repaso A1', subtitle: 'Review and mastery check', focus: 'Mixed review of all A1 concepts; readiness check for A2', vz: null }
+      ]
+    }
+  ]
+};
+
+// Total lessons count
+const TOTAL_A1_LESSONS = CURRICULUM.units.reduce((sum, u) => sum + u.lessons.length, 0);
+
+// Flatten lessons for lookup
+const LESSON_INDEX = {};
+CURRICULUM.units.forEach(u => u.lessons.forEach(l => { LESSON_INDEX[l.id] = { ...l, unit: u.num, unitTitle: u.title }; }));
+
+// ============================================================
+// STATE
+// ============================================================
+const state = {
+  user: null,
+  progress: {
+    current_level: 'A1',
+    current_lesson: 1,
+    completed_lessons: [],
+    streak: 0,
+    last_active: null,
+    total_xp: 0
+  },
+  ready: false,
+  authMode: 'signin'
+};
+
+// ============================================================
+// DOM HELPERS
+// ============================================================
+const $ = sel => document.querySelector(sel);
+const $$ = sel => document.querySelectorAll(sel);
+
+function showScreen(name) {
+  ['loading-screen', 'auth-screen', 'app'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.hidden = (id !== name);
+  });
+}
+
+function showTab(tabName) {
+  $$('.tab-section').forEach(s => s.hidden = true);
+  const target = document.getElementById(tabName + '-tab');
+  if (target) {
+    target.hidden = false;
+    target.classList.remove('fade-in');
+    void target.offsetWidth;
+    target.classList.add('fade-in');
+  }
+  $$('.nav-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tabName));
+  window.scrollTo({ top: 0, behavior: 'instant' });
+}
+
+function toast(message, type = 'default') {
+  const t = document.createElement('div');
+  t.className = `toast ${type}`;
+  t.textContent = message;
+  $('#toast-container').appendChild(t);
+  setTimeout(() => {
+    t.classList.add('out');
+    setTimeout(() => t.remove(), 300);
+  }, 2400);
+}
+
+// ============================================================
+// AUTH FLOW
+// ============================================================
+function setAuthMode(mode) {
+  state.authMode = mode;
+  $$('.auth-tab').forEach(t => t.classList.toggle('active', t.dataset.tab === mode));
+  const indicator = $('.auth-tab-indicator');
+  indicator.classList.toggle('right', mode === 'signup');
+  $('#auth-submit').textContent = mode === 'signin' ? 'Sign In' : 'Create Account';
+  $('#auth-password').autocomplete = mode === 'signin' ? 'current-password' : 'new-password';
+  $('#auth-message-slot').innerHTML = '';
+}
+
+function setAuthMessage(text, kind = 'error') {
+  const slot = $('#auth-message-slot');
+  slot.innerHTML = '';
+  if (!text) return;
+  const div = document.createElement('div');
+  div.className = kind === 'success' ? 'auth-success' : 'auth-error';
+  div.textContent = text;
+  slot.appendChild(div);
+}
+
+async function handleAuthSubmit(e) {
+  e.preventDefault();
+  const email = $('#auth-email').value.trim();
+  const password = $('#auth-password').value;
+  const submitBtn = $('#auth-submit');
+  if (!email || !password) return;
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = state.authMode === 'signin' ? 'Signing in...' : 'Creating account...';
+  setAuthMessage('');
+
+  try {
+    if (state.authMode === 'signin') {
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) throw error;
+      state.user = data.user;
+      await loadProgress();
+      enterApp();
+    } else {
+      const { data, error } = await supabase.auth.signUp({ email, password });
+      if (error) throw error;
+      if (data.user && !data.session) {
+        setAuthMessage('Account created. Check your email to verify (or sign in directly if confirmation is disabled).', 'success');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Create Account';
+        return;
+      }
+      state.user = data.user;
+      await initProgress();
+      enterApp();
+    }
+  } catch (err) {
+    console.error('Auth error:', err);
+    setAuthMessage(err.message || 'Authentication failed. Check your credentials and try again.');
+    submitBtn.disabled = false;
+    submitBtn.textContent = state.authMode === 'signin' ? 'Sign In' : 'Create Account';
+  }
+}
+
+async function signOut() {
+  await supabase.auth.signOut();
+  state.user = null;
+  state.progress = { current_level: 'A1', current_lesson: 1, completed_lessons: [], streak: 0, last_active: null, total_xp: 0 };
+  showScreen('auth-screen');
+  setAuthMode('signin');
+  $('#auth-form').reset();
+}
+
+// ============================================================
+// PROGRESS — Supabase + localStorage fallback
+// ============================================================
+async function loadProgress() {
+  if (!state.user) return;
+  try {
+    const { data, error } = await supabase
+      .from('progress')
+      .select('*')
+      .eq('user_id', state.user.id)
+      .maybeSingle();
+
+    if (error && error.code !== 'PGRST116') throw error;
+
+    if (!data) {
+      await initProgress();
+    } else {
+      state.progress = {
+        current_level: data.current_level || 'A1',
+        current_lesson: data.current_lesson || 1,
+        completed_lessons: Array.isArray(data.completed_lessons) ? data.completed_lessons : [],
+        streak: data.streak || 0,
+        last_active: data.last_active,
+        total_xp: data.total_xp || 0
+      };
+      await updateStreakOnLoad();
+    }
+  } catch (err) {
+    console.warn('Supabase progress load failed, using local cache:', err);
+    const cached = localStorage.getItem('sp_progress_' + state.user.id);
+    if (cached) {
+      try { state.progress = { ...state.progress, ...JSON.parse(cached) }; } catch {}
+    }
+  }
+  cacheProgressLocal();
+}
+
+async function initProgress() {
+  if (!state.user) return;
+  const today = new Date().toISOString().slice(0, 10);
+  state.progress = {
+    current_level: 'A1',
+    current_lesson: 1,
+    completed_lessons: [],
+    streak: 1,
+    last_active: today,
+    total_xp: 0
+  };
+  try {
+    const { error } = await supabase.from('progress').insert({
+      user_id: state.user.id,
+      current_level: 'A1',
+      current_lesson: 1,
+      completed_lessons: [],
+      streak: 1,
+      last_active: today,
+      total_xp: 0
+    });
+    if (error) throw error;
+  } catch (err) {
+    console.warn('Could not init progress in Supabase:', err);
+  }
+  cacheProgressLocal();
+}
+
+async function updateStreakOnLoad() {
+  const today = new Date().toISOString().slice(0, 10);
+  if (state.progress.last_active === today) return;
+  const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+  if (state.progress.last_active === yesterday) {
+    state.progress.streak += 1;
+  } else if (!state.progress.last_active) {
+    state.progress.streak = 1;
+  } else {
+    state.progress.streak = 1;
+  }
+  state.progress.last_active = today;
+  await saveProgress({ streak: state.progress.streak, last_active: today });
+}
+
+async function saveProgress(patch) {
+  if (!state.user) return;
+  state.progress = { ...state.progress, ...patch };
+  cacheProgressLocal();
+  try {
+    const { error } = await supabase
+      .from('progress')
+      .update({ ...patch, updated_at: new Date().toISOString() })
+      .eq('user_id', state.user.id);
+    if (error) throw error;
+  } catch (err) {
+    console.warn('Save failed (cached locally):', err);
+  }
+}
+
+function cacheProgressLocal() {
+  if (state.user) {
+    try { localStorage.setItem('sp_progress_' + state.user.id, JSON.stringify(state.progress)); } catch {}
+  }
+}
+
+// ============================================================
+// LESSON ACTIONS
+// ============================================================
+async function toggleLessonComplete(lessonId, fromModal = false) {
+  const completed = [...state.progress.completed_lessons];
+  const idx = completed.indexOf(lessonId);
+  let xpDelta = 0;
+  if (idx >= 0) {
+    completed.splice(idx, 1);
+    xpDelta = -10;
+  } else {
+    completed.push(lessonId);
+    xpDelta = 10;
+  }
+  completed.sort((a, b) => a - b);
+
+  // Determine next current lesson: smallest id not in completed
+  let nextCurrent = 1;
+  for (let i = 1; i <= TOTAL_A1_LESSONS; i++) {
+    if (!completed.includes(i)) { nextCurrent = i; break; }
+    if (i === TOTAL_A1_LESSONS) nextCurrent = TOTAL_A1_LESSONS; // all done
+  }
+
+  const newXp = Math.max(0, state.progress.total_xp + xpDelta);
+  await saveProgress({ completed_lessons: completed, current_lesson: nextCurrent, total_xp: newXp });
+  renderAll();
+  if (fromModal) closeLessonModal();
+  toast(idx >= 0 ? 'Lesson unmarked' : 'Lesson marked complete ✓', idx >= 0 ? 'default' : 'success');
+}
+
+// ============================================================
+// LESSON MODAL
+// ============================================================
+function openLessonModal(lessonId) {
+  const lesson = LESSON_INDEX[lessonId];
+  if (!lesson) return;
+  const isCompleted = state.progress.completed_lessons.includes(lessonId);
+
+  const overlay = document.createElement('div');
+  overlay.className = 'modal-overlay';
+  overlay.id = 'lesson-modal';
+  overlay.innerHTML = `
+    <div class="modal" role="dialog" aria-modal="true">
+      <div class="modal-handle"></div>
+      <div class="modal-eyebrow">Unit ${lesson.unit} · ${lesson.unitTitle} · Lesson ${lesson.id}</div>
+      <h2 class="modal-title">${lesson.title}</h2>
+      <p class="modal-subtitle">${lesson.subtitle}</p>
+
+      <div class="modal-section">
+        <div class="modal-section-label">What you'll learn</div>
+        <div class="modal-section-text">${lesson.focus}</div>
+      </div>
+
+      ${lesson.vz ? `
+        <div class="modal-section" style="background: var(--terracotta-soft);">
+          <div class="modal-vz-tag">★ Venezuelan note</div>
+          <div class="modal-section-text" style="color: var(--terracotta-deep);">${lesson.vz}</div>
+        </div>
+      ` : ''}
+
+      <div class="modal-actions">
+        <button class="btn-disabled" disabled>Start lesson</button>
+        <button class="btn-secondary ${isCompleted ? 'completed' : ''}" data-action="toggle-complete" data-id="${lessonId}">
+          ${isCompleted ? '✓ Marked complete · tap to undo' : 'Mark as already known'}
+        </button>
+        <button class="btn-secondary" data-action="close-modal">Close</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+  overlay.addEventListener('click', e => {
+    if (e.target === overlay) closeLessonModal();
+  });
+}
+
+function closeLessonModal() {
+  const m = document.getElementById('lesson-modal');
+  if (m) m.remove();
+}
+
+// ============================================================
+// RENDER
+// ============================================================
+function renderHome() {
+  const completed = state.progress.completed_lessons.length;
+  const pct = Math.round((completed / TOTAL_A1_LESSONS) * 100);
+
+  $('#progress-fill').style.width = pct + '%';
+  $('#progress-pct-num').textContent = pct;
+  $('#stat-completed').textContent = completed;
+  $('#stat-xp').textContent = state.progress.total_xp;
+  $('#stat-streak').textContent = state.progress.streak;
+  $('#streak-num').textContent = state.progress.streak;
+  $('#level-badge').textContent = state.progress.current_level;
+
+  const currentLesson = LESSON_INDEX[state.progress.current_lesson];
+  if (currentLesson) {
+    $('#hero-num').textContent = `Lesson ${currentLesson.id} of ${TOTAL_A1_LESSONS}`;
+    $('#hero-title').textContent = currentLesson.title;
+    $('#hero-subtitle').textContent = currentLesson.subtitle;
+  }
+}
+
+function renderCurriculum() {
+  const list = $('#curriculum-list');
+  list.innerHTML = '';
+  $('#curr-completed').textContent = state.progress.completed_lessons.length;
+
+  CURRICULUM.units.forEach(unit => {
+    const block = document.createElement('div');
+    block.className = 'unit-block';
+
+    const unitCompleted = unit.lessons.filter(l => state.progress.completed_lessons.includes(l.id)).length;
+    const unitTotal = unit.lessons.length;
+
+    block.innerHTML = `
+      <div class="unit-header">
+        <div class="unit-num">Unit ${String(unit.num).padStart(2, '0')}</div>
+        <div class="unit-title">${unit.title}</div>
+        <div class="unit-progress">${unitCompleted}/${unitTotal}</div>
+      </div>
+      <div class="lesson-list"></div>
+    `;
+    const ul = block.querySelector('.lesson-list');
+
+    unit.lessons.forEach(lesson => {
+      const isCompleted = state.progress.completed_lessons.includes(lesson.id);
+      const isCurrent = lesson.id === state.progress.current_lesson && !isCompleted;
+      const card = document.createElement('button');
+      card.className = 'lesson-card' + (isCompleted ? ' completed' : '') + (isCurrent ? ' current' : '');
+      card.dataset.lessonId = lesson.id;
+      card.innerHTML = `
+        <div class="lesson-checkbox" data-action="quick-toggle" data-id="${lesson.id}" role="checkbox" aria-checked="${isCompleted}"></div>
+        <div class="lesson-content">
+          <div class="lesson-num">Lesson ${String(lesson.id).padStart(2, '0')}${lesson.vz ? ' · VZ' : ''}</div>
+          <div class="lesson-title">${lesson.title}</div>
+          <div class="lesson-subtitle">${lesson.subtitle}</div>
+        </div>
+        <div class="lesson-arrow">→</div>
+      `;
+      ul.appendChild(card);
+    });
+
+    list.appendChild(block);
+  });
+}
+
+function renderProfile() {
+  if (!state.user) return;
+  const email = state.user.email || '—';
+  $('#profile-email').textContent = email;
+  $('#profile-avatar').textContent = (email[0] || 'U').toUpperCase();
+  if (state.user.created_at) {
+    const d = new Date(state.user.created_at);
+    $('#profile-meta').textContent = `Member since ${d.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}`;
+  }
+}
+
+function renderAll() {
+  renderHome();
+  renderCurriculum();
+  renderProfile();
+}
+
+// ============================================================
+// EVENT WIRING
+// ============================================================
+function wireEvents() {
+  // Auth tab toggle
+  $$('.auth-tab').forEach(tab => {
+    tab.addEventListener('click', () => setAuthMode(tab.dataset.tab));
+  });
+  $('#auth-form').addEventListener('submit', handleAuthSubmit);
+
+  // Bottom nav
+  $$('#bottom-nav .nav-btn').forEach(btn => {
+    btn.addEventListener('click', () => showTab(btn.dataset.tab));
+  });
+
+  // Global delegation
+  document.addEventListener('click', async (e) => {
+    const actionEl = e.target.closest('[data-action]');
+    if (actionEl) {
+      e.stopPropagation();
+      const action = actionEl.dataset.action;
+
+      if (action === 'open-current-lesson') {
+        openLessonModal(state.progress.current_lesson);
+      } else if (action === 'quick-toggle') {
+        e.preventDefault();
+        await toggleLessonComplete(parseInt(actionEl.dataset.id, 10));
+      } else if (action === 'toggle-complete') {
+        await toggleLessonComplete(parseInt(actionEl.dataset.id, 10), true);
+      } else if (action === 'close-modal') {
+        closeLessonModal();
+      } else if (action === 'sign-out') {
+        if (confirm('Sign out of SpanishPath?')) signOut();
+      } else if (action === 'reset-progress') {
+        if (confirm('Reset all your progress? This cannot be undone.')) {
+          await saveProgress({ completed_lessons: [], current_lesson: 1, total_xp: 0 });
+          renderAll();
+          toast('Progress reset', 'default');
+        }
+      } else if (action === 'export-progress') {
+        const blob = new Blob([JSON.stringify(state.progress, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `spanishpath-progress-${new Date().toISOString().slice(0, 10)}.json`;
+        a.click();
+        URL.revokeObjectURL(url);
+        toast('Progress exported', 'success');
+      }
+      return;
+    }
+
+    // Lesson card tap (not on checkbox)
+    const lessonCard = e.target.closest('.lesson-card');
+    if (lessonCard && !e.target.closest('.lesson-checkbox')) {
+      openLessonModal(parseInt(lessonCard.dataset.lessonId, 10));
+    }
+  });
+
+  // ESC closes modal
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeLessonModal();
+  });
+}
+
+// ============================================================
+// BOOT
+// ============================================================
+function enterApp() {
+  showScreen('app');
+  showTab('home');
+  renderAll();
+}
+
+async function boot() {
+  wireEvents();
+  setAuthMode('signin');
+
+  // Check existing session
+  const { data: { session } } = await supabase.auth.getSession();
+  if (session?.user) {
+    state.user = session.user;
+    await loadProgress();
+    enterApp();
+  } else {
+    showScreen('auth-screen');
+  }
+
+  // Watch for auth state changes
+  supabase.auth.onAuthStateChange((event, session) => {
+    if (event === 'SIGNED_OUT') {
+      showScreen('auth-screen');
+    }
+  });
+}
+
+// Hide loading screen at minimum 600ms for clean transition
+const bootStart = Date.now();
+boot().catch(err => {
+  console.error('Boot failed:', err);
+  setTimeout(() => {
+    showScreen('auth-screen');
+    setAuthMessage('Could not initialize. Check your connection and refresh.');
+  }, Math.max(0, 600 - (Date.now() - bootStart)));
+});
+
+</script>
+</body>
+</html>
