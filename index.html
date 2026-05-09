@@ -1491,7 +1491,130 @@ input { font-size: 16px; } /* prevents iOS zoom */
 }
 .review-banner-arrow { font-size: 20px; opacity: 0.7; }
 
-/* ─────────────────────── Assessment report ─────────────────────── */
+/* ─────────────────────── Venezuelan track ─────────────────────── */
+.unit-ve {
+  position: relative;
+}
+.unit-num-ve {
+  background: linear-gradient(135deg, var(--terracotta), var(--gold));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.unit-ve-locked .lesson-list { opacity: 0.6; }
+.lesson-ve {
+  background: linear-gradient(180deg, var(--paper), rgba(184,71,42,0.03));
+}
+.lesson-ve .lesson-circle {
+  background: linear-gradient(135deg, var(--terracotta-soft), var(--gold-soft));
+  border-color: rgba(184,71,42,0.4);
+  color: var(--terracotta);
+}
+.lesson-ve.complete .lesson-circle {
+  background: linear-gradient(135deg, var(--terracotta), var(--gold));
+  border-color: var(--terracotta);
+  color: var(--cream);
+}
+.lesson-tag-ve {
+  color: var(--terracotta) !important;
+  background: var(--terracotta-soft) !important;
+}
+
+/* Dialect toggle highlights when ON */
+body.dialect-on .dialect-note {
+  border-color: var(--terracotta);
+  background: linear-gradient(135deg, rgba(184,71,42,0.1), rgba(201,155,61,0.1));
+}
+body.dialect-on .lesson-ve {
+  box-shadow: 0 0 0 1px rgba(184,71,42,0.3);
+}
+
+/* Profile settings card */
+.settings-card {
+  margin: 0 20px 16px;
+  padding: 16px 20px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+.setting-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  padding: 8px 0;
+}
+.setting-row + .setting-row { border-top: 1px solid var(--line); margin-top: 8px; padding-top: 16px; }
+.setting-info { flex: 1; min-width: 0; }
+.setting-label {
+  font-family: var(--serif);
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+.setting-desc {
+  font-size: 12.5px;
+  color: var(--muted);
+  line-height: 1.4;
+}
+.toggle {
+  flex-shrink: 0;
+  width: 46px;
+  height: 26px;
+  background: var(--line-2);
+  border-radius: 999px;
+  position: relative;
+  cursor: pointer;
+  transition: background .2s;
+}
+.toggle::after {
+  content: "";
+  position: absolute;
+  top: 2px; left: 2px;
+  width: 22px; height: 22px;
+  background: var(--cream);
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+  transition: transform .2s;
+}
+.toggle.on {
+  background: linear-gradient(135deg, var(--terracotta), var(--gold));
+}
+.toggle.on::after { transform: translateX(20px); }
+
+/* Offline indicator */
+.offline-pill {
+  position: fixed;
+  top: calc(8px + var(--safe-top));
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 7px 14px;
+  background: var(--ink);
+  color: var(--gold);
+  border-radius: 999px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 600;
+  z-index: 100;
+  display: none;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  animation: slideDown .3s ease;
+}
+.offline-pill.show { display: inline-block; }
+@keyframes slideDown { from { opacity: 0; transform: translate(-50%, -10px); } to { opacity: 1; transform: translate(-50%, 0); } }
+.offline-pill .dot {
+  display: inline-block;
+  width: 6px; height: 6px;
+  background: var(--terracotta);
+  border-radius: 50%;
+  margin-right: 6px;
+  animation: pulse-dot 1.5s ease infinite;
+}
+@keyframes pulse-dot { 50% { opacity: 0.4; } }
+
+
 .complete-mark.gold {
   background: linear-gradient(135deg, var(--terracotta), var(--gold));
   -webkit-background-clip: text;
@@ -1729,6 +1852,8 @@ input { font-size: 16px; } /* prevents iOS zoom */
 
 <body>
 
+<div id="offline-pill" class="offline-pill"><span class="dot"></span>Offline · progress queued</div>
+
 <div id="loading"><div class="spin"></div></div>
 
 <div id="app">
@@ -1908,6 +2033,16 @@ input { font-size: 16px; } /* prevents iOS zoom */
       </div>
     </div>
 
+    <div class="settings-card">
+      <div class="setting-row">
+        <div class="setting-info">
+          <div class="setting-label">🇻🇪 Spotlight Venezuelan content</div>
+          <div class="setting-desc">Highlights dialect notes and Venezuelan track lessons across the app.</div>
+        </div>
+        <div class="toggle" id="toggle-dialect" data-key="dialect" role="switch" aria-checked="false"></div>
+      </div>
+    </div>
+
     <div class="profile-actions">
       <button class="btn btn-ghost" id="btn-export">Export progress (.json)</button>
       <button class="btn btn-ghost" id="btn-reset" style="color: var(--error);">Reset all progress</button>
@@ -2024,6 +2159,16 @@ const LESSON_META = {
   L28: { unit:8, n:28, title:'Repaso 2', sub:'Review: Units 5-7', xp:40 },
   L29: { unit:8, n:29, title:'Conversación A1', sub:'Hold a real conversation', xp:50 },
   L30: { unit:8, n:30, title:'Evaluación A1', sub:'Final A1 assessment', xp:60 },
+  // Venezuelan A1 deep dive — unlocks after A1 complete
+  V1: { track:'venezuelan', level:'A1', n:1, title:'Caracas en la calle', sub:'Slang & street talk', xp:35, dialect:"This whole module is the Venezuelan dialect track. Drop these phrases into A2 conversation and locals will treat you like family." },
+  V2: { track:'venezuelan', level:'A1', n:2, title:'La mesa venezolana', sub:'Food culture deep dive', xp:35 },
+  V3: { track:'venezuelan', level:'A1', n:3, title:'Música y ritmo', sub:'Joropo, gaita, salsa', xp:30 },
+  V4: { track:'venezuelan', level:'A1', n:4, title:'Cultura caraqueña', sub:'El Ávila, la cola, areperas', xp:35 },
+};
+
+// Venezuelan track lessons grouped by level — unlock when matching level is complete
+const VE_TRACKS = {
+  A1: ['V1','V2','V3','V4'],
 };
 
 // ─────────── LESSON 1 CONTENT (the playable lesson) ───────────
@@ -2728,7 +2873,79 @@ const LESSON_30 = {
   ],
 };
 
-const LESSONS = { L1: LESSON_1, L2: LESSON_2, L3: LESSON_3, L4: LESSON_4, L5: LESSON_5, L6: LESSON_6, L7: LESSON_7, L8: LESSON_8, L9: LESSON_9, L10: LESSON_10, L11: LESSON_11, L12: LESSON_12, L13: LESSON_13, L14: LESSON_14, L15: LESSON_15, L16: LESSON_16, L17: LESSON_17, L18: LESSON_18, L19: LESSON_19, L20: LESSON_20, L21: LESSON_21, L22: LESSON_22, L23: LESSON_23, L24: LESSON_24, L25: LESSON_25, L26: LESSON_26, L27: LESSON_27, L28: LESSON_28, L29: LESSON_29, L30: LESSON_30 };
+const LESSON_V1 = {
+  id: 'V1', title: 'Caracas en la calle', track: 'venezuelan', level: 'A1',
+  vocabPreview: [['épale','hey'],['chamo','dude'],['pana','close friend'],['vaina','thing'],['burda de','really / very'],['¿qué más?','what\'s up?']],
+  vocabulary: [['épale','hey (casual greeting)'],['chamo / chama','dude / girl'],['pana','close friend / buddy'],['vaina','thing (used for everything)'],['burda de','really / super (intensifier)'],['¿qué más?','what\'s up? (greeting)'],['arrecho','cool — but careful, can also mean angry'],['coroto','thing / object'],['jevita','girlfriend (casual)'],['fino','great / nice'],['valió','it was worth it / cool']],
+  exercises: [
+    { type:'intro', title:'🇻🇪 Caracas slang basics', body:'These words mark you as someone who actually lives in Venezuela, not a tourist with a phrasebook. «Vaina» is the universal stand-in for «thing» — used for objects, situations, problems, anything. «Burda de» is the all-purpose intensifier («burda de bueno» = really good). One landmine: «arrecho» means cool / awesome in casual chat, but among the wrong company it means furious. Read the room.', vocab:[['épale','hey (casual)'],['chamo / chama','dude / girl'],['pana','close friend (m or f)'],['vaina','thing — anything'],['burda de + adj','really / super'],['arrecho','cool (be careful, also = angry)'],['¿qué más?','what\'s up?'],['fino','great / nice'],['chévere','cool (universal)']] },
+    { type:'tap_select', prompt:'Casual «hey» in Venezuela:', options:['Hola','Adiós','Épale','Salud'], correct:2, explain:'«Épale» — pure Caribbean. Like «hey» between friends.' },
+    { type:'listen', audio:'chévere', prompt:'Listen — universal Venezuelan compliment.', options:['bad','cool / great','tired','expensive'], correct:1, explain:'«Chévere» — adjective, exclamation, agreement. The Swiss Army knife of Venezuelan slang.' },
+    { type:'fill_blank', prompt:'Fill the universal «thing» word.', sentence:'Esa _____ es chévere. (that thing is cool)', correct:['vaina'], explain:'«Vaina» = thing. Works for any object or situation. «¿Cómo va la vaina?» = how\'s it going.' },
+    { type:'translate', prompt:'Translate — really cool (Venezuelan way).', source:'really cool', correct:['burda de chévere','burda de bueno','muy chévere'], explain:'«Burda de chévere» — intensifier «burda de» + adjective. «Muy chévere» also works but is more neutral Spanish.' },
+    { type:'tap_select', prompt:'«Pana» means:', options:['enemy','close friend','stranger','boss'], correct:1, explain:'«Pana» — close friend, buddy. Use only with people you actually know well.' },
+    { type:'arrange', prompt:'Arrange — «Hey dude, what\'s up?»', tokens:['más?','Épale','¿qué','chamo,'], correct:['Épale','chamo,','¿qué','más?'], explain:'«Épale chamo, ¿qué más?» — pure Caracas casual greeting between guys.' },
+    { type:'translate', prompt:'Greet a friend casually.', source:'Hey buddy, what\'s up?', correct:['épale pana, ¿qué más?','epale pana que mas','épale chamo, ¿qué más?'], explain:'«Pana» (friend) or «chamo» (dude) both work. «¿Qué más?» = what\'s up.' },
+    { type:'tap_select', prompt:'When should you be careful using «arrecho»?', options:['Never — it\'s always positive','Only with strangers and family elders','In formal writing only','At parties'], correct:1, explain:'«Arrecho» = cool among close friends, but means furious / angry in other contexts. Stick to «chévere» until you know someone well.' },
+    { type:'speak', prompt:'Greet a friend.', target:'épale chamo', translation:'hey dude (casual)', explain:'«AY-pa-lay CHA-mo». Drop it casually — never in a job interview.' },
+  ],
+};
+
+const LESSON_V2 = {
+  id: 'V2', title: 'La mesa venezolana', track: 'venezuelan', level: 'A1',
+  vocabPreview: [['arepa con perico','arepa with scrambled eggs'],['cachito','ham roll pastry'],['guayoyo','small black coffee'],['pan de jamón','Christmas ham bread'],['malta','malt drink'],['jugo de parchita','passion fruit juice']],
+  vocabulary: [['la arepa rellena','stuffed arepa'],['reina pepiada','arepa with chicken & avocado'],['arepa con perico','arepa with scrambled eggs'],['arepa dominó','black beans & white cheese'],['cachito','ham & cheese pastry roll'],['cachapa con queso de mano','sweet corn pancake with stretchy cheese'],['empanada','fried turnover'],['hallaca','Christmas tamale'],['pan de jamón','Christmas ham bread'],['pabellón criollo','national stew (rice/beans/beef/plantain)'],['el cafecito','small coffee'],['el guayoyo','weak black coffee'],['malta','non-alcoholic malt drink'],['jugo de parchita','passion fruit juice'],['jugo de lechosa','papaya juice']],
+  exercises: [
+    { type:'intro', title:'🇻🇪 The Venezuelan plate (deep dive)', body:'You met arepas in Lesson 17 — now you order like a local. Arepa fillings each have names: «reina pepiada» (chicken-avocado), «dominó» (black beans + white cheese — the colors of dominoes), «perico» (scrambled eggs with onion/tomato/pepper), «catira» (chicken + yellow cheese). Breakfast = arepa + perico + cafecito. December = hallacas + pan de jamón. «Guayoyo» is the watery black coffee Venezuelans drink all day. «Malta» is the iconic non-alcoholic malt drink — you\'ll see it everywhere.', vocab:[['arepa reina pepiada','chicken & avocado'],['arepa con perico','with scrambled eggs (breakfast classic)'],['cachito','curved ham/cheese pastry'],['cachapa con queso','corn pancake folded over cheese'],['hallaca','Christmas tamale wrapped in plantain leaf'],['pan de jamón','Christmas ham + olive bread'],['guayoyo','weak black coffee, drunk all day'],['cafecito','little espresso shot'],['malta','sweet non-alc malt drink']] },
+    { type:'tap_select', prompt:'A «reina pepiada» arepa is filled with:', options:['ham and cheese','chicken and avocado','black beans only','plantain'], correct:1, explain:'«Reina pepiada» — chicken salad with avocado, mayo, and seasonings. Iconic.' },
+    { type:'listen', audio:'arepa con perico', prompt:'Listen — what is this?', options:['arepa with parrot','arepa with scrambled eggs','arepa with chicken','arepa with beans'], correct:1, explain:'«Perico» = scrambled eggs Venezuelan-style (with onion, tomato, sweet pepper). Despite the name, no parrots involved.' },
+    { type:'fill_blank', prompt:'Christmas centerpiece dish:', sentence:'En diciembre comemos _____.', correct:['hallacas','hallaca'], explain:'«Hallacas» — corn-dough pockets stuffed with stew, wrapped in plantain leaf, steamed. Families spend whole days making them in late December.' },
+    { type:'translate', prompt:'Order politely.', source:'I would like a coffee.', correct:['quisiera un café','quisiera un cafecito'], explain:'«Quisiera un cafecito» — diminutive «-cito» softens the request. Very Venezuelan to use diminutives like this.' },
+    { type:'tap_select', prompt:'«Guayoyo» is:', options:['A type of arepa','A weak black coffee','A type of fruit','A meat dish'], correct:1, explain:'«Guayoyo» — weak filtered black coffee, drunk throughout the day. Stronger versions: «marrón» (with milk), «negrito» (small espresso).' },
+    { type:'arrange', prompt:'Arrange — «I want an arepa with cheese.»', tokens:['queso','arepa','con','una','Quiero'], correct:['Quiero','una','arepa','con','queso'], explain:'«Quiero una arepa con queso» — direct order. Use «quisiera» for politer.' },
+    { type:'translate', prompt:'Order at a juice stand.', source:'A passion fruit juice, please.', correct:['un jugo de parchita, por favor','un jugo de parchita por favor'], explain:'«Parchita» = passion fruit (Venezuelan term — rest of LatAm uses «maracuyá»). Distinctively Venezuelan word.' },
+    { type:'tap_select', prompt:'Iconic Christmas bread in Venezuela:', options:['pan dulce','pan de jamón','pan tostado','pan integral'], correct:1, explain:'«Pan de jamón» — bread roll filled with ham, olives, and raisins. Christmas table essential alongside hallacas.' },
+    { type:'speak', prompt:'Order an arepa.', target:'una arepa, por favor', translation:'an arepa, please', explain:'«OO-na ah-RE-pa por fah-VOR». Standard arepa-counter order.' },
+  ],
+};
+
+const LESSON_V3 = {
+  id: 'V3', title: 'Música y ritmo', track: 'venezuelan', level: 'A1',
+  vocabPreview: [['el joropo','national folk style'],['la gaita','Christmas music'],['la salsa','salsa'],['el cuatro','4-string guitar'],['las maracas','maracas'],['bailar','to dance']],
+  vocabulary: [['la música','music'],['el joropo','national folk style'],['la gaita','Christmas music style (from Zulia)'],['la salsa','salsa'],['el merengue','merengue'],['el cuatro','4-string Venezuelan guitar'],['las maracas','maracas'],['el arpa','the harp (used in joropo)'],['bailar','to dance'],['cantar','to sing'],['la canción','the song'],['el llano','the plains (joropo region)'],['la costa','the coast (gaita region)']],
+  exercises: [
+    { type:'intro', title:'🇻🇪 Venezuelan music & rhythm', body:'Three styles you\'ll hear constantly: JOROPO is the national folk music — fast, played on cuatro (4-string guitar), harp, and maracas. Comes from los llanos (the plains). GAITA is December music from the Zulia region — you cannot escape it from November through January. SALSA isn\'t Venezuelan-origin but Caracas dances it as much as anywhere. The CUATRO (4-string mini guitar) is the national instrument — every Venezuelan knows someone who plays it.', vocab:[['el joropo','national folk style — fast, plains music'],['la gaita','Christmas music from Zulia region'],['la salsa','salsa (universal Latin music)'],['el cuatro','4-string Venezuelan guitar'],['el arpa','harp (essential in joropo)'],['las maracas','maracas (rhythm)'],['bailar joropo','to dance joropo'],['el llano','the plains (joropo origin)']] },
+    { type:'tap_select', prompt:'Venezuela\'s national folk music:', options:['la salsa','el joropo','la gaita','el merengue'], correct:1, explain:'«El joropo» — fast, energetic plains music with cuatro, harp, and maracas. National identity in song form.' },
+    { type:'listen', audio:'el cuatro', prompt:'Listen — what does this name?', options:['the number 4','a 4-string guitar','a card game','a square'], correct:1, explain:'«El cuatro» — small 4-string guitar, the national instrument. Sounds like a stripped-down ukulele.' },
+    { type:'fill_blank', prompt:'Christmas music style.', sentence:'En diciembre escuchamos _____.', correct:['gaita','la gaita','gaitas','las gaitas'], explain:'«La gaita» — December = gaita on every radio station. Originally from Zulia (western Venezuela), now nationwide.' },
+    { type:'translate', prompt:'Translate.', source:'I dance salsa.', correct:['bailo salsa','yo bailo salsa'], explain:'«Bailo salsa» — «bailar» as a regular -AR verb. «Yo» optional.' },
+    { type:'tap_select', prompt:'«El arpa» means:', options:['the bagpipe','the harp','the accordion','the flute'], correct:1, explain:'«El arpa» — harp. Central to joropo arrangements alongside cuatro and maracas.' },
+    { type:'arrange', prompt:'Arrange — «I like joropo.»', tokens:['joropo','gusta','el','Me'], correct:['Me','gusta','el','joropo'], explain:'«Me gusta el joropo» — «gustar» pattern from Lesson 19. Singular subject «el joropo» → «gusta».' },
+    { type:'translate', prompt:'Translate — Christmas music.', source:'I like Christmas music.', correct:['me gusta la gaita','me gustan las gaitas'], explain:'«Me gusta la gaita» — singular reference. For specific songs (plural), «me gustan las gaitas».' },
+    { type:'listen', audio:'las maracas', prompt:'Listen — what\'s named?', options:['the maracas','the bagpipes','the drums','the strings'], correct:0, explain:'«Las maracas» — gourd shakers filled with seeds. Provide the rhythm in joropo.' },
+    { type:'speak', prompt:'Say the national folk style.', target:'joropo', translation:'joropo (national folk music)', explain:'«ho-RO-po». Crisp Spanish «h» (which is silent — pronounced like «o-ro-po» almost). Stress on RO.' },
+  ],
+};
+
+const LESSON_V4 = {
+  id: 'V4', title: 'Cultura caraqueña', track: 'venezuelan', level: 'A1',
+  vocabPreview: [['el Ávila','the Caracas mountain'],['la arepera','24/7 arepa shop'],['la cola','traffic / line'],['el por puesto','shared taxi'],['pelao','kid'],['chimbo','bad / cheap']],
+  vocabulary: [['el Ávila','the mountain (Caracas\'s northern border)'],['la arepera','24-hour arepa restaurant'],['la cola','traffic jam / line / queue'],['el por puesto','shared taxi (fixed route)'],['el chofer','the driver'],['la hora venezolana','Venezuelan time (= late)'],['pelao / pela','kid (m / f)'],['chimbo','bad / cheap / disappointing'],['echar coleto','to mop'],['valió','it was worth it / cool']],
+  exercises: [
+    { type:'intro', title:'🇻🇪 Caracas cultural touchstones', body:'EL ÁVILA — the mountain forming Caracas\'s northern wall. Caraqueños orient by it. LA AREPERA — restaurants open 24/7 serving arepas; the late-night Venezuelan version of a diner. LA COLA — means both «traffic jam» and «the line/queue»; «hay mucha cola» = could be either. EL POR PUESTO — shared taxi running a fixed route; a Caracas commute essential. LA HORA VENEZOLANA — cultural concept of being 30+ minutes late and considering it on time. Don\'t take it personally.', vocab:[['el Ávila','the mountain — orientation point'],['la arepera','24/7 arepa restaurant'],['la cola','traffic jam OR line/queue'],['el por puesto','shared fixed-route taxi'],['la hora venezolana','being late and calling it on time'],['pelao / pela','kid (informal)'],['chimbo','bad / cheap / lame'],['valió','it was worth it / cool']] },
+    { type:'tap_select', prompt:'«El Ávila» is:', options:['A famous restaurant','The mountain north of Caracas','A neighborhood','A bus line'], correct:1, explain:'El Ávila (Cerro El Ávila / Waraira Repano) — the mountain marking Caracas\'s north edge. Caracas oriented around it: «al norte del Ávila» = toward the coast.' },
+    { type:'listen', audio:'la arepera', prompt:'Listen — what is named?', options:['the arepa-maker','the arepa shop','an arepa lady','an arepa party'], correct:1, explain:'«La arepera» — restaurant specializing in arepas. Many open 24/7. Late-night drunk food central.' },
+    { type:'fill_blank', prompt:'Traffic is horrible.', sentence:'_____ es horrible hoy. (the traffic)', correct:['la cola'], explain:'«La cola» — traffic jam (also means line/queue). Context disambiguates.' },
+    { type:'translate', prompt:'Translate.', source:'I\'m in traffic.', correct:['estoy en cola','estoy en la cola'], explain:'«Estoy en cola» — universal Caracas commuter complaint. Estar for current state.' },
+    { type:'tap_select', prompt:'«Pelao» means:', options:['hairless','old man','kid','rich person'], correct:2, explain:'«Pelao / pela» — kid, informal. «¿Cómo está el pelao?» = how\'s the kid?' },
+    { type:'arrange', prompt:'Arrange — «El Ávila is beautiful.»', tokens:['bonito','Ávila','El','es'], correct:['El','Ávila','es','bonito'], explain:'«El Ávila es bonito» — ser for inherent quality. Note the stressed «Á».' },
+    { type:'translate', prompt:'Translate — shared taxi.', source:'I take the por puesto.', correct:['tomo el por puesto'], explain:'«Tomo el por puesto» — fixed-route shared taxi. «Tomar» for taking transport (cf. L22).' },
+    { type:'tap_select', prompt:'«Chimbo» means:', options:['fancy','expensive','bad / cheap','delicious'], correct:2, explain:'«Chimbo» — bad, cheap, disappointing. «Esa vaina está chimba» = that thing is lame.' },
+    { type:'speak', prompt:'Cool, friend!', target:'chévere, pana', translation:'cool, buddy!', explain:'«CHEH-vay-ray PA-na». Practice the relaxed cadence — this is everyday Caracas.' },
+  ],
+};
+
+const LESSONS = { L1: LESSON_1, L2: LESSON_2, L3: LESSON_3, L4: LESSON_4, L5: LESSON_5, L6: LESSON_6, L7: LESSON_7, L8: LESSON_8, L9: LESSON_9, L10: LESSON_10, L11: LESSON_11, L12: LESSON_12, L13: LESSON_13, L14: LESSON_14, L15: LESSON_15, L16: LESSON_16, L17: LESSON_17, L18: LESSON_18, L19: LESSON_19, L20: LESSON_20, L21: LESSON_21, L22: LESSON_22, L23: LESSON_23, L24: LESSON_24, L25: LESSON_25, L26: LESSON_26, L27: LESSON_27, L28: LESSON_28, L29: LESSON_29, L30: LESSON_30, V1: LESSON_V1, V2: LESSON_V2, V3: LESSON_V3, V4: LESSON_V4 };
 
 // ─────────── STATE ───────────
 let user = null;
@@ -2962,7 +3179,9 @@ function getLibraryStats() {
 
 // ─────────── DASHBOARD RENDER ───────────
 function getNextLessonId() {
-  const all = Object.keys(LESSON_META).sort((a,b)=>LESSON_META[a].n - LESSON_META[b].n);
+  const all = Object.keys(LESSON_META)
+    .filter(id => !LESSON_META[id].track) // skip Venezuelan/other tracks
+    .sort((a,b)=>LESSON_META[a].n - LESSON_META[b].n);
   for (const id of all) if (!progress.completed[id]) return id;
   return all[all.length - 1];
 }
@@ -3017,14 +3236,17 @@ function buildLessonRow(id, currentId) {
   const done = !!progress.completed[id];
   const isCurrent = id === currentId;
   const hasContent = !!LESSONS[id];
+  const isVE = m.track === 'venezuelan';
   const row = document.createElement('button');
-  row.className = 'lesson' + (done?' complete':'') + (isCurrent?' current':'') + (hasContent?' has-content':'');
+  row.className = 'lesson' + (done?' complete':'') + (isCurrent?' current':'') + (hasContent?' has-content':'') + (isVE?' lesson-ve':'');
+  const numLabel = isVE ? `V${m.n}` : m.n;
   row.innerHTML = `
-    <div class="lesson-circle" data-toggle="${id}" title="Mark complete"><span class="num-text">${m.n}</span></div>
+    <div class="lesson-circle" data-toggle="${id}" title="Mark complete"><span class="num-text">${numLabel}</span></div>
     <div class="lesson-info">
       <div class="lesson-title-row">
         <div class="lesson-title">${m.title}</div>
         <span class="lesson-tag">PLAYABLE</span>
+        ${isVE ? '<span class="lesson-tag lesson-tag-ve">🇻🇪 VE</span>' : ''}
       </div>
       <div class="lesson-sub">${m.sub} · ${m.xp} XP</div>
     </div>
@@ -3061,6 +3283,41 @@ function renderCurriculum() {
     u.lessons.forEach(id => list.appendChild(buildLessonRow(id, currentId)));
     root.appendChild(unitEl);
   });
+
+  // Venezuelan track sections — one per level, unlocked when matching level is complete
+  Object.entries(VE_TRACKS).forEach(([level, lessonIds]) => {
+    const unlocked = !!progress.completedLevels?.[level];
+    const unitEl = document.createElement('div');
+    unitEl.className = 'unit unit-ve' + (unlocked ? '' : ' unit-ve-locked');
+    unitEl.innerHTML = `
+      <div class="unit-head">
+        <span class="unit-num unit-num-ve">🇻🇪 VENEZUELAN ${level}</span>
+        <span class="unit-title">${unlocked ? 'Deep dive — bonus track' : 'Unlocks when ' + level + ' is complete'}</span>
+        <span class="unit-line"></span>
+      </div>
+      <div class="lesson-list"></div>
+    `;
+    const list = unitEl.querySelector('.lesson-list');
+    lessonIds.forEach(id => {
+      if (unlocked) {
+        list.appendChild(buildLessonRow(id, currentId));
+      } else {
+        const m = LESSON_META[id];
+        const lockedRow = document.createElement('div');
+        lockedRow.className = 'lesson locked lesson-ve';
+        lockedRow.innerHTML = `
+          <div class="lesson-circle" style="cursor:default;"><span class="num-text">V${m.n}</span></div>
+          <div class="lesson-info">
+            <div class="lesson-title-row"><div class="lesson-title">${m.title}</div></div>
+            <div class="lesson-sub">${m.sub}</div>
+          </div>
+          <div class="lesson-arrow">🔒</div>
+        `;
+        list.appendChild(lockedRow);
+      }
+    });
+    root.appendChild(unitEl);
+  });
 }
 
 async function toggleComplete(id) {
@@ -3082,7 +3339,12 @@ function openLessonModal(id) {
   const m = LESSON_META[id];
   const lesson = LESSONS[id];
   const isAssessment = lesson && lesson.assessment === true;
-  $('#modal-eyebrow').textContent = isAssessment ? 'A1 EVALUATION · 30 QUESTIONS' : `UNIT ${m.unit} · LESSON ${m.n}`;
+  const isVE = m.track === 'venezuelan';
+  $('#modal-eyebrow').textContent = isAssessment
+    ? 'A1 EVALUATION · 30 QUESTIONS'
+    : isVE
+      ? `🇻🇪 VENEZUELAN ${m.level} · LESSON V${m.n}`
+      : `UNIT ${m.unit} · LESSON ${m.n}`;
   $('#modal-title').textContent = m.title;
   $('#modal-sub').textContent = isAssessment
     ? 'No hints, no feedback during the test. Score 75%+ to pass.'
@@ -4340,14 +4602,105 @@ $('#btn-export').addEventListener('click', exportProgress);
 $('#btn-reset').addEventListener('click', resetAllProgress);
 $('#btn-signout').addEventListener('click', handleSignOut);
 
+// ─────────── DIALECT TOGGLE ───────────
+function getPref(key) {
+  try { return JSON.parse(localStorage.getItem('sp_pref_' + key)); } catch (e) { return null; }
+}
+function setPref(key, val) {
+  try { localStorage.setItem('sp_pref_' + key, JSON.stringify(val)); } catch (e) {}
+}
+function applyDialectPref() {
+  const on = !!getPref('dialect');
+  document.body.classList.toggle('dialect-on', on);
+  const tog = $('#toggle-dialect');
+  if (tog) {
+    tog.classList.toggle('on', on);
+    tog.setAttribute('aria-checked', on ? 'true' : 'false');
+  }
+}
+$('#toggle-dialect')?.addEventListener('click', () => {
+  const on = !getPref('dialect');
+  setPref('dialect', on);
+  applyDialectPref();
+});
+
+// ─────────── OFFLINE QUEUE ───────────
+function showOfflineIndicator() { $('#offline-pill').classList.add('show'); }
+function hideOfflineIndicator() { $('#offline-pill').classList.remove('show'); }
+
+function queueOfflineSave(payload) {
+  try {
+    // Last-write-wins: just store the latest payload
+    localStorage.setItem('sp_offline_payload', JSON.stringify({ payload, at: Date.now() }));
+  } catch (e) {}
+  showOfflineIndicator();
+}
+
+async function flushOfflineQueue() {
+  const raw = localStorage.getItem('sp_offline_payload');
+  if (!raw || !user) { hideOfflineIndicator(); return; }
+  try {
+    const { payload } = JSON.parse(raw);
+    const { error } = await sb.from('progress').update(payload).eq('user_id', user.id);
+    if (!error) {
+      localStorage.removeItem('sp_offline_payload');
+      hideOfflineIndicator();
+    } else {
+      console.warn('flush error', error);
+    }
+  } catch (e) { console.warn('flush parse', e); }
+}
+
+// Wrap saveProgress so failures + offline state get queued
+const _origSaveProgress = saveProgress;
+saveProgress = async function(opts = {}) {
+  if (!navigator.onLine) {
+    // Compute payload locally, store, skip server call
+    const today = todayISO();
+    if (opts.activity && progress.last_active !== today) {
+      const gap = daysBetween(progress.last_active, today);
+      if (gap === 1) progress.streak += 1;
+      else if (gap > 1 || !progress.last_active) progress.streak = 1;
+      progress.last_active = today;
+    }
+    queueOfflineSave({
+      completed: progress.completed,
+      xp: progress.xp,
+      streak: progress.streak,
+      last_active: progress.last_active,
+      library: progress.library,
+      assessments: progress.assessments,
+      completed_levels: progress.completedLevels,
+    });
+    return;
+  }
+  return _origSaveProgress(opts);
+};
+
+window.addEventListener('online', () => { hideOfflineIndicator(); flushOfflineQueue(); });
+window.addEventListener('offline', () => showOfflineIndicator());
+
+// ─────────── SERVICE WORKER (offline cache) ───────────
+if ('serviceWorker' in navigator) {
+  // Use relative path so it works on GitHub Pages subpaths
+  navigator.serviceWorker.register('./sw.js').catch(err => console.warn('SW register failed', err));
+}
+
 // ─────────── INIT ───────────
 (async () => {
+  // Apply preferences immediately (before load) so toggle reflects state
+  applyDialectPref();
+  if (!navigator.onLine) showOfflineIndicator();
+
   // Pre-warm voices on user gesture later
   if ('speechSynthesis' in window) speechSynthesis.getVoices();
 
   const { data: { session } } = await sb.auth.getSession();
   await handleSession(session);
   sb.auth.onAuthStateChange((_event, session) => handleSession(session));
+
+  // After session loads, attempt to flush any pending offline saves
+  if (navigator.onLine) flushOfflineQueue();
 })();
 </script>
 </body>
