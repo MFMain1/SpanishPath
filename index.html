@@ -2216,7 +2216,140 @@ const LESSON_15 = {
   ],
 };
 
-const LESSONS = { L1: LESSON_1, L2: LESSON_2, L3: LESSON_3, L4: LESSON_4, L5: LESSON_5, L6: LESSON_6, L7: LESSON_7, L8: LESSON_8, L9: LESSON_9, L10: LESSON_10, L11: LESSON_11, L12: LESSON_12, L13: LESSON_13, L14: LESSON_14, L15: LESSON_15 };
+const LESSON_16 = {
+  id: 'L16', title: 'En el restaurante',
+  vocabPreview: [['el menú','the menu'],['la cuenta','the bill'],['quisiera','I would like'],['me gustaría','I would like'],['¿qué desea?','what would you like?'],['una mesa','a table']],
+  vocabulary: [['el menú','the menu'],['la cuenta','the bill / check'],['el camarero / la camarera','the waiter / waitress'],['el plato','the dish / plate'],['quisiera','I would like (polite)'],['me gustaría','I would like'],['¿qué desea?','what would you like?'],['una mesa para dos','a table for two'],['¿me trae...?','can you bring me...?'],['el agua','water'],['un café','a coffee'],['¿qué me recomienda?','what do you recommend?'],['delicioso','delicious'],['rico','tasty'],['Por favor','please']],
+  exercises: [
+    { type:'intro', title:'Restaurant interactions', body:'Restaurants run on courtesy. «Quisiera» (I would like) and «me gustaría» (I would like) are softer than «quiero» (I want) — use them with waiters. «¿Me trae…?» (can you bring me…?) is the polite way to request something. End with «la cuenta, por favor» when you\'re done.', vocab:[['Quisiera una mesa para dos','I\'d like a table for two'],['¿Me trae el menú?','Can you bring me the menu?'],['¿Qué me recomienda?','What do you recommend?'],['Quisiera un café, por favor','I\'d like a coffee, please'],['La cuenta, por favor','The bill, please'],['Está delicioso / rico','It\'s delicious']] },
+    { type:'tap_select', prompt:'«The bill»:', options:['el menú','el plato','la cuenta','la mesa'], correct:2, explain:'«La cuenta» — what you ask for at the end of the meal.' },
+    { type:'listen', audio:'¿Qué desea?', prompt:'Listen and choose.', options:['Where are you?','What would you like?','How are you?','What\'s your name?'], correct:1, explain:'«¿Qué desea?» — formal «what would you like?». Waiters often open with this.' },
+    { type:'fill_blank', prompt:'Polite request — fill in.', sentence:'_____ una mesa para dos.', correct:['quisiera','me gustaría','quiero'], explain:'«Quisiera» (preferred — most polite) or «Me gustaría» both work. «Quiero» is technically fine but blunter.' },
+    { type:'translate', prompt:'Translate.', source:'The bill, please.', correct:['la cuenta, por favor','la cuenta por favor'], explain:'«La cuenta, por favor» — universal. You can also signal by writing in the air, but the phrase is standard.' },
+    { type:'tap_select', prompt:'«What do you recommend?»', options:['¿Cuánto cuesta?','¿Qué me recomienda?','¿Dónde está?','¿Quién es?'], correct:1, explain:'«¿Qué me recomienda?» — uses formal «usted» form. Asking the waiter what to order.' },
+    { type:'arrange', prompt:'Arrange — «I\'d like a coffee.»', tokens:['café','un','Quisiera'], correct:['Quisiera','un','café'], explain:'«Quisiera un café» — polite request structure: courtesy verb + indefinite article + noun.' },
+    { type:'listen', audio:'¿Me trae agua?', prompt:'Listen and choose.', options:['Do you have water?','Can you bring me water?','Is the water cold?','Where is the water?'], correct:1, explain:'«¿Me trae…?» — polite request to bring something. Common in restaurants and cafes.' },
+    { type:'translate', prompt:'Translate.', source:'I would like water, please.', correct:['quisiera agua, por favor','me gustaría agua, por favor','quisiera agua por favor'], explain:'«Quisiera agua, por favor» — clean polite request.' },
+    { type:'tap_select', prompt:'«It\'s delicious»:', options:['Está malo','Está caliente','Está delicioso','Está nuevo'], correct:2, explain:'«Está delicioso» — uses estar (state, not identity). Could also say «Está rico» — more casual.' },
+    { type:'speak', prompt:'Ask for the bill.', target:'La cuenta, por favor', translation:'the bill, please', explain:'«lah KWEN-tah por fah-VOR». Standard restaurant exit.' },
+  ],
+};
+
+const LESSON_17 = {
+  id: 'L17', title: 'Comida venezolana',
+  vocabPreview: [['la arepa','arepa (corn cake)'],['la hallaca','hallaca (Christmas tamale)'],['la cachapa','cachapa (sweet corn pancake)'],['el pabellón','pabellón (national dish)'],['los tequeños','tequeños (cheese sticks)'],['¿te provoca?','do you feel like?'],['¡qué rico!','how delicious!']],
+  vocabulary: [['la arepa','arepa (round corn cake, national staple)'],['la hallaca','hallaca (Christmas tamale)'],['la cachapa','cachapa (sweet corn pancake)'],['el pabellón criollo','pabellón (rice, beans, beef, plantain)'],['los tequeños','tequeños (fried cheese sticks)'],['la empanada','empanada (fried turnover)'],['el queso','cheese'],['el plátano','plantain'],['el pollo','chicken'],['la carne','meat / beef'],['el pescado','fish'],['¿te provoca?','do you feel like? (Caribbean)'],['¡qué rico!','how delicious!'],['sabroso','tasty / flavorful'],['criollo','Creole / traditional Venezuelan']],
+  exercises: [
+    { type:'intro', title:'🇻🇪 The Venezuelan plate', body:'Arepas are the national dish — eaten daily, split open and stuffed. Hallacas are the Christmas centerpiece (corn dough with stew, wrapped in plantain leaves). Cachapas are sweet corn pancakes folded over cheese. Pabellón criollo is the national stew: rice, black beans, shredded beef, fried plantains. Tequeños are fried cheese sticks — at every Venezuelan party. The phrase «¿Te provoca…?» is pure Caribbean Spanish: it means «do you feel like…?» — uses «provocar» where most Spanish would use «apetecer» or «tener ganas de».', vocab:[['arepa','round corn cake, sliced and stuffed'],['hallaca','Christmas tamale wrapped in plantain leaves'],['cachapa','sweet corn pancake'],['pabellón criollo','national dish: rice + beans + beef + plantain'],['tequeños','cheese sticks wrapped in dough, fried'],['¿Te provoca un café?','Do you feel like a coffee?'],['¡Qué rico!','How delicious!']] },
+    { type:'tap_select', prompt:'An arepa is:', options:['A type of soup','A round corn cake','A fish dish','A drink'], correct:1, explain:'«La arepa» — round, thick corn cake, sliced and stuffed with cheese, beans, meat, or whatever you like.' },
+    { type:'listen', audio:'una cachapa', prompt:'Listen and choose what was said.', options:['una arepa','una cachapa','una hallaca','una empanada'], correct:1, explain:'«Cachapa» — sweet corn pancake. Different from arepa: thinner, sweeter, folded.' },
+    { type:'translate', prompt:'Translate — using the Venezuelan «provocar».', source:'I feel like an arepa.', correct:['me provoca una arepa'], explain:'«Me provoca una arepa» — pure Venezuelan/Caribbean. In Mexico or Spain you\'d say «se me antoja» or «tengo ganas de».' },
+    { type:'tap_select', prompt:'When are hallacas traditionally eaten?', options:['Breakfast year-round','At weddings','Christmas season','At funerals'], correct:2, explain:'Hallacas are the Christmas dish — families spend a full day making them in late December.' },
+    { type:'fill_blank', prompt:'Fill in — Venezuelan way to ask «do you feel like a coffee?»', sentence:'¿_____ provoca un café?', correct:['te'], explain:'«¿Te provoca…?» — «te» is the indirect object pronoun. «¿Te provoca un café?» = casual offer.' },
+    { type:'listen', audio:'¡Qué rico!', prompt:'Listen and choose.', options:['How nice!','How delicious!','How big!','How fast!'], correct:1, explain:'«¡Qué rico!» — universal compliment for tasty food. «Rico» literally means «rich», but with food it means «delicious».' },
+    { type:'tap_select', prompt:'Tequeños are:', options:['A vegetable dish','Fried cheese sticks','A type of beer','A dessert'], correct:1, explain:'Tequeños — wheat dough wrapped around cheese, deep-fried. The default Venezuelan party food.' },
+    { type:'translate', prompt:'Translate.', source:'The arepa is delicious.', correct:['la arepa está deliciosa','la arepa está rica','la arepa es deliciosa'], explain:'«La arepa está deliciosa» — using estar for current taste/state. «Es deliciosa» (ser) implies it\'s an inherent quality of arepas in general — also acceptable.' },
+    { type:'arrange', prompt:'Arrange — «I want a Venezuelan arepa.»', tokens:['arepa','venezolana','Quiero','una'], correct:['Quiero','una','arepa','venezolana'], explain:'«Quiero una arepa venezolana» — adjective AFTER noun, agreeing feminine («venezolana»).' },
+    { type:'speak', prompt:'Say it like a Venezuelan.', target:'Me provoca una arepa', translation:'I feel like an arepa', explain:'«may pro-VO-ka oo-na ah-RE-pa». Drop this in conversation and you\'ll instantly sound local.' },
+  ],
+};
+
+const LESSON_18 = {
+  id: 'L18', title: 'Bebidas y mercado',
+  vocabPreview: [['el agua','water'],['el café','coffee'],['el jugo','juice'],['la cerveza','beer'],['el mercado','the market'],['¿cuánto cuesta?','how much does it cost?']],
+  vocabulary: [['el agua','water'],['el café','coffee'],['el té','tea'],['el jugo','juice'],['la cerveza','beer'],['el vino','wine'],['la leche','milk'],['el mercado','the market'],['el supermercado','the supermarket'],['comprar','to buy'],['el precio','the price'],['¿cuánto cuesta?','how much does it cost?'],['¿cuánto cuestan?','how much do they cost?'],['mucho','a lot'],['poco','a little'],['todo','everything'],['nada','nothing']],
+  exercises: [
+    { type:'intro', title:'Drinks & market shopping', body:'«¿Cuánto cuesta?» (singular) and «¿Cuánto cuestan?» (plural) are the standard «how much?» questions. «Comprar» = to buy. Drinks: «agua» is technically feminine («el agua» uses «el» for pronunciation, but adjectives stay feminine: «agua fría»). At a market, «¿cuánto?» before any object asks the price.', vocab:[['el agua fría','cold water (note feminine adjective)'],['un café','a coffee'],['un jugo de naranja','an orange juice'],['una cerveza','a beer'],['¿Cuánto cuesta el pan?','How much is the bread?'],['¿Cuánto cuestan las arepas?','How much are the arepas?']] },
+    { type:'tap_select', prompt:'«How much does it cost?»', options:['¿Cómo está?','¿Cuánto cuesta?','¿Dónde está?','¿Cuándo es?'], correct:1, explain:'«¿Cuánto cuesta?» — singular. For plural items, «¿Cuánto cuestan?»' },
+    { type:'listen', audio:'un jugo de naranja', prompt:'Listen and choose.', options:['a glass of milk','an orange juice','a coffee','a beer'], correct:1, explain:'«Un jugo de naranja» — orange juice. «De» indicates the type/flavor.' },
+    { type:'fill_blank', prompt:'Fill the question word.', sentence:'¿_____ cuesta el café?', correct:['cuánto','cuanto'], explain:'«¿Cuánto cuesta el café?» — singular subject «el café» → singular «cuesta».' },
+    { type:'translate', prompt:'Translate.', source:'I want a coffee.', correct:['quiero un café','yo quiero un café'], explain:'«Quiero un café» — direct. Use «quisiera» if you want to be more polite (cf. L16).' },
+    { type:'tap_select', prompt:'Where do you buy fresh produce in Venezuela?', options:['el banco','el mercado','el museo','la farmacia'], correct:1, explain:'«El mercado» — the open-air or covered market. «El supermercado» is the chain grocery store.' },
+    { type:'arrange', prompt:'Arrange — «How much is the water?»', tokens:['agua','el','¿Cuánto','cuesta'], correct:['¿Cuánto','cuesta','el','agua'], explain:'«¿Cuánto cuesta el agua?» — though «agua» is feminine, it takes «el» (pronunciation rule).' },
+    { type:'listen', audio:'cuesta veinte', prompt:'Listen — what\'s the price?', options:['It costs 12','It costs 20','It costs 22','It costs 32'], correct:1, explain:'«Cuesta veinte» = costs 20. Don\'t confuse «veinte» (20) with «doce» (12).' },
+    { type:'translate', prompt:'Translate.', source:'Two beers, please.', correct:['dos cervezas, por favor','dos cervezas por favor'], explain:'«Dos cervezas, por favor» — note plural «cervezas». Drinks are usually feminine ending in -a.' },
+    { type:'tap_select', prompt:'«A little»:', options:['todo','nada','mucho','poco'], correct:3, explain:'«Poco» = a little. Opposite is «mucho» (a lot). «Nada» = nothing, «todo» = everything.' },
+    { type:'speak', prompt:'Ask the price.', target:'¿Cuánto cuesta?', translation:'how much does it cost?', explain:'«KWAN-toh KWES-tah». Rising intonation at the end — it\'s a question.' },
+  ],
+};
+
+const LESSON_19 = {
+  id: 'L19', title: 'Me gusta',
+  vocabPreview: [['me gusta','I like (sing.)'],['me gustan','I like (pl.)'],['te gusta','you like'],['le gusta','he/she likes'],['nos gusta','we like'],['les gusta','they like']],
+  vocabulary: [['me gusta','I like (singular subject)'],['me gustan','I like (plural subject)'],['te gusta / te gustan','you like'],['le gusta / le gustan','he/she/usted likes'],['nos gusta / nos gustan','we like'],['les gusta / les gustan','they/ustedes like'],['no me gusta','I don\'t like'],['me encanta','I love (it)'],['¿te gusta?','do you like?'],['mucho','a lot'],['nada','at all (with negation)']],
+  exercises: [
+    { type:'intro', title:'Gustar — backwards from English', body:'«Gustar» is structurally inverted from English. «Me gusta el café» literally means «the coffee pleases me», not «I like coffee». The thing you like is the SUBJECT, you\'re the indirect object. So: singular thing → «gusta», plural things → «gustan». «Me gustan los libros» (I like books) — plural «libros» = «gustan». Pattern: me / te / le / nos / les + gusta(n) + thing.', vocab:[['Me gusta el café','I like coffee (sing. subject)'],['Me gustan los libros','I like books (pl. subject)'],['Te gusta bailar','You like to dance (verb is singular)'],['A ella le gusta…','She likes… (clarify with «a ella»)'],['No me gusta nada','I don\'t like it at all'],['Me encanta','I love it (stronger than gustar)']] },
+    { type:'tap_select', prompt:'«I like coffee»:', options:['Yo gusto el café','Me gusta el café','Me gusto el café','Me gustan el café'], correct:1, explain:'«Me gusta el café» — singular «café» → «gusta». «Yo gusto» means «I am pleasing (to others)» — a different and rare use.' },
+    { type:'listen', audio:'me gusta bailar', prompt:'Listen and choose.', options:['I dance','I like to dance','You dance','I want to dance'], correct:1, explain:'«Me gusta bailar» — when followed by an infinitive verb (bailar, leer, comer), always use singular «gusta».' },
+    { type:'fill_blank', prompt:'Fill the pronoun — «you like chocolate».', sentence:'_____ gusta el chocolate.', correct:['te'], explain:'«Te gusta» — second person informal. Pattern: pronoun + gusta(n) + thing.' },
+    { type:'tap_select', prompt:'Which uses «gustan» (plural form)?', options:['Me ___ el libro','Me ___ los libros','Me ___ leer','Me ___ café'], correct:1, explain:'«Los libros» is plural → «gustan». The verb agrees with the THING liked, not the person who likes it.' },
+    { type:'translate', prompt:'Translate.', source:'We like the music.', correct:['nos gusta la música','a nosotros nos gusta la música'], explain:'«Nos gusta la música» — singular «música» → «gusta». «Nos» = first person plural indirect object pronoun.' },
+    { type:'arrange', prompt:'Arrange — «She likes to sing.»', tokens:['cantar','le','A','gusta','ella'], correct:['A','ella','le','gusta','cantar'], explain:'«A ella le gusta cantar» — «a ella» clarifies whose «le» it is (since «le» can mean him/her/usted). Optional but common for clarity.' },
+    { type:'tap_select', prompt:'In Venezuela, «¿Te provoca un café?» means roughly the same as:', options:['¿Te llamas un café?','¿Te gusta un café?','¿Te bebes un café?','¿Te tienes un café?'], correct:1, explain:'«¿Te provoca?» (Venezuelan/Caribbean) ≈ «¿Te apetece?» (Spain) ≈ «¿Te gustaría?» — all variations of «do you feel like?»' },
+    { type:'translate', prompt:'Translate.', source:'I don\'t like meat.', correct:['no me gusta la carne','no me gusta carne'], explain:'«No me gusta la carne» — Spanish prefers the article «la» before generic concepts. Negation goes before the pronoun.' },
+    { type:'fill_blank', prompt:'Fill in — «they like the arepas».', sentence:'_____ gustan las arepas.', correct:['les'], explain:'«Les gustan» — third person plural «les» (they/ustedes), and «gustaN» because «las arepas» is plural.' },
+    { type:'speak', prompt:'Tell someone what you like.', target:'Me gusta el café', translation:'I like coffee', explain:'«may GOOS-ta ell ka-FAY». A foundational phrase you\'ll use daily.' },
+  ],
+};
+
+const LESSON_20 = {
+  id: 'L20', title: 'En la ciudad',
+  vocabPreview: [['la ciudad','the city'],['el centro','downtown'],['la calle','the street'],['la plaza','the plaza'],['la tienda','the shop'],['el banco','the bank']],
+  vocabulary: [['la ciudad','the city'],['el centro','downtown / center'],['la calle','the street'],['la plaza','the plaza / square'],['la tienda','the shop / store'],['la farmacia','the pharmacy'],['el banco','the bank'],['el hotel','the hotel'],['el restaurante','the restaurant'],['el museo','the museum'],['el parque','the park'],['el aeropuerto','the airport'],['la estación','the station'],['el hospital','the hospital'],['la iglesia','the church'],['hay','there is / there are'],['¿dónde está?','where is it?']],
+  exercises: [
+    { type:'intro', title:'Around the city', body:'«Hay» is one of the most useful words in Spanish — it covers both «there is» AND «there are», never changes form. «Hay un parque» (there is a park) / «Hay tres parques» (there are three parks). «¿Dónde está…?» asks for location of a SPECIFIC thing; «¿Dónde hay…?» asks where to find one (any).', vocab:[['Hay un banco','There is a bank'],['Hay tres restaurantes','There are three restaurants'],['¿Dónde está el banco?','Where is THE bank? (specific)'],['¿Dónde hay un banco?','Where is there A bank? (any one)'],['en el centro','downtown'],['en la calle','on the street']] },
+    { type:'tap_select', prompt:'«The bank»:', options:['el museo','el banco','el hotel','la calle'], correct:1, explain:'«El banco» — note: same word also means «bench». Context disambiguates.' },
+    { type:'listen', audio:'el museo', prompt:'Listen and choose.', options:['the market','the museum','the hotel','the church'], correct:1, explain:'«El museo» = the museum. Don\'t confuse with «el mercado» (the market).' },
+    { type:'fill_blank', prompt:'Fill the question word.', sentence:'¿_____ está la farmacia?', correct:['dónde','donde'], explain:'«¿Dónde está la farmacia?» — asking for the location of a specific pharmacy.' },
+    { type:'translate', prompt:'Translate.', source:'There is a park.', correct:['hay un parque'], explain:'«Hay un parque» — «hay» never changes for singular/plural: «hay un parque», «hay tres parques».' },
+    { type:'tap_select', prompt:'«The hospital»:', options:['el hotel','el hospital','la iglesia','la estación'], correct:1, explain:'«El hospital» — looks like English but stress and pronunciation differ: «os-pee-TAL».' },
+    { type:'arrange', prompt:'Arrange — «There is a restaurant on the street.»', tokens:['restaurante','en','calle','la','un','Hay'], correct:['Hay','un','restaurante','en','la','calle'], explain:'«Hay» first (existence), then noun phrase, then location with «en». «En la calle» = on the street.' },
+    { type:'listen', audio:'la plaza está cerca', prompt:'Listen and choose.', options:['the plaza is far','the plaza is close','the plaza is open','the plaza is closed'], correct:1, explain:'«La plaza está cerca» — «cerca» = close/nearby. Estar for location.' },
+    { type:'translate', prompt:'Translate.', source:'Where is the airport?', correct:['¿dónde está el aeropuerto?','dónde está el aeropuerto','donde esta el aeropuerto'], explain:'«¿Dónde está el aeropuerto?» — definite article «el» needed. Estar for location.' },
+    { type:'tap_select', prompt:'«There are many shops»:', options:['Hay muchos tiendas','Hay muchas tiendas','Está muchas tiendas','Son muchas tiendas'], correct:1, explain:'«Hay muchas tiendas» — «hay» works for plural too. «Tienda» is feminine → «muchas».' },
+    { type:'speak', prompt:'Say «downtown».', target:'el centro de la ciudad', translation:'downtown / city center', explain:'«ell SEN-tro day la see-yoo-DAHD». A useful tourist phrase.' },
+  ],
+};
+
+const LESSON_21 = {
+  id: 'L21', title: 'Direcciones',
+  vocabPreview: [['a la derecha','to the right'],['a la izquierda','to the left'],['todo derecho','straight ahead'],['cerca','near'],['lejos','far'],['al lado de','next to']],
+  vocabulary: [['a la derecha','to the right'],['a la izquierda','to the left'],['todo derecho','straight ahead'],['todo recto','straight ahead (alt)'],['cerca','near / close'],['lejos','far'],['al lado de','next to / beside'],['en frente de','in front of / across from'],['detrás de','behind'],['entre','between'],['doblar','to turn'],['seguir','to continue / follow'],['cruzar','to cross'],['¿Cómo llego a...?','how do I get to...?']],
+  exercises: [
+    { type:'intro', title:'Giving and asking directions', body:'«Doblar a la derecha/izquierda» = turn right/left. «Todo derecho» (or «todo recto») = straight ahead. Watch out: «derecha» (right side) and «derecho» (straight / right as in legal right) are easy to confuse. Position prepositions all use «de»: «al lado de», «en frente de», «detrás de» — except «entre» (between), which doesn\'t. To ask: «¿Cómo llego a [place]?»', vocab:[['¿Cómo llego al museo?','How do I get to the museum?'],['Doble a la derecha','Turn right (formal command)'],['Siga todo derecho','Continue straight ahead'],['Está al lado del banco','It\'s next to the bank'],['Está cerca','It\'s close'],['Está lejos','It\'s far']] },
+    { type:'tap_select', prompt:'«To the right»:', options:['a la izquierda','a la derecha','todo derecho','al lado'], correct:1, explain:'«A la derecha» — to the right. «Derecha» (f) for the direction; «derecho» means straight or legal right.' },
+    { type:'listen', audio:'todo derecho', prompt:'Listen and choose.', options:['turn left','turn right','straight ahead','behind you'], correct:2, explain:'«Todo derecho» — straight ahead. «Todo recto» means the same.' },
+    { type:'fill_blank', prompt:'Fill in — turn left.', sentence:'Doble a la _____.', correct:['izquierda'], explain:'«Doble a la izquierda» — formal command form of «doblar» (to turn). «Izquierda» = left.' },
+    { type:'translate', prompt:'Translate.', source:'It\'s far.', correct:['está lejos'], explain:'«Está lejos» — distance is a temporary state from your current position → estar.' },
+    { type:'tap_select', prompt:'«Next to»:', options:['detrás de','en frente de','al lado de','entre'], correct:2, explain:'«Al lado de» = next to / beside. «Lado» = side.' },
+    { type:'arrange', prompt:'Arrange — «The bank is near the park.»', tokens:['parque','del','está','cerca','El','banco'], correct:['El','banco','está','cerca','del','parque'], explain:'«El banco está cerca del parque» — «cerca de» + place. «De + el» contracts to «del».' },
+    { type:'translate', prompt:'Translate.', source:'How do I get to the museum?', correct:['¿cómo llego al museo?','como llego al museo'], explain:'«¿Cómo llego al museo?» — «llegar a» + place. Contraction: «a + el» = «al».' },
+    { type:'listen', audio:'está entre el banco y la farmacia', prompt:'Listen and choose.', options:['It\'s next to the bank','It\'s between the bank and the pharmacy','It\'s in front of the pharmacy','It\'s behind the bank'], correct:1, explain:'«Entre A y B» = between A and B. Note: «entre» doesn\'t take «de» like other position prepositions.' },
+    { type:'tap_select', prompt:'«In front of»:', options:['detrás de','al lado de','en frente de','cerca de'], correct:2, explain:'«En frente de» = in front of / across from. Some say «enfrente de» as one word — also accepted.' },
+    { type:'speak', prompt:'Direct someone right.', target:'a la derecha', translation:'to the right', explain:'«ah lah day-RAY-cha». Crisp «r» — a single tap, not rolled.' },
+  ],
+};
+
+const LESSON_22 = {
+  id: 'L22', title: 'Transporte',
+  vocabPreview: [['el carro','the car'],['el autobús','the bus'],['el metro','the metro'],['el taxi','the taxi'],['el avión','the airplane'],['el tren','the train'],['a pie','on foot']],
+  vocabulary: [['el carro','the car (LatAm)'],['el coche','the car (Spain, also used)'],['el autobús','the bus'],['el metro','the metro / subway'],['el taxi','the taxi'],['el avión','the airplane'],['el tren','the train'],['la bicicleta','the bicycle'],['a pie','on foot'],['ir en','to go by (vehicle)'],['conducir','to drive (Spain)'],['manejar','to drive (LatAm)'],['tomar','to take (transport)']],
+  exercises: [
+    { type:'intro', title:'Getting around', body:'Two patterns for transport: «ir EN [vehicle]» (to go by car/bus/etc.) and «tomar [vehicle]» (to take a bus/metro/etc.). Walking is the exception: «a pie» (on foot), no «en». Latin Americans say «manejar» for to drive; Spaniards say «conducir». «Carro» (LatAm) vs «coche» (Spain) — both understood everywhere.', vocab:[['Voy en autobús','I go by bus'],['Voy en carro','I go by car'],['Voy a pie','I go on foot'],['Tomo el metro','I take the metro'],['Tomo un taxi','I take a taxi'],['Manejo a casa','I drive home (LatAm)']] },
+    { type:'tap_select', prompt:'«The bus»:', options:['el carro','el autobús','el tren','el metro'], correct:1, explain:'«El autobús» — the bus. Some Latin American countries shorten it to «el bus» or use local slang («la guagua» in Caribbean).' },
+    { type:'listen', audio:'voy en taxi', prompt:'Listen and choose.', options:['I go by car','I go by taxi','I go by bus','I take the train'], correct:1, explain:'«Voy en taxi» — «ir en + vehicle». «Voy» = I go (irregular form of «ir»).' },
+    { type:'fill_blank', prompt:'Fill in — on foot.', sentence:'_____ pie.', correct:['a'], explain:'«A pie» — exception to the «en + vehicle» pattern. Walking takes «a», not «en».' },
+    { type:'translate', prompt:'Translate.', source:'I take the metro.', correct:['tomo el metro','yo tomo el metro'], explain:'«Tomo el metro» — «tomar» means «to take» (a vehicle, a coffee, a class). Direct article «el» required.' },
+    { type:'tap_select', prompt:'«The airplane»:', options:['el tren','el avión','el carro','el metro'], correct:1, explain:'«El avión» — the airplane. Note the accent on the «ó».' },
+    { type:'arrange', prompt:'Arrange — «I go home by bus.»', tokens:['Voy','autobús','en','casa','a'], correct:['Voy','a','casa','en','autobús'], explain:'«Voy a casa en autobús» — «ir a [place] en [vehicle]». «A casa» (home) doesn\'t take an article.' },
+    { type:'listen', audio:'¿cómo vienes?', prompt:'Listen and choose.', options:['Where do you live?','How do you come (here)?','When do you come?','Why are you coming?'], correct:1, explain:'«¿Cómo vienes?» — common question about transport mode. «Vienes» = you come (irregular «venir»).' },
+    { type:'translate', prompt:'Translate.', source:'We go by car.', correct:['vamos en carro','vamos en coche','nosotros vamos en carro'], explain:'«Vamos en carro» (LatAm) or «vamos en coche» (Spain). «Vamos» = we go.' },
+    { type:'tap_select', prompt:'In Latin America, «to drive» is:', options:['conducir','manejar','tomar','andar'], correct:1, explain:'«Manejar» — Latin American standard. «Conducir» is also understood but sounds Spanish.' },
+    { type:'speak', prompt:'Say it.', target:'Tomo el metro', translation:'I take the metro', explain:'«TOH-mo ell MAY-tro». Useful daily commute phrase.' },
+  ],
+};
+
+const LESSONS = { L1: LESSON_1, L2: LESSON_2, L3: LESSON_3, L4: LESSON_4, L5: LESSON_5, L6: LESSON_6, L7: LESSON_7, L8: LESSON_8, L9: LESSON_9, L10: LESSON_10, L11: LESSON_11, L12: LESSON_12, L13: LESSON_13, L14: LESSON_14, L15: LESSON_15, L16: LESSON_16, L17: LESSON_17, L18: LESSON_18, L19: LESSON_19, L20: LESSON_20, L21: LESSON_21, L22: LESSON_22 };
 
 // ─────────── STATE ───────────
 let user = null;
