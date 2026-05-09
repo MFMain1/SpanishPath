@@ -1013,6 +1013,43 @@ input { font-size: 16px; } /* prevents iOS zoom */
   display: none;
 }
 .speak-heard.show { display: block; }
+.speak-fallback {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+.speak-mark-said {
+  padding: 10px 18px;
+  background: var(--paper);
+  border: 1.5px solid var(--line-2);
+  border-radius: 10px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink);
+  font-weight: 600;
+  transition: all .15s;
+}
+.speak-mark-said:hover { border-color: var(--success); color: var(--success); }
+.speak-mark-said:active { transform: scale(0.96); }
+.speak-skip {
+  padding: 10px 14px;
+  background: transparent;
+  border: 1px solid transparent;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.speak-skip:hover { color: var(--ink-soft); }
+.speak-skip:active { transform: scale(0.96); }
 
 /* ─────────────────────── Footer (check / continue) ─────────────────────── */
 .exercise-footer {
@@ -2444,6 +2481,13 @@ function renderExercise() {
   $('#feedback').classList.remove('show','correct','wrong');
   currentAnswered = false;
   currentResult = null;
+  // Clear any speak-exercise state from a prior exercise
+  window.__speakHeard = '';
+  window.__speakAlternatives = null;
+  window.__speakBypass = false;
+  window.__speakSkipped = false;
+  // Cancel any TTS that might still be playing from previous exercise
+  if ('speechSynthesis' in window) speechSynthesis.cancel();
   const checkBtn = $('#btn-check');
   checkBtn.textContent = ex.type === 'intro' ? 'Continue' : 'Check';
   checkBtn.disabled = false;
@@ -2671,83 +2715,131 @@ function buildSpeak(ex) {
   card.innerHTML = `
     <div class="speak-target">${ex.target}</div>
     <div class="speak-translation">${ex.translation}</div>
-    <button class="intro-speak" id="speak-listen" style="margin: 0 auto 16px; width: 36px; height: 36px;" aria-label="Listen">▶</button>
+    <button class="intro-speak" id="speak-listen" style="margin: 0 auto 16px; width: 40px; height: 40px;" aria-label="Listen">▶</button>
     <button class="mic-button" id="mic-btn" aria-label="Record speech">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="9" y="3" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0014 0M12 18v3"/></svg>
     </button>
-    <div class="mic-status" id="mic-status">Tap mic to speak</div>
+    <div class="mic-status" id="mic-status">Tap mic, or use «I said it» below</div>
     <div class="speak-heard" id="speak-heard"></div>
+    <div class="speak-fallback">
+      <button class="speak-mark-said" id="speak-mark-said">I said it ✓</button>
+      <button class="speak-skip" id="speak-skip">Skip</button>
+    </div>
   `;
   f.appendChild(card);
-
-  // Pre-pronounce after render
-  setTimeout(() => speak(ex.target), 300);
-
-  card.querySelector('#speak-listen').addEventListener('click', () => speak(ex.target));
 
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
   const micBtn = card.querySelector('#mic-btn');
   const statusEl = card.querySelector('#mic-status');
   const heardEl = card.querySelector('#speak-heard');
+  const markBtn = card.querySelector('#speak-mark-said');
+  const skipBtn = card.querySelector('#speak-skip');
+
+  // Listen button — user-initiated TTS only (no auto-play, avoids iOS audio session conflicts)
+  card.querySelector('#speak-listen').addEventListener('click', () => speak(ex.target));
+
+  // Self-attest: full credit, advance like correct
+  markBtn.addEventListener('click', () => {
+    if (currentAnswered) return;
+    window.__speakBypass = true;
+    window.__speakHeard = '(self-marked)';
+    statusEl.textContent = '✓ Marked — tap Check';
+    markBtn.style.background = 'var(--success)';
+    markBtn.style.color = 'var(--cream)';
+    markBtn.style.borderColor = 'var(--success)';
+  });
+
+  // Skip: also advance, no penalty
+  skipBtn.addEventListener('click', () => {
+    if (currentAnswered) return;
+    window.__speakBypass = true;
+    window.__speakSkipped = true;
+    window.__speakHeard = '(skipped)';
+    statusEl.textContent = 'Skipped — tap Continue';
+  });
 
   if (!SR) {
-    statusEl.textContent = 'Speech not supported on this device';
-    micBtn.style.opacity = '0.5';
+    statusEl.textContent = 'Speech recognition not supported here — use «I said it ✓»';
+    micBtn.style.opacity = '0.4';
     micBtn.disabled = true;
-    // Allow user to bypass
-    setTimeout(() => {
-      window.__speakHeard = '';
-      window.__speakBypass = true;
-    }, 0);
     return f;
   }
 
   let recognition = null;
   let isListening = false;
+  let timeoutId = null;
+
+  function cleanupRecognition() {
+    if (timeoutId) { clearTimeout(timeoutId); timeoutId = null; }
+    isListening = false;
+    micBtn.classList.remove('listening');
+  }
 
   micBtn.addEventListener('click', () => {
     if (currentAnswered) return;
-    if (isListening) { recognition?.stop(); return; }
 
+    // Tap-to-stop if already listening
+    if (isListening) {
+      try { recognition?.stop(); } catch(e) {}
+      cleanupRecognition();
+      statusEl.textContent = 'Stopped — tap mic to retry';
+      return;
+    }
+
+    // Cancel any TTS first; iOS needs a moment for the audio session to free up
     speechSynthesis.cancel();
-    recognition = new SR();
-    recognition.lang = 'es-MX';
-    recognition.continuous = false;
-    recognition.interimResults = false;
-    recognition.maxAlternatives = 3;
+    statusEl.textContent = 'Preparing…';
 
-    recognition.onstart = () => {
-      isListening = true;
-      micBtn.classList.add('listening');
-      statusEl.textContent = 'Listening… speak now';
-      heardEl.classList.remove('show');
-    };
-    recognition.onerror = (e) => {
-      isListening = false;
-      micBtn.classList.remove('listening');
-      if (e.error === 'not-allowed') {
-        statusEl.textContent = 'Microphone blocked — check browser permissions';
-      } else if (e.error === 'no-speech') {
-        statusEl.textContent = 'Didn\'t hear anything — try again';
-      } else {
-        statusEl.textContent = 'Error: ' + e.error;
+    setTimeout(() => {
+      try {
+        recognition = new SR();
+        recognition.lang = 'es-MX';
+        recognition.continuous = false;
+        recognition.interimResults = false;
+        recognition.maxAlternatives = 3;
+
+        recognition.onstart = () => {
+          isListening = true;
+          micBtn.classList.add('listening');
+          statusEl.textContent = 'Listening… speak now';
+          heardEl.classList.remove('show');
+          // Hard timeout — iOS Safari sometimes hangs without firing onresult/onerror
+          timeoutId = setTimeout(() => {
+            try { recognition?.stop(); } catch(e) {}
+            cleanupRecognition();
+            statusEl.textContent = 'Took too long — retry, or tap «I said it ✓»';
+          }, 7000);
+        };
+        recognition.onerror = (e) => {
+          cleanupRecognition();
+          if (e.error === 'not-allowed') {
+            statusEl.textContent = 'Mic blocked — check browser permissions';
+          } else if (e.error === 'no-speech') {
+            statusEl.textContent = "Didn't hear anything — tap mic to retry";
+          } else if (e.error === 'aborted') {
+            // User stopped manually; status already set
+          } else {
+            statusEl.textContent = 'Mic glitched — use «I said it ✓»';
+          }
+        };
+        recognition.onend = () => { cleanupRecognition(); };
+        recognition.onresult = (e) => {
+          if (timeoutId) { clearTimeout(timeoutId); timeoutId = null; }
+          const alts = [];
+          for (let i = 0; i < e.results[0].length; i++) alts.push(e.results[0][i].transcript);
+          const heard = alts[0] || '';
+          window.__speakHeard = heard;
+          window.__speakAlternatives = alts;
+          heardEl.textContent = '«' + heard + '»';
+          heardEl.classList.add('show');
+          statusEl.textContent = 'Got it — tap Check';
+        };
+        recognition.start();
+      } catch(err) {
+        cleanupRecognition();
+        statusEl.textContent = 'Could not start mic — use «I said it ✓»';
       }
-    };
-    recognition.onend = () => {
-      isListening = false;
-      micBtn.classList.remove('listening');
-    };
-    recognition.onresult = (e) => {
-      const alts = [];
-      for (let i = 0; i < e.results[0].length; i++) alts.push(e.results[0][i].transcript);
-      const heard = alts[0] || '';
-      window.__speakHeard = heard;
-      window.__speakAlternatives = alts;
-      heardEl.textContent = '«' + heard + '»';
-      heardEl.classList.add('show');
-      statusEl.textContent = 'Got it — tap Check';
-    };
-    try { recognition.start(); } catch(err) { statusEl.textContent = 'Could not start mic'; }
+    }, 250);
   });
 
   return f;
