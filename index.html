@@ -1641,6 +1641,164 @@ input { font-size: 16px; } /* prevents iOS zoom */
   border-style: solid;
 }
 
+/* English hint toggle on every exercise */
+.hint-wrap {
+  margin: -4px 0 14px;
+}
+.hint-toggle {
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  padding: 6px 10px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all .12s;
+}
+.hint-toggle:hover { color: var(--ink); border-color: var(--ink); }
+.hint-body {
+  margin-top: 8px;
+  padding: 10px 14px;
+  background: var(--cream-2);
+  border-left: 3px solid var(--gold);
+  border-radius: 6px;
+  font-size: 14px;
+  color: var(--ink);
+  line-height: 1.5;
+}
+
+/* Venezuelan Reference Sheet */
+.ve-reference-section {
+  margin: 14px 0 22px;
+  background: linear-gradient(180deg, rgba(184,71,42,0.04), rgba(201,155,61,0.02));
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 14px 16px 6px;
+}
+.ve-ref-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.ve-ref-eyebrow {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  background: linear-gradient(135deg, var(--terracotta), var(--gold));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.ve-ref-sub {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+}
+.ve-ref-sheet { margin-bottom: 10px; }
+.ve-ref-locked { opacity: 0.55; }
+.ve-ref-header {
+  width: 100%;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-align: left;
+  cursor: pointer;
+  transition: all .15s;
+}
+.ve-ref-header:hover { border-color: var(--terracotta); }
+.ve-ref-locked .ve-ref-header { cursor: default; }
+.ve-ref-locked .ve-ref-header:hover { border-color: var(--line); }
+.ve-ref-level {
+  flex: 1;
+  font-family: var(--serif);
+  font-size: 16px;
+  color: var(--ink);
+  font-variation-settings: 'opsz' 24;
+}
+.ve-ref-count {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+}
+.ve-ref-chevron {
+  font-size: 14px;
+  color: var(--terracotta);
+  width: 18px;
+  text-align: center;
+}
+.ve-ref-body {
+  margin-top: 10px;
+  padding: 14px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+.ve-ref-note {
+  margin-bottom: 14px;
+  padding-bottom: 14px;
+  border-bottom: 1px dashed var(--line);
+}
+.ve-ref-note:last-of-type { border-bottom: none; }
+.ve-ref-note-title {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--terracotta);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+.ve-ref-note-body {
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--ink);
+}
+.ve-ref-vocab-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 10px;
+}
+@media (max-width: 520px) {
+  .ve-ref-vocab-grid { grid-template-columns: 1fr; }
+}
+.ve-ref-vocab {
+  background: var(--cream-2);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+.ve-ref-vocab-es {
+  font-family: var(--serif);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+  font-variation-settings: 'opsz' 18;
+  margin-bottom: 2px;
+}
+.ve-ref-vocab-en {
+  font-size: 13px;
+  color: var(--ink);
+  opacity: 0.85;
+  margin-bottom: 4px;
+}
+.ve-ref-vocab-source {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
 /* Dialect toggle highlights when ON */
 body.dialect-on .dialect-note {
   border-color: var(--terracotta);
@@ -2113,6 +2271,15 @@ body.dialect-on .lesson-ve {
           <button class="lib-filter" data-filter="learned">Learned</button>
           <button class="lib-filter" data-filter="new">New</button>
         </div>
+      </div>
+
+      <!-- Venezuelan Reference Sheets — unlocked per level -->
+      <div id="ve-reference-section" class="ve-reference-section" style="display:none;">
+        <div class="ve-ref-head">
+          <span class="ve-ref-eyebrow">🇻🇪 VENEZUELAN REFERENCE</span>
+          <span class="ve-ref-sub">Tap a level to expand</span>
+        </div>
+        <div id="ve-reference-list"></div>
       </div>
 
       <div class="lib-list" id="lib-list"></div>
@@ -4343,7 +4510,7 @@ function getLibraryStats() {
 // ─────────── DASHBOARD RENDER ───────────
 function getNextLessonId() {
   const all = Object.keys(LESSON_META)
-    .filter(id => !LESSON_META[id].track) // skip Venezuelan/other tracks
+    .filter(id => !LESSON_META[id].track && !LESSON_META[id].scenario) // skip VE tracks AND scenarios
     .sort((a,b)=>LESSON_META[a].n - LESSON_META[b].n);
   for (const id of all) if (!progress.completed[id]) return id;
   return all[all.length - 1];
@@ -4700,16 +4867,55 @@ function renderExercise() {
 function eyebrowFor(n, total) {
   return `EXERCISE ${n} OF ${total}`;
 }
+
+// Best-effort English hint extraction so the user can peek at meaning during any exercise
+function englishHintFor(ex) {
+  // Explicit translation field (speak, conversation)
+  if (ex.translation && typeof ex.translation === 'string') return ex.translation;
+  // Translate exercises already show English as the source
+  if (ex.type === 'translate' && ex.source) return ex.source;
+  // Listen exercises have English options — show the correct one
+  if (ex.type === 'listen' && Array.isArray(ex.options) && typeof ex.correct === 'number') {
+    return ex.options[ex.correct] || '';
+  }
+  // Fall back to the first sentence of the explain field
+  if (ex.explain) {
+    const firstSentence = ex.explain.split('—')[0].split('.')[0];
+    return firstSentence.length > 4 ? firstSentence : ex.explain;
+  }
+  return '';
+}
+
 function exHeader(ex) {
+  const wrap = document.createDocumentFragment();
   const eb = document.createElement('div');
   eb.className = 'exercise-prompt-eyebrow';
   eb.textContent = eyebrowFor(currentExerciseIdx + 1, currentLesson.exercises.length);
+  wrap.appendChild(eb);
   const p = document.createElement('div');
   p.className = 'exercise-prompt';
   p.textContent = ex.prompt || ex.title || '';
-  const wrap = document.createDocumentFragment();
-  wrap.appendChild(eb);
   wrap.appendChild(p);
+  // Hint button — except for intro screens where vocab already has English
+  if (ex.type !== 'intro') {
+    const hint = englishHintFor(ex);
+    if (hint) {
+      const hintWrap = document.createElement('div');
+      hintWrap.className = 'hint-wrap';
+      hintWrap.innerHTML = `
+        <button class="hint-toggle" type="button">🇺🇸 Show English</button>
+        <div class="hint-body" style="display:none;">${hint}</div>
+      `;
+      const btn = hintWrap.querySelector('.hint-toggle');
+      const body = hintWrap.querySelector('.hint-body');
+      btn.addEventListener('click', () => {
+        const shown = body.style.display !== 'none';
+        body.style.display = shown ? 'none' : 'block';
+        btn.textContent = shown ? '🇺🇸 Show English' : '🇺🇸 Hide English';
+      });
+      wrap.appendChild(hintWrap);
+    }
+  }
   return wrap;
 }
 
@@ -5062,9 +5268,9 @@ function buildConversation(ex) {
     </div>
     ${ex.translation ? `<div class="convo-translation">${ex.translation}</div>` : ''}
   `;
-  npc.querySelector('.convo-tts').addEventListener('click', () => speakES(ex.npcLine));
+  npc.querySelector('.convo-tts').addEventListener('click', () => speak(ex.npcLine));
   f.appendChild(npc);
-  setTimeout(() => speakES(ex.npcLine), 300);
+  setTimeout(() => speak(ex.npcLine), 300);
   // Prompt
   const prompt = document.createElement('div');
   prompt.className = 'convo-prompt';
@@ -5446,15 +5652,14 @@ async function finishLesson() {
   const wasComplete = !!progress.completed[id];
   // Bonus XP for first-time completion
   const lessonXp = wasComplete ? Math.round(meta.xp * 0.5) : meta.xp;
+  // Mark progress IMMEDIATELY so even if save fails, in-memory state is consistent
   progress.completed[id] = new Date().toISOString();
   progress.xp += lessonXp;
-  // Populate library with this lesson's vocab
-  const wordsAdded = populateLibraryFromLesson(id);
-  await saveProgress({ activity: true });
-  renderDashboard();
-  renderCurriculum();
-  renderProfile();
-  // Show completion screen INSIDE the lesson screen
+  // Populate library with this lesson's vocab (safe — guarded internally)
+  let wordsAdded = 0;
+  try { wordsAdded = populateLibraryFromLesson(id); } catch(e) { console.warn('library populate failed', e); }
+
+  // Render completion screen FIRST — unblock the user even if save/dashboard renders fail
   $('#lesson-progress-fill').style.width = '100%';
   const area = $('#exercise-area');
   area.innerHTML = '';
@@ -5498,6 +5703,13 @@ async function finishLesson() {
     $('#exercise-footer').style.display = '';
     startLesson(id);
   });
+
+  // Background: persist progress + refresh downstream UI. Each wrapped so one failure doesn't break the others.
+  try { await saveProgress({ activity: true }); } catch(e) { console.warn('saveProgress failed', e); }
+  try { renderDashboard(); } catch(e) { console.warn('renderDashboard failed', e); }
+  try { renderCurriculum(); } catch(e) { console.warn('renderCurriculum failed', e); }
+  try { renderProfile(); } catch(e) { console.warn('renderProfile failed', e); }
+  try { renderLibrary(); } catch(e) { console.warn('renderLibrary failed', e); }
 }
 
 // ─────────── LIBRARY RENDER ───────────
@@ -5526,6 +5738,9 @@ function renderLibrary() {
   }
   $('#library-empty').style.display = 'none';
   $('#library-content').style.display = 'block';
+
+  // Venezuelan reference sheets
+  renderVeReference();
 
   // Filter & search
   const today = todayISO();
@@ -5732,6 +5947,77 @@ function exitReview() {
   showScreen('home');
 }
 
+// ─────────── VENEZUELAN REFERENCE SHEET ───────────
+// Aggregates all Venezuelan vocab + slang per level, unlocked when that level is complete.
+let veRefExpanded = {}; // { A1: true, A2: false } — track which sheets are open
+
+function renderVeReference() {
+  const section = $('#ve-reference-section');
+  const list = $('#ve-reference-list');
+  if (!section || !list) return;
+  list.innerHTML = '';
+  const levels = Object.keys(VE_TRACKS);
+  let anyVisible = false;
+  levels.forEach(level => {
+    const unlocked = !!progress.completedLevels?.[level];
+    const sheet = document.createElement('div');
+    sheet.className = 've-ref-sheet' + (unlocked ? '' : ' ve-ref-locked');
+    const lessonIds = VE_TRACKS[level];
+    // Aggregate vocabulary from all lessons in this VE level
+    let allVocab = [];
+    let dialectNotes = [];
+    lessonIds.forEach(id => {
+      const lesson = LESSONS[id];
+      if (!lesson) return;
+      const m = LESSON_META[id];
+      // Pull every vocab entry, tagged by source lesson
+      (lesson.vocabulary || []).forEach(([es, en]) => {
+        allVocab.push({ es, en, source: m?.title || id });
+      });
+      // Also grab any dialect intro body content (mostly cultural notes)
+      const intro = (lesson.exercises || []).find(e => e.type === 'intro');
+      if (intro && intro.body) {
+        dialectNotes.push({ title: m?.title || id, body: intro.body });
+      }
+    });
+    const isExpanded = !!veRefExpanded[level];
+    sheet.innerHTML = `
+      <button class="ve-ref-header" type="button">
+        <span class="ve-ref-level">${level} — Venezuelan ${unlocked ? 'unlocked' : '🔒 locked'}</span>
+        <span class="ve-ref-count">${unlocked ? allVocab.length + ' entries' : 'Complete ' + level + ' to unlock'}</span>
+        <span class="ve-ref-chevron">${isExpanded ? '▾' : '▸'}</span>
+      </button>
+      ${isExpanded && unlocked ? `
+        <div class="ve-ref-body">
+          ${dialectNotes.map(n => `
+            <div class="ve-ref-note">
+              <div class="ve-ref-note-title">${n.title}</div>
+              <div class="ve-ref-note-body">${n.body}</div>
+            </div>
+          `).join('')}
+          <div class="ve-ref-vocab-grid">
+            ${allVocab.map(v => `
+              <div class="ve-ref-vocab">
+                <div class="ve-ref-vocab-es">${v.es}</div>
+                <div class="ve-ref-vocab-en">${v.en}</div>
+                <div class="ve-ref-vocab-source">${v.source}</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      ` : ''}
+    `;
+    sheet.querySelector('.ve-ref-header').addEventListener('click', () => {
+      if (!unlocked) return;
+      veRefExpanded[level] = !isExpanded;
+      renderVeReference();
+    });
+    list.appendChild(sheet);
+    anyVisible = true;
+  });
+  section.style.display = anyVisible ? 'block' : 'none';
+}
+
 // ─────────── PROFILE ───────────
 function renderProfile() {
   $('#profile-email').textContent = user?.email || '—';
@@ -5894,11 +6180,17 @@ $('#lesson-close').addEventListener('click', () => {
 });
 
 $('#btn-check').addEventListener('click', () => {
-  if (!currentLesson) return;
-  const ex = currentLesson.exercises[currentExerciseIdx];
-  if (ex.type === 'intro') { advance(); return; }
-  if (currentAnswered) { advance(); return; }
-  checkAnswer();
+  try {
+    if (!currentLesson) return;
+    const ex = currentLesson.exercises[currentExerciseIdx];
+    if (ex.type === 'intro') { advance(); return; }
+    if (currentAnswered) { advance(); return; }
+    checkAnswer();
+  } catch(e) {
+    console.error('Lesson button error — forcing advance', e);
+    // Failsafe: if something broke mid-lesson, try to advance anyway
+    try { advance(); } catch(e2) { console.error('advance also failed', e2); }
+  }
 });
 
 // Library

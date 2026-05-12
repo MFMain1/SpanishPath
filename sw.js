@@ -2,7 +2,7 @@
 // Enables offline play. Uses stale-while-revalidate so updates roll out
 // the next time the user is online but offline-only sessions still work.
 
-const CACHE_NAME = 'spanishpath-v11';
+const CACHE_NAME = 'spanishpath-v12';
 const PRECACHE_URLS = [
   './',
   './index.html',
