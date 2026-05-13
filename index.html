@@ -639,6 +639,35 @@ input { font-size: 16px; } /* prevents iOS zoom */
   border: 1px solid var(--line);
   border-radius: 18px;
 }
+
+.sync-card {
+  margin: 0 20px 16px;
+  padding: 14px 18px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+.sync-row { display: flex; align-items: center; gap: 12px; }
+.sync-icon {
+  font-size: 11px;
+  color: var(--success);
+  width: 14px;
+  text-align: center;
+}
+.sync-icon.warn { color: var(--gold); }
+.sync-icon.offline { color: var(--terracotta); }
+.sync-status {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--ink);
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+.sync-detail {
+  font-size: 13px;
+  color: var(--muted);
+}
 .profile-email {
   font-family: var(--serif);
   font-size: 18px;
@@ -1077,6 +1106,18 @@ input { font-size: 16px; } /* prevents iOS zoom */
   font-style: italic;
   margin-bottom: 22px;
 }
+.speak-instruction {
+  color: var(--muted);
+  font-size: 12px;
+  font-family: var(--mono);
+  letter-spacing: 0.04em;
+  margin-top: 14px;
+}
+.speak-card .intro-speak {
+  margin: 0 auto;
+  width: 56px;
+  height: 56px;
+}
 .mic-button {
   width: 84px; height: 84px;
   border-radius: 50%;
@@ -1367,6 +1408,37 @@ input { font-size: 16px; } /* prevents iOS zoom */
   color: var(--cream);
 }
 
+.lib-tracks {
+  display: flex; gap: 0;
+  margin-bottom: 10px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 4px;
+  background: var(--paper);
+}
+.lib-track-btn {
+  flex: 1;
+  padding: 8px 12px;
+  background: transparent;
+  border: none;
+  border-radius: 7px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--ink-soft);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all .15s;
+}
+.lib-track-btn:hover { color: var(--ink); }
+.lib-track-btn.active {
+  background: var(--ink);
+  color: var(--cream);
+}
+.lib-track-btn[data-track="venezuelan"].active {
+  background: linear-gradient(135deg, var(--terracotta), var(--gold));
+}
+
 .lib-list {
   padding: 0 20px;
   display: flex; flex-direction: column; gap: 8px;
@@ -1382,6 +1454,30 @@ input { font-size: 16px; } /* prevents iOS zoom */
 .lib-card.due {
   border-color: rgba(184,71,42,0.4);
   background: linear-gradient(180deg, var(--paper), rgba(184,71,42,0.04));
+}
+.lib-card-ve {
+  background: linear-gradient(180deg, var(--paper), rgba(201,155,61,0.04));
+  border-left: 3px solid var(--gold);
+}
+.lib-card-ve.due {
+  border-left-color: var(--terracotta);
+}
+.lib-card-reviewed {
+  opacity: 0.78;
+  border-color: rgba(74,113,64,0.3);
+  background: linear-gradient(180deg, var(--paper), rgba(74,113,64,0.04));
+}
+.lib-card-reviewed .lib-card-interval {
+  color: var(--success);
+  font-weight: 500;
+}
+.lib-card-reviewed.due {
+  border-color: rgba(74,113,64,0.3);
+}
+.lib-card-ve .lib-card-tag {
+  background: linear-gradient(135deg, var(--terracotta-soft), var(--gold-soft));
+  color: var(--terracotta);
+  font-weight: 700;
 }
 .lib-card-speak {
   width: 36px; height: 36px;
@@ -1520,6 +1616,13 @@ input { font-size: 16px; } /* prevents iOS zoom */
   display: none;
 }
 .review-quality-grid.show { display: grid; animation: fadeIn .25s; }
+.review-quality-grid-2 {
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.review-quality-grid-2 .q-btn {
+  padding: 18px 12px;
+}
 .q-btn {
   padding: 14px 6px 12px;
   border-radius: 12px;
@@ -1544,8 +1647,18 @@ input { font-size: 16px; } /* prevents iOS zoom */
   font-size: 11px;
   color: var(--muted);
 }
+.q-btn-sub {
+  font-size: 11px;
+  color: var(--muted);
+  font-style: italic;
+  margin-top: 2px;
+}
 .q-again { color: var(--error); border-color: rgba(179,58,42,0.3); }
 .q-again:hover { background: rgba(179,58,42,0.06); }
+.q-again-2 { color: var(--terracotta); border-color: rgba(184,71,42,0.35); background: linear-gradient(180deg, var(--paper), rgba(184,71,42,0.03)); }
+.q-again-2:hover { background: rgba(184,71,42,0.08); }
+.q-good-2 { color: var(--success); border-color: rgba(74,113,64,0.35); background: linear-gradient(180deg, var(--paper), rgba(74,113,64,0.03)); }
+.q-good-2:hover { background: rgba(74,113,64,0.08); }
 .q-hard { color: #c4793b; border-color: rgba(196,121,59,0.3); }
 .q-hard:hover { background: rgba(196,121,59,0.06); }
 .q-good { color: var(--success); border-color: rgba(74,113,64,0.3); }
@@ -2131,7 +2244,7 @@ body.dialect-on .lesson-ve {
 
 <body>
 
-<div id="offline-pill" class="offline-pill"><span class="dot"></span>Offline · progress queued</div>
+<div id="offline-pill" class="offline-pill"><span class="dot"></span>Offline · saved locally</div>
 
 <div id="loading"><div class="spin"></div></div>
 
@@ -2265,6 +2378,11 @@ body.dialect-on .lesson-ve {
 
       <div class="lib-controls">
         <input type="text" class="input lib-search" id="lib-search" placeholder="Search words…" autocomplete="off" autocapitalize="none">
+        <div class="lib-tracks" id="lib-tracks">
+          <button class="lib-track-btn active" data-track="standard">🇪🇸 Spanish</button>
+          <button class="lib-track-btn" data-track="venezuelan">🇻🇪 Venezuelan</button>
+          <button class="lib-track-btn" data-track="all">All</button>
+        </div>
         <div class="lib-filters" id="lib-filters">
           <button class="lib-filter active" data-filter="all">All</button>
           <button class="lib-filter" data-filter="due">Due</button>
@@ -2321,13 +2439,13 @@ body.dialect-on .lesson-ve {
       </div>
     </div>
 
-    <div class="settings-card">
-      <div class="setting-row">
-        <div class="setting-info">
-          <div class="setting-label">🇻🇪 Spotlight Venezuelan content</div>
-          <div class="setting-desc">Highlights dialect notes and Venezuelan track lessons across the app.</div>
+    <div class="sync-card" id="sync-card">
+      <div class="sync-row">
+        <div class="sync-icon" id="sync-icon">●</div>
+        <div class="sync-text">
+          <div class="sync-status" id="sync-status">Synced</div>
+          <div class="sync-detail" id="sync-detail">Last saved just now</div>
         </div>
-        <div class="toggle" id="toggle-dialect" data-key="dialect" role="switch" aria-checked="false"></div>
       </div>
     </div>
 
@@ -2531,6 +2649,12 @@ const LESSON_1 = {
     ['Nos vemos','see you'], ['Chao','bye (casual)'], ['Mucho gusto','nice to meet you'],
     ['Épale','hey (Venezuelan)'], ['Chévere','cool / great (Venezuelan)'],
     ['¿Qué tal?','what\'s up?'], ['Pana','friend (Venezuelan)'],
+  ],
+  veVocabulary: [
+    ['Épale','hey (Venezuelan greeting)'],
+    ['Chévere','cool / great (Venezuelan)'],
+    ['Pana','friend / buddy (Venezuelan)'],
+    ['Chao','bye (casual, very common in Caracas)'],
   ],
   exercises: [
     {
@@ -2892,6 +3016,11 @@ const LESSON_15 = {
   id: 'L15', title: 'Adjetivos',
   vocabPreview: [['bueno/a','good'],['malo/a','bad'],['grande','big'],['pequeño/a','small'],['bonito/a','pretty'],['nuevo/a','new'],['viejo/a','old']],
   vocabulary: [['bueno / buena','good (m / f)'],['malo / mala','bad'],['grande','big (no gender change)'],['pequeño / pequeña','small'],['alto / alta','tall'],['bajo / baja','short (height)'],['bonito / bonita','pretty'],['feo / fea','ugly'],['nuevo / nueva','new'],['viejo / vieja','old'],['joven','young (no gender change)'],['fácil','easy (no gender change)'],['difícil','difficult'],['interesante','interesting (no gender change)'],['burda de','really / very (Venezuelan intensifier)'],['fino','great / nice (Venezuelan)'],['arrecho','cool (Venezuelan, context-sensitive)']],
+  veVocabulary: [
+    ['burda de','really / very (Venezuelan intensifier — burda de bueno)'],
+    ['fino','great / nice (Venezuelan)'],
+    ['arrecho','cool (Venezuelan, context-sensitive — can be vulgar)'],
+  ],
   exercises: [
     { type:'intro', title:'Adjective agreement & position', body:'Spanish adjectives AGREE with the noun in gender (m/f) and number (singular/plural). Most also go AFTER the noun, unlike English. Pattern: «-o» becomes «-a» for feminine; add «-s» for plural. Adjectives ending in -e or consonants usually stay the same for both genders. And a Venezuelan bonus: «burda de bueno» = really good. «Fino» = great. «Arrecho» = cool, but it can also be vulgar — use with care among friends only.', vocab:[['un libro bueno','a good book (m sing)'],['una casa buena','a good house (f sing)'],['libros buenos','good books (m pl)'],['casas buenas','good houses (f pl)'],['un libro grande','a big book (-e adj, no gender change)'],['burda de bueno','really good (Venezuelan slang intensifier)']] },
     { type:'tap_select', prompt:'«Tall» (masculine):', options:['alta','alto','altos','altas'], correct:1, explain:'«Alto» — masculine singular form. «Alta» (f), «altos» (m pl), «altas» (f pl).' },
@@ -2930,6 +3059,15 @@ const LESSON_17 = {
   id: 'L17', title: 'Comida venezolana',
   vocabPreview: [['la arepa','arepa (corn cake)'],['la hallaca','hallaca (Christmas tamale)'],['la cachapa','cachapa (sweet corn pancake)'],['el pabellón','pabellón (national dish)'],['los tequeños','tequeños (cheese sticks)'],['¿te provoca?','do you feel like?'],['¡qué rico!','how delicious!']],
   vocabulary: [['la arepa','arepa (round corn cake, national staple)'],['la hallaca','hallaca (Christmas tamale)'],['la cachapa','cachapa (sweet corn pancake)'],['el pabellón criollo','pabellón (rice, beans, beef, plantain)'],['los tequeños','tequeños (fried cheese sticks)'],['la empanada','empanada (fried turnover)'],['el queso','cheese'],['el plátano','plantain'],['el pollo','chicken'],['la carne','meat / beef'],['el pescado','fish'],['¿te provoca?','do you feel like? (Caribbean)'],['¡qué rico!','how delicious!'],['sabroso','tasty / flavorful'],['criollo','Creole / traditional Venezuelan']],
+  veVocabulary: [
+    ['la arepa','arepa — round corn cake, daily staple'],
+    ['la hallaca','hallaca — Christmas tamale'],
+    ['la cachapa','cachapa — sweet corn pancake'],
+    ['el pabellón criollo','national dish: rice + beans + beef + plantain'],
+    ['los tequeños','fried cheese sticks (Venezuelan party staple)'],
+    ['¿te provoca?','do you feel like? (Caribbean/Venezuelan phrasing)'],
+    ['criollo','Creole / traditional Venezuelan'],
+  ],
   exercises: [
     { type:'intro', title:'🇻🇪 The Venezuelan plate', body:'Arepas are the national dish — eaten daily, split open and stuffed. Hallacas are the Christmas centerpiece (corn dough with stew, wrapped in plantain leaves). Cachapas are sweet corn pancakes folded over cheese. Pabellón criollo is the national stew: rice, black beans, shredded beef, fried plantains. Tequeños are fried cheese sticks — at every Venezuelan party. The phrase «¿Te provoca…?» is pure Caribbean Spanish: it means «do you feel like…?» — uses «provocar» where most Spanish would use «apetecer» or «tener ganas de».', vocab:[['arepa','round corn cake, sliced and stuffed'],['hallaca','Christmas tamale wrapped in plantain leaves'],['cachapa','sweet corn pancake'],['pabellón criollo','national dish: rice + beans + beef + plantain'],['tequeños','cheese sticks wrapped in dough, fried'],['¿Te provoca un café?','Do you feel like a coffee?'],['¡Qué rico!','How delicious!']] },
     { type:'tap_select', prompt:'An arepa is:', options:['A type of soup','A round corn cake','A fish dish','A drink'], correct:1, explain:'«La arepa» — round, thick corn cake, sliced and stuffed with cheese, beans, meat, or whatever you like.' },
@@ -3480,6 +3618,11 @@ const LESSON_41 = {
   id: 'L41', title: 'Por vs Para',
   vocabPreview: [['por','because of / through / by / in exchange for'],['para','for / in order to / destined for']],
   vocabulary: [['por','because of / through / for (duration / exchange)'],['para','in order to / for (recipient / deadline / destination)'],['gracias por','thanks for'],['por la mañana','in the morning'],['por dos horas','for two hours (duration)'],['para mí','for me'],['para aprender','in order to learn'],['para el lunes','by Monday'],['¿para qué?','what for?'],['¿por qué?','why?']],
+  veVocabulary: [
+    ['pa\'','para (casual Venezuelan contraction — «pa\' la casa»)'],
+    ['¡por fin!','finally! (Venezuelan high-frequency expression)'],
+    ['por si acaso','just in case (Venezuelan staple)'],
+  ],
   exercises: [
     { type:'intro', title:'The eternal A2 question', body:'POR: cause/reason ("because of"), exchange ($), duration ("for X hours"), movement through ("through Europe"), means ("by phone"). PARA: purpose ("in order to"), recipient ("for you"), deadline ("by Monday"), destination ("for Madrid"), opinion ("in my view"). Mnemonic: PARA = forward-looking (destination, purpose, deadline). POR = looking around/back (cause, duration, exchange).', vocab:[['Cause/reason','POR: «por la lluvia» = because of the rain'],['Exchange','POR: «pagué $20 por el libro»'],['Duration','POR: «por dos horas»'],['Through/by','POR: «por la calle»'],['Purpose','PARA: «para aprender»'],['Recipient','PARA: «para ti»'],['Deadline','PARA: «para el lunes»'],['Destination','PARA: «un tren para Madrid»']] },
     { type:'tap_select', prompt:'«I work in order to support my family»:', options:['por mantener a mi familia','para mantener a mi familia','por mi familia','para mi familia'], correct:1, explain:'«Para mantener» — purpose / goal → PARA + infinitive.' },
@@ -3689,6 +3832,10 @@ const LESSON_52 = {
   id: 'L52', title: 'Salud y cuerpo',
   vocabPreview: [['la cabeza','head'],['el estómago','stomach'],['me duele','it hurts'],['estoy enfermo','I\'m sick'],['la fiebre','fever']],
   vocabulary: [['la cabeza','head'],['el estómago','stomach'],['la espalda','back'],['la pierna','leg'],['el brazo','arm'],['la mano','hand'],['el pie','foot'],['el ojo','eye'],['la garganta','throat'],['me duele(n)','it hurts me / they hurt'],['estoy enfermo/a','I\'m sick'],['tengo fiebre','I have a fever'],['tengo gripe','I have the flu'],['estoy resfriado/a','I have a cold'],['el médico / la médica','doctor'],['la farmacia','pharmacy'],['la receta','prescription'],['la pastilla','pill']],
+  veVocabulary: [
+    ['estoy malucho','feeling sub-par / under the weather (VE)'],
+    ['me cayó como una patada','it really upset me / made me sick (VE idiom)'],
+  ],
   exercises: [
     { type:'intro', title:'Health & body — getting medical help', body:'Body parts use definite articles, NOT possessives: «me duele LA cabeza» (literally «the head hurts me»), not «mi cabeza». «Doler» works like «gustar» — «me duele» (singular) / «me duelen» (plural). Health states: «estoy enfermo/a», «tengo gripe», «tengo fiebre». At the pharmacy: «¿tiene algo para X?» = do you have something for X?', vocab:[['Me duele la cabeza','My head hurts'],['Me duelen los pies','My feet hurt'],['Estoy enfermo / enferma','I\'m sick'],['Tengo fiebre','I have a fever'],['Tengo dolor de garganta','I have a sore throat'],['¿Tiene algo para la tos?','Do you have something for cough?']] },
     { type:'tap_select', prompt:'«My head hurts»:', options:['mi cabeza duele','me duele la cabeza','duelo la cabeza','tengo cabeza'], correct:1, explain:'«Me duele la cabeza» — Spanish uses «doler» like «gustar», with definite article.' },
@@ -4288,6 +4435,7 @@ let progress = {
   library: {},     // { 'normalized_es': { es, en, lessonIds, added, interval, ease, reviews, next_review, last_quality } }
   assessments: {}, // { A1: { score, total, percentage, passed, date, perUnit, missed } }
   completedLevels: {}, // { A1: ISO_date }
+  last_save_at: null, // ISO timestamp of last save — used for offline cache arbitration
 };
 
 let currentLesson = null;     // active lesson during play
@@ -4342,7 +4490,19 @@ function getVoices() {
   return new Promise(resolve => {
     let v = speechSynthesis.getVoices();
     if (v && v.length) return resolve(v);
-    speechSynthesis.onvoiceschanged = () => resolve(speechSynthesis.getVoices());
+    let resolved = false;
+    speechSynthesis.onvoiceschanged = () => {
+      if (resolved) return;
+      resolved = true;
+      resolve(speechSynthesis.getVoices());
+    };
+    // Hard timeout — iOS Safari sometimes never fires onvoiceschanged in PWA mode.
+    // Falling back to an empty list lets the rest of the app proceed instead of hanging.
+    setTimeout(() => {
+      if (resolved) return;
+      resolved = true;
+      resolve(speechSynthesis.getVoices() || []);
+    }, 2000);
   });
 }
 async function speak(text, opts = {}) {
@@ -4363,33 +4523,133 @@ async function speak(text, opts = {}) {
 }
 
 // ─────────── SUPABASE PROGRESS ───────────
+// ─────────── LOCAL CACHE (offline support via timestamp-arbitrated mirror) ───────────
+// Strategy: every save writes a full snapshot to localStorage. On load, we pick whichever
+// of {server, cache} has the newer last_save_at timestamp. This is SAFE because:
+// - A stale cache from weeks ago will lose to a fresh server response (newer timestamp wins)
+// - Doing lessons offline keeps everything in cache, and pushes up on next reconnect
+// - Single-device use is bulletproof; multi-device is last-write-wins by client clock
+function cacheKey() { return user ? 'sp_cache_' + user.id : null; }
+
+function saveLocalCache() {
+  const key = cacheKey();
+  if (!key) return;
+  try {
+    localStorage.setItem(key, JSON.stringify(progress));
+  } catch(e) { console.warn('local cache write failed', e); }
+}
+
+function loadLocalCache() {
+  const key = cacheKey();
+  if (!key) return null;
+  try {
+    const raw = localStorage.getItem(key);
+    return raw ? JSON.parse(raw) : null;
+  } catch(e) { return null; }
+}
+
+function clearLocalCache() {
+  const key = cacheKey();
+  if (!key) return;
+  try { localStorage.removeItem(key); } catch(e) {}
+}
+
+function copyProgressFrom(src) {
+  progress.completed = src.completed || {};
+  progress.xp = src.xp || 0;
+  progress.streak = src.streak || 0;
+  progress.last_active = src.last_active || null;
+  progress.created_at = src.created_at || null;
+  progress.library = src.library || {};
+  progress.assessments = src.assessments || {};
+  progress.completedLevels = src.completedLevels || src.completed_levels || {};
+  progress.last_save_at = src.last_save_at || null;
+}
+
 async function loadProgress() {
   if (!user) return;
-  const { data, error } = await sb.from('progress').select('*').eq('user_id', user.id).maybeSingle();
-  if (error) console.warn('progress load error', error);
-  if (data) {
-    progress.completed = data.completed || {};
-    progress.xp = data.xp || 0;
-    progress.streak = data.streak || 0;
-    progress.last_active = data.last_active || null;
-    progress.created_at = data.created_at || null;
-    progress.library = data.library || {};
-    progress.assessments = data.assessments || {};
-    progress.completedLevels = data.completed_levels || {};
-  } else {
-    // first-time user: insert blank row
-    const { data: ins } = await sb.from('progress').insert({
-      user_id: user.id,
-      completed: {},
-      xp: 0,
-      streak: 0,
-      last_active: null,
-      library: {},
-    }).select().single();
-    if (ins) progress.created_at = ins.created_at;
+  const cached = loadLocalCache();
+
+  // Offline path — load from cache or fail visibly
+  if (!navigator.onLine) {
+    if (cached) {
+      copyProgressFrom(cached);
+      console.log('Offline — loaded from local cache (last saved ' + cached.last_save_at + ')');
+      runLibraryBackfill();
+      return;
+    }
+    alert('You\'re offline and there\'s no local cache yet. Connect to the internet at least once before working offline.');
+    return;
   }
-  // Compute streak based on activity gap
+
+  // Online — fetch server with retry
+  let data = null, lastError = null;
+  for (let attempt = 0; attempt < 2; attempt++) {
+    const res = await sb.from('progress').select('*').eq('user_id', user.id).maybeSingle();
+    if (!res.error) { data = res.data; break; }
+    lastError = res.error;
+    if (attempt === 0) await new Promise(r => setTimeout(r, 400));
+  }
+
+  if (lastError) {
+    console.error('progress load failed after retries', lastError);
+    if (cached) {
+      copyProgressFrom(cached);
+      console.log('Server unreachable — fell back to local cache');
+      runLibraryBackfill();
+      return;
+    }
+    alert('Could not load your progress (network or auth issue). Refresh and try again.');
+    return;
+  }
+
+  if (data) {
+    // Both server data and cache exist — pick newer by last_save_at
+    const serverTime = data.last_save_at ? new Date(data.last_save_at).getTime() : 0;
+    const cacheTime = cached?.last_save_at ? new Date(cached.last_save_at).getTime() : 0;
+    if (cached && cacheTime > serverTime) {
+      // Local cache is newer — keep local in memory and push it up
+      copyProgressFrom(cached);
+      console.log('Local cache newer than server — pushing local state up');
+      try { await saveProgress(); } catch(e) { console.warn('push up failed', e); }
+    } else {
+      // Server is newer or tied — use server
+      copyProgressFrom({
+        completed: data.completed,
+        xp: data.xp,
+        streak: data.streak,
+        last_active: data.last_active,
+        created_at: data.created_at,
+        library: data.library,
+        assessments: data.assessments,
+        completedLevels: data.completed_levels,
+        last_save_at: data.last_save_at,
+      });
+      saveLocalCache(); // sync cache to server state
+    }
+    runLibraryBackfill();
+  } else {
+    // First-time user — upsert blank row
+    const { data: ins, error: insErr } = await sb.from('progress').upsert({
+      user_id: user.id,
+      completed: {}, xp: 0, streak: 0, last_active: null,
+      library: {}, assessments: {}, completed_levels: {},
+      last_save_at: new Date().toISOString(),
+    }, { onConflict: 'user_id' }).select().single();
+    if (insErr) { console.error('first-time create failed', insErr); return; }
+    if (ins) progress.created_at = ins.created_at;
+    saveLocalCache();
+  }
   updateStreakOnLoad();
+}
+
+function runLibraryBackfill() {
+  try {
+    Object.keys(progress.completed).forEach(lessonId => {
+      try { populateLibraryFromLesson(lessonId); } catch(e) {}
+    });
+    ensureLibraryTrackFields();
+  } catch(e) { console.warn('library backfill failed', e); }
 }
 
 function updateStreakOnLoad() {
@@ -4397,8 +4657,7 @@ function updateStreakOnLoad() {
   if (!progress.last_active) return;
   const gap = daysBetween(progress.last_active, today);
   if (gap === null) return;
-  if (gap > 1) progress.streak = 0; // broke streak
-  // gap of 0 or 1: streak intact (1 means they need a lesson today to bump it)
+  if (gap > 1) progress.streak = 0;
 }
 
 async function saveProgress(opts = {}) {
@@ -4412,7 +4671,12 @@ async function saveProgress(opts = {}) {
       progress.last_active = today;
     }
   }
+  // Stamp save time and always update local cache (online or offline)
+  progress.last_save_at = new Date().toISOString();
+  saveLocalCache();
+
   const payload = {
+    user_id: user.id,
     completed: progress.completed,
     xp: progress.xp,
     streak: progress.streak,
@@ -4420,20 +4684,25 @@ async function saveProgress(opts = {}) {
     library: progress.library,
     assessments: progress.assessments,
     completed_levels: progress.completedLevels,
+    last_save_at: progress.last_save_at,
   };
-  const { error } = await sb.from('progress').update(payload).eq('user_id', user.id);
+  const { error } = await sb.from('progress').upsert(payload, { onConflict: 'user_id' });
   if (error) {
-    // Fallback if newer columns don't exist yet — strip them and retry
     const msg = String(error.message||'').toLowerCase();
-    if (msg.includes('library') || msg.includes('assessments') || msg.includes('completed_levels')) {
+    // Graceful fallback if newer columns don't exist yet
+    if (msg.includes('library') || msg.includes('assessments') || msg.includes('completed_levels') || msg.includes('last_save_at')) {
       delete payload.library;
       delete payload.assessments;
       delete payload.completed_levels;
-      const { error: e2 } = await sb.from('progress').update(payload).eq('user_id', user.id);
-      if (e2) console.warn('progress save error', e2);
-      console.warn('Newer columns missing — run the Build 7 SQL migration. Some data will not persist until then.');
+      delete payload.last_save_at;
+      const { error: e2 } = await sb.from('progress').upsert(payload, { onConflict: 'user_id' });
+      if (e2) {
+        console.error('progress save error (after column strip)', e2);
+      } else {
+        console.warn('Some columns missing — run latest SQL migrations for full feature support.');
+      }
     } else {
-      console.warn('progress save error', error);
+      console.error('progress save error', error);
     }
   }
 }
@@ -4445,32 +4714,68 @@ function libraryKey(es) {
 
 function populateLibraryFromLesson(lessonId) {
   const lesson = LESSONS[lessonId];
-  if (!lesson || !lesson.vocabulary) return 0;
+  if (!lesson) return 0;
+  const meta = LESSON_META[lessonId];
+  // Lesson-level track: 'venezuelan' for V1-V8, otherwise 'standard'
+  const lessonTrack = (meta && meta.track === 'venezuelan') ? 'venezuelan' : 'standard';
   let added = 0;
   const today = todayISO();
-  lesson.vocabulary.forEach(([es, en]) => {
+
+  function harvest(pair, track) {
+    const [es, en] = pair;
     const key = libraryKey(es);
     if (!key) return;
     if (progress.library[key]) {
-      // Already exists — just register that this lesson also taught it
       const lessons = progress.library[key].lessonIds || [];
       if (!lessons.includes(lessonId)) lessons.push(lessonId);
       progress.library[key].lessonIds = lessons;
+      // Upgrade rule: missing → set; standard → can upgrade to venezuelan; venezuelan → never downgrades
+      const existing = progress.library[key].track;
+      if (!existing || (existing === 'standard' && track === 'venezuelan')) {
+        progress.library[key].track = track;
+      }
     } else {
       progress.library[key] = {
         es, en,
         lessonIds: [lessonId],
+        track,
         added: today,
         interval: 0,
         ease: 2.5,
         reviews: 0,
-        next_review: today, // available for review immediately
+        next_review: today,
         last_quality: null,
       };
       added++;
     }
+  }
+
+  // veVocabulary → ALWAYS Venezuelan library. If an entry also appears in standard vocabulary,
+  // the VE tagging wins (it's tracked once, not duplicated).
+  const veKeys = new Set();
+  (lesson.veVocabulary || []).forEach(p => {
+    const key = libraryKey(p[0]);
+    if (key) veKeys.add(key);
+    harvest(p, 'venezuelan');
   });
+  // Standard vocabulary → standard library, skipping any item already marked VE
+  (lesson.vocabulary || []).forEach(p => {
+    const key = libraryKey(p[0]);
+    if (key && veKeys.has(key)) return;
+    harvest(p, lessonTrack);
+  });
+
   return added;
+}
+
+// Backfill `track` field on any legacy library entries lacking it
+function ensureLibraryTrackFields() {
+  Object.keys(progress.library || {}).forEach(key => {
+    const it = progress.library[key];
+    if (!it.track) {
+      it.track = (it.lessonIds || []).some(id => /^V\d/.test(id)) ? 'venezuelan' : 'standard';
+    }
+  });
 }
 
 // SM-2 algorithm. Quality: 1=Again, 2=Hard, 3=Good, 4=Easy
@@ -4493,6 +4798,7 @@ function scheduleSRS(item, quality) {
   next.setDate(next.getDate() + item.interval);
   item.next_review = next.toISOString().slice(0,10);
   item.last_quality = quality;
+  item.last_reviewed = todayISO(); // for "reviewed today" badge in library
 }
 
 function getDueItems() {
@@ -4705,11 +5011,14 @@ async function toggleComplete(id) {
   } else {
     progress.completed[id] = today;
     progress.xp += LESSON_META[id].xp;
+    // Manual mark should also harvest vocabulary into library — same as finishing the lesson
+    try { populateLibraryFromLesson(id); } catch(e) { console.warn('library populate failed', e); }
   }
   await saveProgress({ activity: true });
   renderDashboard();
   renderCurriculum();
   renderProfile();
+  renderLibrary();
 }
 
 // ─────────── LESSON MODAL ───────────
@@ -4828,11 +5137,6 @@ function renderExercise() {
   if (isAssessment) {
     $('#lesson-xp-running').textContent = (currentExerciseIdx + 1) + '/' + total;
   }
-  // Clear any speak-exercise state from a prior exercise
-  window.__speakHeard = '';
-  window.__speakAlternatives = null;
-  window.__speakBypass = false;
-  window.__speakSkipped = false;
   // Cancel any TTS that might still be playing from previous exercise
   if ('speechSynthesis' in window) speechSynthesis.cancel();
   const checkBtn = $('#btn-check');
@@ -4965,7 +5269,12 @@ function buildTapSelect(ex) {
     tile.innerHTML = `<span class="option-text">${opt}</span><span class="option-letter">${String.fromCharCode(65+i)}</span>`;
     tile.addEventListener('click', () => {
       if (currentAnswered) return;
-      $$('.option-tile').forEach(t => t.classList.remove('selected'));
+      // Clear BOTH the class AND the dataset on every tile — previously dataset.selected
+      // was sticky which caused checkAnswer to read the FIRST clicked tile, not the latest.
+      $$('.option-tile').forEach(t => {
+        t.classList.remove('selected');
+        delete t.dataset.selected;
+      });
       tile.classList.add('selected');
       tile.dataset.selected = 'true';
     });
@@ -5003,7 +5312,10 @@ function buildListen(ex) {
     tile.innerHTML = `<span class="option-text">${opt}</span><span class="option-letter">${String.fromCharCode(65+i)}</span>`;
     tile.addEventListener('click', () => {
       if (currentAnswered) return;
-      $$('.option-tile').forEach(t => t.classList.remove('selected'));
+      $$('.option-tile').forEach(t => {
+        t.classList.remove('selected');
+        delete t.dataset.selected;
+      });
       tile.classList.add('selected');
       tile.dataset.selected = 'true';
     });
@@ -5105,134 +5417,12 @@ function buildSpeak(ex) {
   card.className = 'speak-card';
   card.innerHTML = `
     <div class="speak-target">${ex.target}</div>
-    <div class="speak-translation">${ex.translation}</div>
-    <button class="intro-speak" id="speak-listen" style="margin: 0 auto 16px; width: 40px; height: 40px;" aria-label="Listen">▶</button>
-    <button class="mic-button" id="mic-btn" aria-label="Record speech">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="9" y="3" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0014 0M12 18v3"/></svg>
-    </button>
-    <div class="mic-status" id="mic-status">Tap mic, or use «I said it» below</div>
-    <div class="speak-heard" id="speak-heard"></div>
-    <div class="speak-fallback">
-      <button class="speak-mark-said" id="speak-mark-said">I said it ✓</button>
-      <button class="speak-skip" id="speak-skip">Skip</button>
-    </div>
+    <div class="speak-translation">${ex.translation || ''}</div>
+    <button class="intro-speak" id="speak-listen" aria-label="Listen">▶</button>
+    <div class="speak-instruction">Tap Listen, repeat aloud, then tap Check to continue.</div>
   `;
   f.appendChild(card);
-
-  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-  const micBtn = card.querySelector('#mic-btn');
-  const statusEl = card.querySelector('#mic-status');
-  const heardEl = card.querySelector('#speak-heard');
-  const markBtn = card.querySelector('#speak-mark-said');
-  const skipBtn = card.querySelector('#speak-skip');
-
-  // Listen button — user-initiated TTS only (no auto-play, avoids iOS audio session conflicts)
   card.querySelector('#speak-listen').addEventListener('click', () => speak(ex.target));
-
-  // Self-attest: full credit, advance like correct
-  markBtn.addEventListener('click', () => {
-    if (currentAnswered) return;
-    window.__speakBypass = true;
-    window.__speakHeard = '(self-marked)';
-    statusEl.textContent = '✓ Marked — tap Check';
-    markBtn.style.background = 'var(--success)';
-    markBtn.style.color = 'var(--cream)';
-    markBtn.style.borderColor = 'var(--success)';
-  });
-
-  // Skip: also advance, no penalty
-  skipBtn.addEventListener('click', () => {
-    if (currentAnswered) return;
-    window.__speakBypass = true;
-    window.__speakSkipped = true;
-    window.__speakHeard = '(skipped)';
-    statusEl.textContent = 'Skipped — tap Continue';
-  });
-
-  if (!SR) {
-    statusEl.textContent = 'Speech recognition not supported here — use «I said it ✓»';
-    micBtn.style.opacity = '0.4';
-    micBtn.disabled = true;
-    return f;
-  }
-
-  let recognition = null;
-  let isListening = false;
-  let timeoutId = null;
-
-  function cleanupRecognition() {
-    if (timeoutId) { clearTimeout(timeoutId); timeoutId = null; }
-    isListening = false;
-    micBtn.classList.remove('listening');
-  }
-
-  micBtn.addEventListener('click', () => {
-    if (currentAnswered) return;
-
-    // Tap-to-stop if already listening
-    if (isListening) {
-      try { recognition?.stop(); } catch(e) {}
-      cleanupRecognition();
-      statusEl.textContent = 'Stopped — tap mic to retry';
-      return;
-    }
-
-    // Cancel any TTS first; iOS needs a moment for the audio session to free up
-    speechSynthesis.cancel();
-    statusEl.textContent = 'Preparing…';
-
-    setTimeout(() => {
-      try {
-        recognition = new SR();
-        recognition.lang = 'es-MX';
-        recognition.continuous = false;
-        recognition.interimResults = false;
-        recognition.maxAlternatives = 3;
-
-        recognition.onstart = () => {
-          isListening = true;
-          micBtn.classList.add('listening');
-          statusEl.textContent = 'Listening… speak now';
-          heardEl.classList.remove('show');
-          // Hard timeout — iOS Safari sometimes hangs without firing onresult/onerror
-          timeoutId = setTimeout(() => {
-            try { recognition?.stop(); } catch(e) {}
-            cleanupRecognition();
-            statusEl.textContent = 'Took too long — retry, or tap «I said it ✓»';
-          }, 7000);
-        };
-        recognition.onerror = (e) => {
-          cleanupRecognition();
-          if (e.error === 'not-allowed') {
-            statusEl.textContent = 'Mic blocked — check browser permissions';
-          } else if (e.error === 'no-speech') {
-            statusEl.textContent = "Didn't hear anything — tap mic to retry";
-          } else if (e.error === 'aborted') {
-            // User stopped manually; status already set
-          } else {
-            statusEl.textContent = 'Mic glitched — use «I said it ✓»';
-          }
-        };
-        recognition.onend = () => { cleanupRecognition(); };
-        recognition.onresult = (e) => {
-          if (timeoutId) { clearTimeout(timeoutId); timeoutId = null; }
-          const alts = [];
-          for (let i = 0; i < e.results[0].length; i++) alts.push(e.results[0][i].transcript);
-          const heard = alts[0] || '';
-          window.__speakHeard = heard;
-          window.__speakAlternatives = alts;
-          heardEl.textContent = '«' + heard + '»';
-          heardEl.classList.add('show');
-          statusEl.textContent = 'Got it — tap Check';
-        };
-        recognition.start();
-      } catch(err) {
-        cleanupRecognition();
-        statusEl.textContent = 'Could not start mic — use «I said it ✓»';
-      }
-    }, 250);
-  });
-
   return f;
 }
 
@@ -5364,18 +5554,9 @@ function checkAnswer() {
       break;
     }
     case 'speak': {
-      if (window.__speakBypass) { isCorrect = true; yourAnswer = '(skipped)'; break; }
-      const heard = (window.__speakHeard||'').trim();
-      const alts = window.__speakAlternatives || [heard];
-      yourAnswer = heard;
-      const targetN = normalize(ex.target);
-      isCorrect = alts.some(a => {
-        const n = normalize(a);
-        if (!n) return false;
-        return n === targetN || n.includes(targetN) || targetN.includes(n);
-      });
-      window.__speakHeard = '';
-      window.__speakAlternatives = null;
+      // Read-aloud is honor-system. The act of reading + listening is the practice.
+      isCorrect = true;
+      yourAnswer = '(read aloud)';
       break;
     }
     case 'conversation': {
@@ -5715,8 +5896,11 @@ async function finishLesson() {
 // ─────────── LIBRARY RENDER ───────────
 let libFilter = 'all';
 let libSearch = '';
+let libTrack = 'standard'; // 'standard' | 'venezuelan' | 'all'
 
 function renderLibrary() {
+  // Backfill track field on any legacy entries before reading
+  ensureLibraryTrackFields();
   const items = Object.values(progress.library);
   const stats = getLibraryStats();
   $('#lib-total').textContent = stats.total;
@@ -5739,12 +5923,18 @@ function renderLibrary() {
   $('#library-empty').style.display = 'none';
   $('#library-content').style.display = 'block';
 
+  // Sync active state of track buttons
+  $$('.lib-track-btn').forEach(b => b.classList.toggle('active', b.dataset.track === libTrack));
+
   // Venezuelan reference sheets
   renderVeReference();
 
   // Filter & search
   const today = todayISO();
   let filtered = items.slice();
+  // Track filter
+  if (libTrack === 'standard') filtered = filtered.filter(it => (it.track || 'standard') !== 'venezuelan');
+  else if (libTrack === 'venezuelan') filtered = filtered.filter(it => it.track === 'venezuelan');
   if (libFilter === 'due') filtered = filtered.filter(it => !it.next_review || it.next_review <= today);
   else if (libFilter === 'learned') filtered = filtered.filter(it => (it.reviews || 0) > 0);
   else if (libFilter === 'new') filtered = filtered.filter(it => (it.reviews || 0) === 0);
@@ -5769,12 +5959,29 @@ function renderLibrary() {
   filtered.forEach(it => {
     const card = document.createElement('div');
     const due = !it.next_review || it.next_review <= today;
-    card.className = 'lib-card' + (due ? ' due' : '');
-    const lessonTag = (it.lessonIds && it.lessonIds[0]) ? `LESSON ${LESSON_META[it.lessonIds[0]]?.n || '?'}` : '';
+    const isVE = it.track === 'venezuelan';
+    const reviewedToday = it.last_reviewed === today;
+    card.className = 'lib-card' + (due ? ' due' : '') + (isVE ? ' lib-card-ve' : '') + (reviewedToday ? ' lib-card-reviewed' : '');
+    const firstLesson = it.lessonIds && it.lessonIds[0];
+    const lessonTag = firstLesson
+      ? (isVE ? `🇻🇪 ${firstLesson}` : `LESSON ${LESSON_META[firstLesson]?.n || '?'}`)
+      : '';
     let intervalText;
-    if ((it.reviews || 0) === 0) intervalText = 'New';
-    else if (due) intervalText = 'Due now';
-    else {
+    if (reviewedToday) {
+      // Show a clear "you did this today" badge, plus the next interval below
+      if (it.last_quality < 2) {
+        intervalText = '✓ Reviewed · come back to it';
+      } else {
+        const days = it.next_review ? daysBetween(today, it.next_review) : 0;
+        intervalText = days <= 1
+          ? '✓ Reviewed · see tomorrow'
+          : `✓ Reviewed · see in ${days} days`;
+      }
+    } else if ((it.reviews || 0) === 0) {
+      intervalText = 'New';
+    } else if (due) {
+      intervalText = 'Due now';
+    } else {
       const days = daysBetween(today, it.next_review);
       intervalText = days <= 0 ? 'Due now' : (days === 1 ? 'In 1 day' : `In ${days} days`);
     }
@@ -5803,6 +6010,12 @@ function setLibFilter(f) {
   renderLibrary();
 }
 
+function setLibTrack(t) {
+  libTrack = t;
+  $$('.lib-track-btn').forEach(b => b.classList.toggle('active', b.dataset.track === t));
+  renderLibrary();
+}
+
 // ─────────── REVIEW SESSION ───────────
 function startReview() {
   reviewQueue = getDueItems().slice();
@@ -5820,62 +6033,73 @@ function startReview() {
 }
 
 function renderReviewCard() {
-  if (reviewIdx >= reviewQueue.length) { return finishReview(); }
-  const it = reviewQueue[reviewIdx];
-  const total = reviewQueue.length;
-  $('#review-progress-fill').style.width = ((reviewIdx) / total * 100) + '%';
-  $('#review-counter').textContent = `${reviewIdx + 1}/${total}`;
-  reviewRevealed = false;
-  const area = $('#review-area');
-  const lessonTag = (it.lessonIds && it.lessonIds[0]) ? `LESSON ${LESSON_META[it.lessonIds[0]]?.n || '?'}` : '';
-  area.innerHTML = `
-    <div class="fade-in">
-      <div class="exercise-prompt-eyebrow">RECALL</div>
-      <div class="review-card">
-        <div class="review-eyebrow">CARD ${reviewIdx + 1} OF ${total}</div>
-        <div class="review-front">${it.es}</div>
-        <div class="review-back" id="review-back">${it.en}</div>
-        <div><span class="review-tag">${lessonTag}</span></div>
-        <div class="review-speak-row">
-          <button id="review-speak">▶ Listen</button>
+  try {
+    if (reviewIdx >= reviewQueue.length) { return finishReview(); }
+    const it = reviewQueue[reviewIdx];
+    const total = reviewQueue.length;
+    $('#review-progress-fill').style.width = ((reviewIdx) / total * 100) + '%';
+    $('#review-counter').textContent = `${reviewIdx + 1}/${total}`;
+    reviewRevealed = false;
+    const area = $('#review-area');
+    const lessonTag = (it.lessonIds && it.lessonIds[0]) ? `LESSON ${LESSON_META[it.lessonIds[0]]?.n || '?'}` : '';
+    area.innerHTML = `
+      <div class="fade-in">
+        <div class="exercise-prompt-eyebrow">RECALL</div>
+        <div class="review-card">
+          <div class="review-eyebrow">CARD ${reviewIdx + 1} OF ${total}</div>
+          <div class="review-front">${it.es}</div>
+          <div class="review-back" id="review-back">${it.en}</div>
+          <div><span class="review-tag">${lessonTag}</span></div>
+          <div class="review-speak-row">
+            <button id="review-speak">▶ Listen</button>
+          </div>
+        </div>
+        <div class="review-actions">
+          <button class="btn btn-primary" id="btn-reveal">Show answer</button>
+          <div class="review-quality-grid review-quality-grid-2" id="quality-grid">
+            <button class="q-btn q-again-2" data-q="1">
+              <span class="q-btn-label">Review again</span>
+              <span class="q-btn-sub">come back to this card now</span>
+            </button>
+            <button class="q-btn q-good-2" data-q="3">
+              <span class="q-btn-label">Got it</span>
+              <span class="q-btn-sub" id="q-good-int">schedule for next time</span>
+            </button>
+          </div>
         </div>
       </div>
-      <div class="review-actions">
-        <button class="btn btn-primary" id="btn-reveal">Show answer</button>
-        <div class="review-quality-grid" id="quality-grid">
-          <button class="q-btn q-again" data-q="1"><span class="q-btn-label">Again</span><span class="q-btn-interval">&lt;1d</span></button>
-          <button class="q-btn q-hard" data-q="2"><span class="q-btn-label">Hard</span><span class="q-btn-interval" id="q-hard-int">1d</span></button>
-          <button class="q-btn q-good" data-q="3"><span class="q-btn-label">Good</span><span class="q-btn-interval" id="q-good-int">3d</span></button>
-          <button class="q-btn q-easy" data-q="4"><span class="q-btn-label">Easy</span><span class="q-btn-interval" id="q-easy-int">5d</span></button>
-        </div>
-      </div>
-    </div>
-  `;
-  $('#review-speak').addEventListener('click', () => speak(it.es));
-  $('#btn-reveal').addEventListener('click', revealReviewCard);
-  $$('.q-btn').forEach(b => b.addEventListener('click', () => rateReviewCard(parseInt(b.dataset.q))));
-  // Auto-pronounce
-  setTimeout(() => speak(it.es), 250);
-  // Update interval previews based on this item's current state
-  updateQualityIntervals(it);
+    `;
+    $('#review-speak').addEventListener('click', () => speak(it.es));
+    $('#btn-reveal').addEventListener('click', revealReviewCard);
+    $$('.q-btn').forEach(b => b.addEventListener('click', () => rateReviewCard(parseInt(b.dataset.q))));
+    // Auto-pronounce, but cancel any leftover speech first to avoid iOS audio session conflicts
+    try { speechSynthesis.cancel(); } catch(e) {}
+    setTimeout(() => { try { speak(it.es); } catch(e) {} }, 300);
+    // Update interval preview for "Got it"
+    updateQualityIntervals(it);
+  } catch(e) {
+    console.error('renderReviewCard failed', e);
+    // Failsafe: skip this card so we don't trap the user
+    reviewIdx++;
+    if (reviewIdx >= reviewQueue.length) finishReview();
+    else renderReviewCard();
+  }
 }
 
 function updateQualityIntervals(it) {
-  // Lightweight projection of what each quality would produce
-  function project(quality) {
+  // Project what "Got it" produces for the interval preview
+  function project() {
     const copy = { ...it, ease: it.ease || 2.5, interval: it.interval || 0, reviews: it.reviews || 0 };
-    if (quality < 2) return 1;
     copy.reviews++;
     if (copy.reviews === 1) copy.interval = 1;
-    else if (copy.reviews === 2) copy.interval = quality === 4 ? 4 : 3;
+    else if (copy.reviews === 2) copy.interval = 3;
     else copy.interval = Math.max(1, Math.round(copy.interval * copy.ease));
-    if (quality === 4) copy.interval = Math.round(copy.interval * 1.3);
     return copy.interval;
   }
-  const fmt = d => d === 1 ? '1d' : d < 30 ? `${d}d` : `${Math.round(d/30)}mo`;
-  $('#q-hard-int').textContent = fmt(project(2));
-  $('#q-good-int').textContent = fmt(project(3));
-  $('#q-easy-int').textContent = fmt(project(4));
+  const d = project();
+  const fmt = d === 1 ? 'see in 1 day' : d < 30 ? `see in ${d} days` : `see in ~${Math.round(d/30)} months`;
+  const el = $('#q-good-int');
+  if (el) el.textContent = fmt;
 }
 
 function revealReviewCard() {
@@ -5887,63 +6111,88 @@ function revealReviewCard() {
 
 async function rateReviewCard(quality) {
   if (!reviewRevealed) return;
-  const it = reviewQueue[reviewIdx];
-  // Look up the live item by key (reviewQueue holds references but we want to update progress.library)
-  const key = libraryKey(it.es);
-  const live = progress.library[key];
-  if (live) {
-    scheduleSRS(live, quality);
-    if (quality >= 3) reviewCorrect++;
+  try {
+    const it = reviewQueue[reviewIdx];
+    const key = libraryKey(it.es);
+    const live = progress.library[key];
+    if (live) {
+      scheduleSRS(live, quality);
+      if (quality >= 3) reviewCorrect++;
+    }
+    // "Review again" (quality=1): push this card BACK into the current session queue
+    // so it actually resurfaces. Insert ~3 positions ahead, or at the end if queue is short.
+    if (quality < 2 && reviewIdx < reviewQueue.length) {
+      const insertAt = Math.min(reviewQueue.length, reviewIdx + 4);
+      reviewQueue.splice(insertAt, 0, it);
+    }
+    reviewIdx++;
+    // Save in background — don't block UI
+    saveProgress().catch(e => console.warn('review save error', e));
+    if (reviewIdx >= reviewQueue.length) finishReview();
+    else renderReviewCard();
+  } catch(e) {
+    console.error('rateReviewCard failed', e);
+    // Failsafe: advance so user can continue
+    reviewIdx++;
+    if (reviewIdx >= reviewQueue.length) finishReview();
+    else renderReviewCard();
   }
-  reviewIdx++;
-  // Save in background (don't block UI)
-  saveProgress();
-  if (reviewIdx >= reviewQueue.length) finishReview();
-  else renderReviewCard();
 }
 
 function finishReview() {
-  $('#review-progress-fill').style.width = '100%';
-  $('#review-counter').textContent = `${reviewQueue.length}/${reviewQueue.length}`;
-  const total = reviewQueue.length;
-  const xpEarned = reviewCorrect * 2;
-  progress.xp += xpEarned;
-  saveProgress({ activity: total > 0 });
-  renderDashboard();
-  renderLibrary();
-  renderProfile();
-  $('#review-area').innerHTML = `
-    <div class="complete-screen fade-in">
-      <div class="complete-mark">¡✓!</div>
-      <div class="complete-eyebrow">REVIEW COMPLETE</div>
-      <div class="complete-title">Nice work.</div>
-      <div class="complete-sub">${reviewCorrect}/${total} recalled. Cards are scheduled for their next review.</div>
-      <div class="complete-stats">
-        <div class="complete-stat">
-          <div class="complete-stat-num">+${xpEarned}</div>
-          <div class="complete-stat-label">XP Earned</div>
+  try {
+    $('#review-progress-fill').style.width = '100%';
+    $('#review-counter').textContent = `${reviewQueue.length}/${reviewQueue.length}`;
+    const total = reviewQueue.length;
+    const xpEarned = reviewCorrect * 2;
+    progress.xp += xpEarned;
+    // Render completion screen FIRST so we never leave the user staring at nothing
+    $('#review-area').innerHTML = `
+      <div class="complete-screen fade-in">
+        <div class="complete-mark">¡✓!</div>
+        <div class="complete-eyebrow">REVIEW COMPLETE</div>
+        <div class="complete-title">Nice work.</div>
+        <div class="complete-sub">${reviewCorrect}/${total} got it. Cards you marked "review again" are scheduled to come back soon.</div>
+        <div class="complete-stats">
+          <div class="complete-stat">
+            <div class="complete-stat-num">+${xpEarned}</div>
+            <div class="complete-stat-label">XP Earned</div>
+          </div>
+          <div class="complete-stat">
+            <div class="complete-stat-num">${reviewCorrect}/${total}</div>
+            <div class="complete-stat-label">Got it</div>
+          </div>
+          <div class="complete-stat">
+            <div class="complete-stat-num">${progress.streak}</div>
+            <div class="complete-stat-label">Day Streak</div>
+          </div>
         </div>
-        <div class="complete-stat">
-          <div class="complete-stat-num">${reviewCorrect}/${total}</div>
-          <div class="complete-stat-label">Recalled</div>
-        </div>
-        <div class="complete-stat">
-          <div class="complete-stat-num">${progress.streak}</div>
-          <div class="complete-stat-label">Day Streak</div>
+        <div class="complete-actions">
+          <button class="btn btn-terracotta" id="review-done">Done</button>
         </div>
       </div>
-      <div class="complete-actions">
-        <button class="btn btn-terracotta" id="review-done">Done</button>
-      </div>
-    </div>
-  `;
-  $('#review-done').addEventListener('click', () => showScreen('home'));
+    `;
+    $('#review-done').addEventListener('click', () => showScreen('home'));
+    // Background: persist + refresh other screens. Wrapped so any failure can't trap the user.
+    try { saveProgress({ activity: total > 0 }); } catch(e) { console.warn('finishReview save failed', e); }
+    try { renderDashboard(); } catch(e) { console.warn('finishReview renderDashboard failed', e); }
+    try { renderLibrary(); } catch(e) { console.warn('finishReview renderLibrary failed', e); }
+    try { renderProfile(); } catch(e) { console.warn('finishReview renderProfile failed', e); }
+  } catch(e) {
+    console.error('finishReview failed catastrophically', e);
+    // Failsafe: at least show the home screen
+    try { showScreen('home'); } catch(e2) {}
+  }
 }
 
 function exitReview() {
-  speechSynthesis.cancel();
-  // Save any rated cards
-  saveProgress();
+  try { speechSynthesis.cancel(); } catch(e) {}
+  // Save any cards rated in this session
+  saveProgress().catch(e => console.warn('exitReview save failed', e));
+  // Refresh dashboard + library so due-count and reviewed-today badges reflect
+  // the partial work you just did, not the snapshot from when review started
+  try { renderDashboard(); } catch(e) { console.warn('exitReview renderDashboard failed', e); }
+  try { renderLibrary(); } catch(e) { console.warn('exitReview renderLibrary failed', e); }
   showScreen('home');
 }
 
@@ -6031,6 +6280,41 @@ function renderProfile() {
   $('#profile-lessons').textContent = Object.keys(progress.completed).length;
   $('#profile-xp').textContent = progress.xp;
   $('#profile-streak').textContent = progress.streak;
+
+  // Sync status
+  const icon = $('#sync-icon');
+  const status = $('#sync-status');
+  const detail = $('#sync-detail');
+  if (icon && status && detail) {
+    icon.classList.remove('warn', 'offline');
+    if (!navigator.onLine) {
+      icon.classList.add('offline');
+      status.textContent = 'Offline';
+      detail.textContent = progress.last_save_at
+        ? 'Saved locally · will sync when you reconnect (last save ' + formatRelativeTime(progress.last_save_at) + ')'
+        : 'Saved locally · will sync when you reconnect';
+    } else if (!progress.last_save_at) {
+      status.textContent = 'Not yet saved';
+      detail.textContent = 'Complete a lesson to start tracking.';
+    } else {
+      status.textContent = 'Synced';
+      detail.textContent = 'Last saved ' + formatRelativeTime(progress.last_save_at);
+    }
+  }
+}
+
+function formatRelativeTime(iso) {
+  if (!iso) return 'unknown';
+  const then = new Date(iso).getTime();
+  const now = Date.now();
+  const sec = Math.floor((now - then) / 1000);
+  if (sec < 60) return 'just now';
+  const min = Math.floor(sec / 60);
+  if (min < 60) return min + ' min ago';
+  const hr = Math.floor(min / 60);
+  if (hr < 24) return hr + (hr === 1 ? ' hour ago' : ' hours ago');
+  const days = Math.floor(hr / 24);
+  return days + (days === 1 ? ' day ago' : ' days ago');
 }
 
 // ─────────── AUTH ───────────
@@ -6097,9 +6381,12 @@ async function handleAuthSubmit() {
 }
 
 async function handleSignOut() {
+  // Clear the per-user local cache so a different user signing in on this device
+  // doesn't see the previous user's progress as the "newer" version
+  clearLocalCache();
   await sb.auth.signOut();
   user = null;
-  progress = { completed:{}, xp:0, streak:0, last_active:null, created_at:null, library:{}, assessments:{}, completedLevels:{} };
+  progress = { completed:{}, xp:0, streak:0, last_active:null, created_at:null, library:{}, assessments:{}, completedLevels:{}, last_save_at:null };
   showScreen('auth');
   $('#auth-email').value = '';
   $('#auth-password').value = '';
@@ -6141,6 +6428,8 @@ async function resetAllProgress() {
   progress.library = {};
   progress.assessments = {};
   progress.completedLevels = {};
+  progress.last_save_at = null;
+  clearLocalCache();
   await saveProgress();
   renderDashboard(); renderCurriculum(); renderLibrary(); renderProfile();
 }
@@ -6201,6 +6490,7 @@ $('#lib-search').addEventListener('input', e => {
   renderLibrary();
 });
 $$('.lib-filter').forEach(b => b.addEventListener('click', () => setLibFilter(b.dataset.filter)));
+$$('.lib-track-btn').forEach(b => b.addEventListener('click', () => setLibTrack(b.dataset.track)));
 $('#review-close').addEventListener('click', () => {
   if (confirm('Exit review? Cards you\'ve already rated will be saved.')) exitReview();
 });
@@ -6216,53 +6506,25 @@ function getPref(key) {
 function setPref(key, val) {
   try { localStorage.setItem('sp_pref_' + key, JSON.stringify(val)); } catch (e) {}
 }
+// Dialect spotlight is ALWAYS on now — Venezuelan content is core, not optional
 function applyDialectPref() {
-  const on = !!getPref('dialect');
-  document.body.classList.toggle('dialect-on', on);
-  const tog = $('#toggle-dialect');
-  if (tog) {
-    tog.classList.toggle('on', on);
-    tog.setAttribute('aria-checked', on ? 'true' : 'false');
-  }
+  document.body.classList.add('dialect-on');
 }
-$('#toggle-dialect')?.addEventListener('click', () => {
-  const on = !getPref('dialect');
-  setPref('dialect', on);
-  applyDialectPref();
-});
 
-// ─────────── OFFLINE QUEUE ───────────
+// ─────────── OFFLINE INDICATOR (queue removed — was causing data loss) ───────────
 function showOfflineIndicator() { $('#offline-pill').classList.add('show'); }
 function hideOfflineIndicator() { $('#offline-pill').classList.remove('show'); }
 
-function queueOfflineSave(payload) {
-  try {
-    // Last-write-wins: just store the latest payload
-    localStorage.setItem('sp_offline_payload', JSON.stringify({ payload, at: Date.now() }));
-  } catch (e) {}
-  showOfflineIndicator();
-}
+// CRITICAL: Clear any stale offline payload from previous builds that was causing
+// progress to be silently overwritten on page load.
+try { localStorage.removeItem('sp_offline_payload'); } catch(e) {}
 
-async function flushOfflineQueue() {
-  const raw = localStorage.getItem('sp_offline_payload');
-  if (!raw || !user) { hideOfflineIndicator(); return; }
-  try {
-    const { payload } = JSON.parse(raw);
-    const { error } = await sb.from('progress').update(payload).eq('user_id', user.id);
-    if (!error) {
-      localStorage.removeItem('sp_offline_payload');
-      hideOfflineIndicator();
-    } else {
-      console.warn('flush error', error);
-    }
-  } catch (e) { console.warn('flush parse', e); }
-}
-
-// Wrap saveProgress so failures + offline state get queued
+// Wrap saveProgress so offline saves still cache locally
 const _origSaveProgress = saveProgress;
 saveProgress = async function(opts = {}) {
+  if (!user) return;
   if (!navigator.onLine) {
-    // Compute payload locally, store, skip server call
+    // Offline: stamp and write to local cache only; sync happens on reconnect
     const today = todayISO();
     if (opts.activity && progress.last_active !== today) {
       const gap = daysBetween(progress.last_active, today);
@@ -6270,44 +6532,38 @@ saveProgress = async function(opts = {}) {
       else if (gap > 1 || !progress.last_active) progress.streak = 1;
       progress.last_active = today;
     }
-    queueOfflineSave({
-      completed: progress.completed,
-      xp: progress.xp,
-      streak: progress.streak,
-      last_active: progress.last_active,
-      library: progress.library,
-      assessments: progress.assessments,
-      completed_levels: progress.completedLevels,
-    });
+    progress.last_save_at = new Date().toISOString();
+    saveLocalCache();
+    showOfflineIndicator();
     return;
   }
   return _origSaveProgress(opts);
 };
 
-window.addEventListener('online', () => { hideOfflineIndicator(); flushOfflineQueue(); });
+window.addEventListener('online', async () => {
+  hideOfflineIndicator();
+  if (user) {
+    // Push current in-memory state up (it's the merge of server + offline work)
+    try { await saveProgress(); } catch(e) { console.warn('reconnect save failed', e); }
+  }
+});
 window.addEventListener('offline', () => showOfflineIndicator());
 
 // ─────────── SERVICE WORKER (offline cache) ───────────
 if ('serviceWorker' in navigator) {
-  // Use relative path so it works on GitHub Pages subpaths
   navigator.serviceWorker.register('./sw.js').catch(err => console.warn('SW register failed', err));
 }
 
 // ─────────── INIT ───────────
 (async () => {
-  // Apply preferences immediately (before load) so toggle reflects state
   applyDialectPref();
   if (!navigator.onLine) showOfflineIndicator();
 
-  // Pre-warm voices on user gesture later
   if ('speechSynthesis' in window) speechSynthesis.getVoices();
 
   const { data: { session } } = await sb.auth.getSession();
   await handleSession(session);
   sb.auth.onAuthStateChange((_event, session) => handleSession(session));
-
-  // After session loads, attempt to flush any pending offline saves
-  if (navigator.onLine) flushOfflineQueue();
 })();
 </script>
 </body>
