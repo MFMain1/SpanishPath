@@ -1474,6 +1474,92 @@ input { font-size: 16px; } /* prevents iOS zoom */
 .lib-card-reviewed.due {
   border-color: rgba(74,113,64,0.3);
 }
+.lib-card-learned {
+  opacity: 0.62;
+  border-color: rgba(74,113,64,0.25);
+  background: linear-gradient(180deg, rgba(250,247,242,0.5), rgba(74,113,64,0.03));
+}
+.lib-card-learned .lib-card-es {
+  color: var(--ink);
+}
+.lib-card-learned .lib-card-interval {
+  color: var(--success);
+  font-weight: 600;
+}
+.lib-card-example {
+  margin-top: 8px;
+  padding: 8px 10px;
+  border-left: 2px solid var(--gold);
+  background: rgba(201, 155, 61, 0.06);
+  border-radius: 0 6px 6px 0;
+}
+.lib-card-example-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  color: var(--gold);
+  font-weight: 700;
+  margin-bottom: 3px;
+}
+.lib-card-example-es {
+  font-family: var(--serif);
+  font-size: 14px;
+  color: var(--ink);
+  font-style: italic;
+  line-height: 1.35;
+}
+.lib-card-example-en {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 2px;
+  line-height: 1.3;
+}
+.lib-card-cat {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 600;
+  margin-top: 4px;
+}
+.lib-categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+.lib-cat-pill {
+  padding: 6px 10px;
+  border-radius: 16px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  font-size: 12px;
+  color: var(--muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: all .15s;
+  cursor: pointer;
+}
+.lib-cat-pill:hover { color: var(--ink); border-color: var(--terracotta-soft); }
+.lib-cat-pill.active {
+  background: var(--terracotta);
+  color: white;
+  border-color: var(--terracotta);
+}
+.lib-cat-pill.active .lib-cat-count {
+  background: rgba(255,255,255,0.25);
+  color: white;
+}
+.lib-cat-count {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 700;
+  background: rgba(0,0,0,0.06);
+  border-radius: 8px;
+  padding: 1px 5px;
+}
 .lib-card-ve .lib-card-tag {
   background: linear-gradient(135deg, var(--terracotta-soft), var(--gold-soft));
   color: var(--terracotta);
@@ -2389,6 +2475,7 @@ body.dialect-on .lesson-ve {
           <button class="lib-filter" data-filter="learned">Learned</button>
           <button class="lib-filter" data-filter="new">New</button>
         </div>
+        <div class="lib-categories" id="lib-categories"></div>
       </div>
 
       <!-- Venezuelan Reference Sheets — unlocked per level -->
@@ -4649,6 +4736,7 @@ function runLibraryBackfill() {
       try { populateLibraryFromLesson(lessonId); } catch(e) {}
     });
     ensureLibraryTrackFields();
+    ensureLibraryExamples();
   } catch(e) { console.warn('library backfill failed', e); }
 }
 
@@ -4712,6 +4800,90 @@ function libraryKey(es) {
   return normalize(es);
 }
 
+// ─────────── CATEGORY DETECTION ───────────
+// Rule-based categorization derived from the Spanish surface form.
+// Computed on render (not stored) so I can tune rules without migrating data.
+const LIBRARY_CATEGORIES = [
+  { id: 'all',         label: 'All',         emoji: '📚' },
+  { id: 'greetings',   label: 'Greetings',   emoji: '👋' },
+  { id: 'verbs',       label: 'Verbs',       emoji: '🏃' },
+  { id: 'nouns',       label: 'Nouns',       emoji: '📦' },
+  { id: 'questions',   label: 'Questions',   emoji: '❓' },
+  { id: 'time',        label: 'Time',        emoji: '⏰' },
+  { id: 'numbers',     label: 'Numbers',     emoji: '🔢' },
+  { id: 'pronouns',    label: 'Pronouns',    emoji: '👤' },
+  { id: 'connectors',  label: 'Connectors',  emoji: '🔗' },
+  { id: 'phrases',     label: 'Phrases',     emoji: '💬' },
+];
+
+function categorize(es) {
+  const lower = (es || '').toLowerCase().trim();
+  if (!lower) return 'phrases';
+
+  // Greetings & farewells
+  if (/^(hola|buenos? d[ií]as|buenas (tardes|noches)|ad[ió]os|chao|chau|hasta (luego|pronto|ma[ñn]ana|la vista)|[ée]pale|nos vemos|bienvenid[oa]s?|mucho gusto|encantad[oa]|qu[ée] tal|c[óo]mo est[áa]s)/.test(lower)) return 'greetings';
+
+  // Questions (starts with ¿ or is a bare question word)
+  if (lower.startsWith('¿')) return 'questions';
+  if (/^(qu[ée]|c[óo]mo|d[óo]nde|cu[áa]ndo|por qu[ée]|cu[áa]nt[oa]s?|cu[áa]l(es)?|qui[ée]n(es)?)$/.test(lower)) return 'questions';
+
+  // Numbers — written or digit
+  if (/^\d+([.,]\d+)?$/.test(lower)) return 'numbers';
+  if (/^(cero|un[oa]?|dos|tres|cuatro|cinco|seis|siete|ocho|nueve|diez|once|doce|trece|catorce|quince|diecis[éeé]is|diecisiete|dieciocho|diecinueve|veinte|veintiuno|treinta|cuarenta|cincuenta|sesenta|setenta|ochenta|noventa|cien(to)?|mil|mill[óo]n(es)?)$/.test(lower)) return 'numbers';
+
+  // Pronouns (subject + object + reflexive)
+  if (/^(yo|t[úu]|[ée]l|ella|usted|nosotr[oa]s|ustedes|ell[oa]s|me|te|se|nos|lo|la|le|los|las|les|mí|ti|conmigo|contigo)$/.test(lower)) return 'pronouns';
+
+  // Prepositions & connectors
+  if (/^(en|a|al|del|de|con|sin|por|para|sobre|bajo|hasta|desde|entre|hacia|y|e|o|u|pero|porque|si|que|aunque|cuando|mientras|tambi[ée]n|tampoco|adem[áa]s|entonces|luego|despu[ée]s|antes)$/.test(lower)) return 'connectors';
+
+  // Time expressions (multi-word starts)
+  if (/^(hoy|ayer|ma[ñn]ana|ahora|nunca|siempre|anoche|temprano|tarde|el fin de semana|la semana pasada|el mes pasado|el a[ñn]o pasado|esta (ma[ñn]ana|tarde|noche|semana)|este (mes|a[ñn]o)|pronto|ya|todav[íi]a|a veces|de vez en cuando)/.test(lower)) return 'time';
+
+  // Verbs — single-word infinitive (-ar/-er/-ir, optionally reflexive)
+  if (!/\s/.test(lower) && /(ar|er|ir|arse|erse|irse)$/.test(lower) && lower.length >= 3) return 'verbs';
+
+  // Nouns — starts with article
+  if (/^(el|la|los|las|un|una|unos|unas) /.test(lower)) return 'nouns';
+
+  // Multi-word default → phrases
+  if (/\s/.test(lower)) return 'phrases';
+
+  // Single-word fallback → nouns (most common case for bare words)
+  return 'nouns';
+}
+
+// ─────────── EXAMPLE EXTRACTION ───────────
+// Scan a lesson's exercises for a sentence that uses the vocab word in context.
+// Used at harvest time AND in a migration pass for legacy entries.
+function findExampleInLesson(vocabEs, lesson) {
+  if (!lesson || !lesson.exercises) return null;
+  const target = (vocabEs || '').toLowerCase().trim();
+  if (!target) return null;
+  const minLen = Math.max(target.length + 3, target.length * 1.4);
+  for (const ex of lesson.exercises) {
+    const pairs = [
+      { es: ex.target,    en: ex.prompt },        // translate / arrange / speak
+      { es: ex.sentence,  en: ex.translation },   // fill_blank (after substitution)
+      { es: ex.npcLine,   en: ex.translation },   // conversation
+      { es: ex.audioText, en: ex.translation },   // listen
+    ];
+    for (const p of pairs) {
+      if (!p.es) continue;
+      const s = String(p.es).trim();
+      const sLower = s.toLowerCase();
+      if (sLower === target) continue;
+      // Match as whole word/phrase OR as substring with at least adjacent space/punct
+      if (sLower.includes(target) && s.length >= minLen) {
+        // Replace fill_blank placeholder if present
+        const cleanEs = s.replace(/_{2,}|___/g, vocabEs);
+        return { es: cleanEs, en: p.en || null };
+      }
+    }
+  }
+  return null;
+}
+
 function populateLibraryFromLesson(lessonId) {
   const lesson = LESSONS[lessonId];
   if (!lesson) return 0;
@@ -4734,7 +4906,13 @@ function populateLibraryFromLesson(lessonId) {
       if (!existing || (existing === 'standard' && track === 'venezuelan')) {
         progress.library[key].track = track;
       }
+      // Backfill example if missing
+      if (!progress.library[key].example) {
+        const ex = findExampleInLesson(es, lesson);
+        if (ex) progress.library[key].example = ex;
+      }
     } else {
+      const example = findExampleInLesson(es, lesson);
       progress.library[key] = {
         es, en,
         lessonIds: [lessonId],
@@ -4745,6 +4923,9 @@ function populateLibraryFromLesson(lessonId) {
         reviews: 0,
         next_review: today,
         last_quality: null,
+        last_reviewed: null,
+        learned: false,
+        example, // {es, en} or null
       };
       added++;
     }
@@ -4768,6 +4949,24 @@ function populateLibraryFromLesson(lessonId) {
   return added;
 }
 
+// Backfill examples for any library entries that were created before Build 17.
+// Walks every entry's source lessons and tries findExampleInLesson.
+function ensureLibraryExamples() {
+  let backfilled = 0;
+  Object.keys(progress.library || {}).forEach(key => {
+    const it = progress.library[key];
+    if (it.example) return;
+    const lessons = it.lessonIds || [];
+    for (const lid of lessons) {
+      const lesson = LESSONS[lid];
+      if (!lesson) continue;
+      const ex = findExampleInLesson(it.es, lesson);
+      if (ex) { it.example = ex; backfilled++; break; }
+    }
+  });
+  return backfilled;
+}
+
 // Backfill `track` field on any legacy library entries lacking it
 function ensureLibraryTrackFields() {
   Object.keys(progress.library || {}).forEach(key => {
@@ -4778,38 +4977,44 @@ function ensureLibraryTrackFields() {
   });
 }
 
-// SM-2 algorithm. Quality: 1=Again, 2=Hard, 3=Good, 4=Easy
+// Simple 2-state model:
+//   "Got it" (quality >= 3) → mark learned, exclude from future review
+//   "Review again" (quality < 2) → schedule for tomorrow, single retry
+// SM-2 intervals/ease retained as residual data but no longer drive scheduling.
 function scheduleSRS(item, quality) {
-  const q = quality + 1; // map 1-4 to 2-5 for SM-2
-  if (quality < 2) {
-    // Failed (Again or Hard slip): reset
-    item.reviews = 0;
-    item.interval = 1;
-  } else {
-    item.reviews = (item.reviews || 0) + 1;
-    if (item.reviews === 1) item.interval = 1;
-    else if (item.reviews === 2) item.interval = quality === 4 ? 4 : 3;
-    else item.interval = Math.max(1, Math.round(item.interval * (item.ease || 2.5)));
-    // Easy bump
-    if (quality === 4) item.interval = Math.round(item.interval * 1.3);
-  }
-  item.ease = Math.max(1.3, (item.ease || 2.5) + (0.1 - (5-q)*(0.08 + (5-q)*0.02)));
-  const next = new Date();
-  next.setDate(next.getDate() + item.interval);
-  item.next_review = next.toISOString().slice(0,10);
+  const today = todayISO();
   item.last_quality = quality;
-  item.last_reviewed = todayISO(); // for "reviewed today" badge in library
+  item.last_reviewed = today;
+  if (quality >= 3) {
+    // Got it — mark as learned. Never reappears in review queue.
+    item.learned = true;
+    item.reviews = (item.reviews || 0) + 1;
+    item.interval = 9999;
+    const next = new Date();
+    next.setDate(next.getDate() + 9999);
+    item.next_review = next.toISOString().slice(0,10);
+  } else {
+    // Review again — single retry tomorrow.
+    item.learned = false;
+    const next = new Date();
+    next.setDate(next.getDate() + 1);
+    item.next_review = next.toISOString().slice(0,10);
+    item.interval = 1;
+  }
 }
 
 function getDueItems() {
   const today = todayISO();
-  return Object.values(progress.library).filter(it => !it.next_review || it.next_review <= today);
+  return Object.values(progress.library).filter(it => {
+    if (it.learned) return false;
+    return !it.next_review || it.next_review <= today;
+  });
 }
 
 function getLibraryStats() {
   const items = Object.values(progress.library);
   const due = getDueItems();
-  const learned = items.filter(it => (it.reviews || 0) > 0).length;
+  const learned = items.filter(it => it.learned).length;
   return { total: items.length, due: due.length, learned };
 }
 
@@ -5897,10 +6102,41 @@ async function finishLesson() {
 let libFilter = 'all';
 let libSearch = '';
 let libTrack = 'standard'; // 'standard' | 'venezuelan' | 'all'
+let libCategory = 'all';
+
+function renderCategoryFilter(baseItems) {
+  const container = $('#lib-categories');
+  if (!container) return;
+  // Count items per category from the track-filtered base
+  const counts = {};
+  baseItems.forEach(it => {
+    const cat = categorize(it.es);
+    counts[cat] = (counts[cat] || 0) + 1;
+  });
+  // Only show categories that have at least one entry (plus "All")
+  const visible = LIBRARY_CATEGORIES.filter(c => c.id === 'all' || counts[c.id] > 0);
+  container.innerHTML = visible.map(c => {
+    const n = c.id === 'all' ? baseItems.length : (counts[c.id] || 0);
+    const active = c.id === libCategory ? 'active' : '';
+    return `<button class="lib-cat-pill ${active}" data-cat="${c.id}">
+      ${c.emoji} ${c.label} <span class="lib-cat-count">${n}</span>
+    </button>`;
+  }).join('');
+  $$('.lib-cat-pill').forEach(b => {
+    b.addEventListener('click', () => setLibCategory(b.dataset.cat));
+  });
+}
+
+function setLibCategory(cat) {
+  libCategory = cat;
+  renderLibrary();
+}
 
 function renderLibrary() {
   // Backfill track field on any legacy entries before reading
   ensureLibraryTrackFields();
+  // Best-effort: pick up examples for any pre-Build-17 entries we haven't filled yet
+  try { ensureLibraryExamples(); } catch(e) {}
   const items = Object.values(progress.library);
   const stats = getLibraryStats();
   $('#lib-total').textContent = stats.total;
@@ -5935,20 +6171,33 @@ function renderLibrary() {
   // Track filter
   if (libTrack === 'standard') filtered = filtered.filter(it => (it.track || 'standard') !== 'venezuelan');
   else if (libTrack === 'venezuelan') filtered = filtered.filter(it => it.track === 'venezuelan');
-  if (libFilter === 'due') filtered = filtered.filter(it => !it.next_review || it.next_review <= today);
-  else if (libFilter === 'learned') filtered = filtered.filter(it => (it.reviews || 0) > 0);
-  else if (libFilter === 'new') filtered = filtered.filter(it => (it.reviews || 0) === 0);
+  // Status filter
+  if (libFilter === 'due') filtered = filtered.filter(it => !it.learned && (!it.next_review || it.next_review <= today));
+  else if (libFilter === 'learned') filtered = filtered.filter(it => it.learned);
+  else if (libFilter === 'new') filtered = filtered.filter(it => (it.reviews || 0) === 0 && !it.learned);
+  // Category filter
+  if (libCategory !== 'all') {
+    filtered = filtered.filter(it => categorize(it.es) === libCategory);
+  }
   if (libSearch) {
     const s = normalize(libSearch);
     filtered = filtered.filter(it => normalize(it.es).includes(s) || normalize(it.en).includes(s));
   }
-  // Sort: due first, then by added date desc
+  // Sort: due-not-learned first, then learned/scheduled, then by added date desc
   filtered.sort((a, b) => {
-    const ad = (!a.next_review || a.next_review <= today) ? 0 : 1;
-    const bd = (!b.next_review || b.next_review <= today) ? 0 : 1;
-    if (ad !== bd) return ad - bd;
+    const aDue = !a.learned && (!a.next_review || a.next_review <= today);
+    const bDue = !b.learned && (!b.next_review || b.next_review <= today);
+    if (aDue !== bDue) return aDue ? -1 : 1;
     return (b.added || '').localeCompare(a.added || '');
   });
+
+  // Update category pill counts (use the track-filtered base, not category-filtered)
+  const categoryBase = items.filter(it => {
+    if (libTrack === 'standard') return (it.track || 'standard') !== 'venezuelan';
+    if (libTrack === 'venezuelan') return it.track === 'venezuelan';
+    return true;
+  });
+  renderCategoryFilter(categoryBase);
 
   const list = $('#lib-list');
   list.innerHTML = '';
@@ -5958,25 +6207,26 @@ function renderLibrary() {
   }
   filtered.forEach(it => {
     const card = document.createElement('div');
-    const due = !it.next_review || it.next_review <= today;
+    const learned = !!it.learned;
+    const due = !learned && (!it.next_review || it.next_review <= today);
     const isVE = it.track === 'venezuelan';
     const reviewedToday = it.last_reviewed === today;
-    card.className = 'lib-card' + (due ? ' due' : '') + (isVE ? ' lib-card-ve' : '') + (reviewedToday ? ' lib-card-reviewed' : '');
+    const cat = categorize(it.es);
+    const catMeta = LIBRARY_CATEGORIES.find(c => c.id === cat) || { label: 'Phrases', emoji: '💬' };
+    card.className = 'lib-card'
+      + (due ? ' due' : '')
+      + (isVE ? ' lib-card-ve' : '')
+      + (reviewedToday ? ' lib-card-reviewed' : '')
+      + (learned ? ' lib-card-learned' : '');
     const firstLesson = it.lessonIds && it.lessonIds[0];
     const lessonTag = firstLesson
       ? (isVE ? `🇻🇪 ${firstLesson}` : `LESSON ${LESSON_META[firstLesson]?.n || '?'}`)
       : '';
     let intervalText;
-    if (reviewedToday) {
-      // Show a clear "you did this today" badge, plus the next interval below
-      if (it.last_quality < 2) {
-        intervalText = '✓ Reviewed · come back to it';
-      } else {
-        const days = it.next_review ? daysBetween(today, it.next_review) : 0;
-        intervalText = days <= 1
-          ? '✓ Reviewed · see tomorrow'
-          : `✓ Reviewed · see in ${days} days`;
-      }
+    if (learned) {
+      intervalText = reviewedToday ? '✓ Learned today' : '✓ Learned';
+    } else if (reviewedToday && it.last_quality < 2) {
+      intervalText = '✓ Practiced · see tomorrow';
     } else if ((it.reviews || 0) === 0) {
       intervalText = 'New';
     } else if (due) {
@@ -5985,14 +6235,25 @@ function renderLibrary() {
       const days = daysBetween(today, it.next_review);
       intervalText = days <= 0 ? 'Due now' : (days === 1 ? 'In 1 day' : `In ${days} days`);
     }
+    const exampleEs = it.example?.es;
+    const exampleEn = it.example?.en;
+    const exampleHtml = exampleEs ? `
+      <div class="lib-card-example">
+        <div class="lib-card-example-label">EXAMPLE</div>
+        <div class="lib-card-example-es">"${exampleEs}"</div>
+        ${exampleEn ? `<div class="lib-card-example-en">${exampleEn}</div>` : ''}
+      </div>
+    ` : '';
     card.innerHTML = `
       <button class="lib-card-speak" aria-label="Listen">▶</button>
       <div class="lib-card-text">
         <div class="lib-card-es">${it.es}</div>
         <div class="lib-card-en">${it.en}</div>
+        ${exampleHtml}
       </div>
       <div class="lib-card-meta">
         <span class="lib-card-tag">${lessonTag}</span>
+        <span class="lib-card-cat">${catMeta.emoji} ${catMeta.label}</span>
         <div class="lib-card-interval">${intervalText}</div>
       </div>
     `;
@@ -6059,11 +6320,11 @@ function renderReviewCard() {
           <div class="review-quality-grid review-quality-grid-2" id="quality-grid">
             <button class="q-btn q-again-2" data-q="1">
               <span class="q-btn-label">Review again</span>
-              <span class="q-btn-sub">come back to this card now</span>
+              <span class="q-btn-sub">see tomorrow</span>
             </button>
             <button class="q-btn q-good-2" data-q="3">
               <span class="q-btn-label">Got it</span>
-              <span class="q-btn-sub" id="q-good-int">schedule for next time</span>
+              <span class="q-btn-sub">mark as known</span>
             </button>
           </div>
         </div>
@@ -6075,8 +6336,6 @@ function renderReviewCard() {
     // Auto-pronounce, but cancel any leftover speech first to avoid iOS audio session conflicts
     try { speechSynthesis.cancel(); } catch(e) {}
     setTimeout(() => { try { speak(it.es); } catch(e) {} }, 300);
-    // Update interval preview for "Got it"
-    updateQualityIntervals(it);
   } catch(e) {
     console.error('renderReviewCard failed', e);
     // Failsafe: skip this card so we don't trap the user
@@ -6084,22 +6343,6 @@ function renderReviewCard() {
     if (reviewIdx >= reviewQueue.length) finishReview();
     else renderReviewCard();
   }
-}
-
-function updateQualityIntervals(it) {
-  // Project what "Got it" produces for the interval preview
-  function project() {
-    const copy = { ...it, ease: it.ease || 2.5, interval: it.interval || 0, reviews: it.reviews || 0 };
-    copy.reviews++;
-    if (copy.reviews === 1) copy.interval = 1;
-    else if (copy.reviews === 2) copy.interval = 3;
-    else copy.interval = Math.max(1, Math.round(copy.interval * copy.ease));
-    return copy.interval;
-  }
-  const d = project();
-  const fmt = d === 1 ? 'see in 1 day' : d < 30 ? `see in ${d} days` : `see in ~${Math.round(d/30)} months`;
-  const el = $('#q-good-int');
-  if (el) el.textContent = fmt;
 }
 
 function revealReviewCard() {
@@ -6118,12 +6361,6 @@ async function rateReviewCard(quality) {
     if (live) {
       scheduleSRS(live, quality);
       if (quality >= 3) reviewCorrect++;
-    }
-    // "Review again" (quality=1): push this card BACK into the current session queue
-    // so it actually resurfaces. Insert ~3 positions ahead, or at the end if queue is short.
-    if (quality < 2 && reviewIdx < reviewQueue.length) {
-      const insertAt = Math.min(reviewQueue.length, reviewIdx + 4);
-      reviewQueue.splice(insertAt, 0, it);
     }
     reviewIdx++;
     // Save in background — don't block UI
